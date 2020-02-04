@@ -74,6 +74,7 @@ export default class HeaderBase extends Component {
                                         <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 8, left: 30,zIndex:2 }} />
                                         <TextInput style={{ height: 40, backgroundColor:'#ffffff', width:ScreenWidth - 40, borderRadius:3, fontFamily:'Roboto', paddingLeft:35 }} placeholderTextColor='#000000' placeholder={'Vui lòng nhập mã hoặc tên sản phẩm'} />
                                     </View>
+                                
                                     <View style={MainStyle.slideBg}>
                                         <Swiper autoplay={true}>
                                             {this.state.list.map((item, i) =>{ return(
@@ -82,7 +83,7 @@ export default class HeaderBase extends Component {
                                         </Swiper >
                                     </View>
                                     <View style={MainStyle.menu}>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu}>
+                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatScreen')}}>
                                             <View>
                                                 <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cat_b.png')}/>
                                             </View>
@@ -100,7 +101,7 @@ export default class HeaderBase extends Component {
                                             </View>
                                             <Text style={MainStyle.textMenu}>Đơn hàng</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu}>
+                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('NewsScreen')}}>
                                             <View >
                                                 <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_news.png')}/>
                                             </View>
@@ -123,14 +124,14 @@ export default class HeaderBase extends Component {
                         <View style={MainStyle.SliderContainerStyle}>
                             <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
                             <View style={MainStyle.itemHeagerHome}>
-                                <View style={MainStyle.headerItem}>
-                                    <View style={MainStyle.headerHomeLeft}>
+                                <View style={MainStyle.headerItemCat}>
+                                    <View style={MainStyle.headerHomeLeftCat}>
                                         <HeaderLeft page={page} title={title} navigation={navigation} />
                                     </View>
-                                    <View style={MainStyle.headerHomeCenter}>
+                                    <View style={MainStyle.headerHomeCenterCat}>
                                         <HeaderCenter page={page} title={title} navigation={navigation} />
                                     </View>
-                                    <View style={MainStyle.headerHomeRight}>
+                                    <View style={MainStyle.headerHomeRightCat}>
                                         <HeaderRight page={page} title={title} navigation={navigation} />
                                     </View>
                                 </View>
@@ -138,6 +139,90 @@ export default class HeaderBase extends Component {
                         </View>
                     </View>
                 );
+                case 'cat':
+                return (
+                    <View >
+                        <View style={MainStyle.SliderContainerStyle}>
+                            <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                            <View style={MainStyle.itemHeagerHome}>
+                                <View style={MainStyle.headerItemCat}>
+                                    <View style={MainStyle.headerHomeLeftCat}>
+                                        <HeaderLeft page={page} title={title} navigation={navigation} />
+                                    </View>
+                                    <View style={MainStyle.headerHomeCenterCat}>
+                                        <HeaderCenter page={page} title={title} navigation={navigation} />
+                                    </View>
+                                    <View style={MainStyle.headerHomeRightCat}>
+                                        <HeaderRight page={page} title={title} navigation={navigation} />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                );
+                case 'news':
+                return (
+                    <View >
+                        <View style={MainStyle.SliderContainerStyle}>
+                            <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                            <View style={MainStyle.itemHeagerHome}>
+                                <View style={MainStyle.headerItemCat}>
+                                    <View style={MainStyle.headerHomeLeftCat}>
+                                        <HeaderLeft page={page} title={title} navigation={navigation} />
+                                    </View>
+                                    <View style={MainStyle.headerHomeCenterCat}>
+                                        <HeaderCenter page={page} title={title} navigation={navigation} />
+                                    </View>
+                                    <View style={MainStyle.headerHomeRightCat}>
+                                        <HeaderRight page={page} title={title} navigation={navigation} />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                );
+                case 'news_detail':
+                    return (
+                        <View >
+                            <View style={MainStyle.SliderContainerStyle}>
+                                <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                <View style={MainStyle.itemHeagerHome}>
+                                    <View style={MainStyle.headerItemCat}>
+                                        <View style={MainStyle.headerHomeLeftCat}>
+                                            <HeaderLeft page={page} title={title} navigation={navigation} />
+                                        </View>
+                                        <View style={MainStyle.headerHomeCenterCat}>
+                                            <HeaderCenter page={page} title={title} navigation={navigation} />
+                                        </View>
+                                        <View style={MainStyle.headerHomeRightCat}>
+                                            <HeaderRight page={page} title={title} navigation={navigation} />
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    );
+                    case 'product_detail':
+                    return (
+                        <View >
+                            <View style={MainStyle.SliderContainerStyle}>
+                                <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                <View style={MainStyle.itemHeagerHome}>
+                                    <View style={MainStyle.headerItemCat}>
+                                        <View style={MainStyle.headerHomeLeftProduct}>
+                                            <HeaderLeft page={page} title={title} navigation={navigation} />
+                                        </View>
+                                        <View style={MainStyle.headerHomeCenterProduct}>
+                                            <HeaderCenter page={page} title={title} navigation={navigation} />
+                                        </View>
+                                        <View style={MainStyle.headerHomeRightProduct}>
+                                            <HeaderRight page={page} title={title} navigation={navigation} />
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    );
             default:
                 // return (
                 //     <View >

@@ -24,3 +24,36 @@ export function getCat(){
     return fetch(url)
     .then(res => res.json());
 };
+//get sub cat industry
+export function getSubCatIn(id){
+    let url;
+    url = global.BASE_URL+`/get_sub_cat_in.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+//get list by industry
+export function getListIn(cat_id){
+    let url;
+    url = global.BASE_URL+`/get_list_in.api?cat_id=${cat_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+//get sub cat Accessary
+export function getSubCatAr(id){
+    let url;
+    url = global.BASE_URL+`/get_sub_cat_ar.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+//get list by accessary
+export function getListAr(cat_id){
+    let url;
+    url = global.BASE_URL+`/get_list_ar.api?cat_id=${cat_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

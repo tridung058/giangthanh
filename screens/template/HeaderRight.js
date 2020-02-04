@@ -19,12 +19,30 @@ export default class HeaderRight extends Component{
     }
     renderButton(){
         const {navigation} = this.props;
-
-        return (
-            <TouchableOpacity onPress={() => this.onLogout()}>
-                <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
-            </TouchableOpacity>
-        )
+        
+        if(this.props.page && this.props.page == 'product_detail'){
+            return (
+                <View style={MainStyle.leftProductDetail}>
+                        
+                            <Icon type="Ionicons" name="md-search" style={{ color: '#ffffff',fontSize:30, paddingRight:10 }} />
+                        
+                            <Icon type="Feather" name="share-2" style={{ color: '#ffffff', fontSize:30, paddingRight:10 }} />
+                        
+                        
+                            <Image style={MainStyle.icon_cart_pro} source={require('./../../assets/icon_cart.png')}/>
+                        
+                            <Icon type="Entypo" name="dots-three-horizontal" style={{ color: '#ffffff', fontSize:30,paddingLeft:15, paddingRight:10 }} />
+                </View>
+            )
+        }else{
+            return (
+                    <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
+                //  <TouchableOpacity onPress={() => this.onLogout()}>
+                //     <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
+                // </TouchableOpacity>
+            )
+        }
+        
     }
 
     render() {

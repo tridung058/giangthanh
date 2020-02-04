@@ -7,8 +7,7 @@ import MainStyle from '../styles/MainStyle.js';
 import HeaderBase from './template/HeaderBase';
 import FooterBase from './template/FooterBase';
 
-import {getProHot} from './../src/api/apiProHot';
-import {getCat} from './../src/api/apiProHot';
+import {getProHot, getCat, getSubCatIn, getListIn, getSubCatAr, getListAr } from './../src/api/apiProHot';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -23,7 +22,11 @@ export default class Home extends React.Component{
         this.state = {
             loading: true,
             list_pro_hot: [],
-            list_cat: []
+            list_cat: [],
+            list_cat_in: [],
+            list_pro_in: [],
+            list_cat_ar: [],
+            list_pro_ar: []
         }; 
     }
 
@@ -34,12 +37,13 @@ export default class Home extends React.Component{
 
     makeRemoteRequest(){
         this.setState({ loading: true}); 
+        let cat_id = 'all';
+        let cat_id_ar = 'all_ar';
         let is_hot = '1';
         getProHot(is_hot)
         .then(resJSON => {
 			const {list_pro_hot, error} = resJSON;
 			if(error == false){	
-
 				this.setState({
 					list_pro_hot: list_pro_hot, 
 				});
@@ -63,7 +67,91 @@ export default class Home extends React.Component{
         }).catch(err => {
 			this.setState({ loading: false });
         });
+
+        //sub cat industry
+        this.getSubCatIndustry();
+        //get list by industry
+        this.proByIndustry(cat_id);
+        //sub cat Accessary
+        this.getSubCatAccessary();
+        //get list by accessary
+        this.proByAccessary(cat_id_ar);
     }
+
+    getSubCatIndustry(){
+        let id = '9';
+        getSubCatIn(id)
+        .then(resJSON => {
+			const {list_cat_in, error} = resJSON;
+			if(error == false){	
+				this.setState({
+					list_cat_in: list_cat_in, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
+    getSubCatAccessary(){
+        let id = '11';
+        getSubCatAr(id)
+        .then(resJSON => {
+			const {list_cat_ar, error} = resJSON;
+			if(error == false){	
+				this.setState({
+					list_cat_ar: list_cat_ar, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
+    
+    proByIndustry(cat_id){
+        getListIn(cat_id)
+        .then(resJSON => {
+			const {list_pro_in, error} = resJSON;
+			if(error == false){	
+				this.setState({
+                    cat_id:cat_id,
+					list_pro_in: list_pro_in, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
+
+    proByAccessary(cat_id_ar){
+        getListAr(cat_id_ar)
+        .then(resJSON => {
+			const {list_pro_ar, error} = resJSON;
+			if(error == false){	
+				this.setState({
+                    cat_id_ar:cat_id_ar,
+					list_pro_ar: list_pro_ar, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
+    
+    goCatDetail(id, name){
+        this.props.navigation.navigate('CatProductScreen',{id:id, name:name});
+    }
+    productDetail(id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    }
+
     renderLoading  = () => {
         if (!this.state.loading) return null;
         return (
@@ -90,7 +178,7 @@ export default class Home extends React.Component{
                             </View>
                             <View style={MainStyle.showProHot}>
                                 {this.state.list_pro_hot.map((item,i) =>{return(
-                                    <TouchableOpacity key={i} style={MainStyle.itemProHot}>
+                                    <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.productDetail(item.id)}}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
                                             <Text style={MainStyle.namePro}>{item.name}</Text>
@@ -111,7 +199,7 @@ export default class Home extends React.Component{
                             </View>
                             <View style={MainStyle.showCat}>
                                 {this.state.list_cat.map((item,i) =>{return(
-                                    <TouchableOpacity key={i} style={MainStyle.itemCat}>
+                                    <TouchableOpacity key={i} style={MainStyle.itemCat} onPress={()=>(this.goCatDetail(item.id, item.name))}>
                                         <View style={MainStyle.colorBgCat}>
                                             <Image style={{width:(screenWidth-100)/4, height:((screenWidth-100)/4)}}  source={{uri:item.image}}/>
                                         </View>
@@ -127,25 +215,22 @@ export default class Home extends React.Component{
                             </View>
                             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',paddingLeft:20}}>
                                 <ScrollView horizontal={true} showsVerticalScrollIndicator={false} >
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevel}>
-                                            <Text style={MainStyle.nameCatLevel}>Tất cả</Text>
+                                    <TouchableOpacity style={MainStyle.catLevel} onPress={() =>(this.proByIndustry('all')) }>
+                                        <View style={this.state.cat_id == 'all'?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
+                                            <Text style={ this.state.cat_id == 'all'?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>Tất cả</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevelActive}>
-                                            <Text style={MainStyle.nameCatLevelActvie}>Máy in sơ đồ, cắt rập</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevelActive}>
-                                            <Text style={MainStyle.nameCatLevelActvie}>Máy trải vải, cắt tự động</Text>
-                                        </View>
-                                    </TouchableOpacity>
+                                    {this.state.list_cat_in.map((item,i) =>{return(
+                                        <TouchableOpacity key={i} style={MainStyle.catLevel} onPress={() =>(this.proByIndustry(item.id)) }>
+                                            <View style={this.state.cat_id == item.id?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
+                                                <Text style={this.state.cat_id == item.id?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>{item.name}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                   )})}
                                 </ScrollView>
                             </View>
                             <View style={[MainStyle.showProHot]}>
-                                {this.state.list_pro_hot.map((item,i) =>{return(
+                                {this.state.list_pro_in.map((item,i) =>{return(
                                     <TouchableOpacity key={i} style={MainStyle.itemProHot}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
@@ -173,25 +258,22 @@ export default class Home extends React.Component{
                             </View>
                             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',paddingLeft:20}}>
                                 <ScrollView horizontal={true} showsVerticalScrollIndicator={false} >
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevel}>
-                                            <Text style={MainStyle.nameCatLevel}>Tất cả</Text>
+                                    <TouchableOpacity style={MainStyle.catLevel} onPress={() =>(this.proByIndustry('all')) }>
+                                        <View style={this.state.cat_id == 'all'?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
+                                            <Text style={ this.state.cat_id == 'all'?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>Tất cả</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevelActive}>
-                                            <Text style={MainStyle.nameCatLevelActvie}>Máy in sơ đồ, cắt rập</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevelActive}>
-                                            <Text style={MainStyle.nameCatLevelActvie}>Máy trải vải, cắt tự động</Text>
-                                        </View>
-                                    </TouchableOpacity>
+                                    {this.state.list_cat_in.map((item,i) =>{return(
+                                        <TouchableOpacity key={i} style={MainStyle.catLevel} onPress={() =>(this.proByIndustry(item.id)) }>
+                                            <View style={this.state.cat_id == item.id?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
+                                                <Text style={this.state.cat_id == item.id?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>{item.name}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )})}
                                 </ScrollView>
                             </View>
                             <View style={[MainStyle.showProHot]}>
-                                {this.state.list_pro_hot.map((item,i) =>{return(
+                                {this.state.list_pro_in.map((item,i) =>{return(
                                     <TouchableOpacity key={i} style={MainStyle.itemProHot}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
@@ -219,25 +301,22 @@ export default class Home extends React.Component{
                             </View>
                             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',paddingLeft:20}}>
                                 <ScrollView horizontal={true} showsVerticalScrollIndicator={false} >
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevel}>
-                                            <Text style={MainStyle.nameCatLevel}>Tất cả</Text>
+                                    <TouchableOpacity style={MainStyle.catLevel} onPress={() =>(this.proByAccessary('all_ar')) }>
+                                        <View style={this.state.cat_id_ar == 'all_ar'?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
+                                            <Text style={ this.state.cat_id_ar == 'all_ar'?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>Tất cả</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevelActive}>
-                                            <Text style={MainStyle.nameCatLevelActvie}>Máy in sơ đồ, cắt rập</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.catLevel}>
-                                        <View style={MainStyle.boxCatLevelActive}>
-                                            <Text style={MainStyle.nameCatLevelActvie}>Máy trải vải, cắt tự động</Text>
-                                        </View>
-                                    </TouchableOpacity>
+                                    {this.state.list_cat_ar.map((item,i) =>{return(
+                                        <TouchableOpacity key={i} style={MainStyle.catLevel} onPress={() =>(this.proByAccessary(item.id)) }>
+                                            <View style={this.state.cat_id_ar == item.id?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
+                                                <Text style={this.state.cat_id_ar == item.id?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>{item.name}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )})}
                                 </ScrollView>
                             </View>
                             <View style={[MainStyle.showProHot]}>
-                                {this.state.list_pro_hot.map((item,i) =>{return(
+                                {this.state.list_pro_ar.map((item,i) =>{return(
                                     <TouchableOpacity key={i} style={MainStyle.itemProHot}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>

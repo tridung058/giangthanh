@@ -21,7 +21,6 @@ export default class App extends React.Component {
         }
     }
     
-
     async componentDidMount() {
         await Font.loadAsync({
             'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),

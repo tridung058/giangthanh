@@ -26,11 +26,29 @@ export default {
         height:width/6,
         overflow:'hidden'
     },
+    headerItemCat:{
+        flexDirection:'row',
+        width:width,
+        height:width/5,
+        overflow:'hidden',
+    },
+    goBack:{
+        position:'relative'
+    },
     headerHomeLeft:{
         width:width/3
     },
     headerHomeCenter:{
         width:width/3
+    },
+    headerHomeLeftCat:{
+        width:width/8
+    },
+    headerHomeCenterCat:{
+        width:width*(6/8)
+    },
+    headerHomeRightCat:{
+        width:width/8
     },
     logoHome:{
         width:width/4,
@@ -198,7 +216,7 @@ export default {
         color:'#ce1e1e',
         fontFamily:'RobotoBold',
         fontSize:14,
-        paddingBottom:5
+        paddingBottom:5,
     },
     showCat:{
         marginTop:10,
@@ -219,7 +237,8 @@ export default {
         fontFamily:'Roboto',
         fontSize:14,
         paddingTop:5,
-        color:'#333333'
+        color:'#333333',
+        height:40
     },
     bgSewing:{
         borderTopColor:'#eeeeee',
@@ -303,4 +322,52 @@ export default {
         width:width,
         height:width*136/750,
     },
+    subCat:{
+        width:width,
+    },
+    subCatDetail:{
+        marginTop:10,
+        flexDirection:'row',
+        flexWrap:'wrap',
+        alignItems:'center',
+        
+    },
+    itemSubCat:{
+        width:(screenWidth-120)/3,
+        marginLeft:20,
+        marginRight:20,
+        marginBottom:10
+    },
+    nameItem:{
+        fontFamily:'Roboto',
+        color:'#777777',
+        height:40,
+        paddingTop:5
+    },
+    list_type2:{
+        marginRight:10
+    },
+    other_news:{
+        marginTop:10,
+        marginBottom:30
+    },
+    headerHomeLeftProduct:{
+        width:screenWidth/8
+    },
+    headerHomeCenterProduct:{
+        width:screenWidth/8
+    },
+    headerHomeRightProduct:{
+        width:(screenWidth*6)/8,
+    },
+    leftProductDetail:{
+        flexDirection:'row',
+        paddingRight:15
+    },
+    icon_cart_pro:{
+        width:width/13,
+        height:(width/13)*44/50,
+        paddingTop:5,
+        paddingRight:5
+    }
 }

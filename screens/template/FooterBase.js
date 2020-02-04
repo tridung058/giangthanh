@@ -29,7 +29,7 @@ export default class FooterBase extends Component {
                     </View>
                     <Text style={MainStyle.textFooterBase}>Trang chủ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { navigation.navigate('CatProductScreen')}}>
+                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { navigation.navigate('CatScreen')}}>
                     <View >
                         <Image style={{ width: 20, height: 23 }} source={require('./../../assets/icon_cat.png')} />
                         {/* <Icon type="SimpleLineIcons" name="grid" style={{ color: '#777777', fontSize: 25 }} /> */}
