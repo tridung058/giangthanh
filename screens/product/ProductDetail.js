@@ -7,7 +7,7 @@ import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import AutoHeightWebView from 'react-native-autoheight-webview';
 
-import { getNewsDetail, getOtherNews} from '../../src/api/apiNews';
+import { getProductDetail} from '../../src/api/apiProHot';
 import {getStorage} from '../../src/api/storage';
 
 let screenWidth = Dimensions.get('window').width;
@@ -21,14 +21,14 @@ export default class ProductDetail extends Component{
         
         this.state = {
             loading: true,
-            news_detail: {},
+            product_detail: {},
             list_other : []
         }
     }
 
     componentDidMount() {
         let id = this.props.navigation.state.params.id;
-        //this.makeRemoteRequest(id);
+        this.makeRemoteRequest(id);
         
     }
 
@@ -36,36 +36,13 @@ export default class ProductDetail extends Component{
 
         this.setState({ loading: true});
 
-            getNewsDetail(id)
+            getProductDetail(id)
             .then(resJSON => {
-                const {news_detail, error } = resJSON;
+                const {product_detail, error } = resJSON;
                 
                 if(error == false){
                     this.setState({
-                        news_detail: news_detail, 
-                        loading: false, 
-                        refreshing: false ,
-                        allow_more: false,
-                    });
-                }else{
-                    this.setState({ 
-                        loading: false, 
-                        allow_more: false
-                    });
-                }
-                    
-            }).catch(err => {
-                // console.log(err);
-                this.setState({ loading: false });
-            });
-
-            getOtherNews(id)
-            .then(resJSON => {
-                const {list_other, error } = resJSON;
-                
-                if(error == false){
-                    this.setState({
-                        list_other: list_other, 
+                        product_detail: product_detail, 
                         loading: false, 
                         refreshing: false ,
                         allow_more: false,
@@ -105,7 +82,9 @@ export default class ProductDetail extends Component{
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
                                 <View style={{position:'relative'}}>
-                                    {/* <Image style={{width:screenWidth-20, height: screenWidth/2}}  source={{uri:this.state.news_detail.image}}/> */}
+                                    <View style={MainStyle.imageDetail}>
+                                        <Image style={{width:screenWidth-40, height: (screenWidth-40)*374/380, }}  source={{uri:this.state.product_detail.image}}/>
+                                    </View>
                                     <View>
                                        
                                     </View>
@@ -122,8 +101,11 @@ export default class ProductDetail extends Component{
                         </ScrollView>
                     </View>
                 </View>
-                <View>
-                    
+                <View style={MainStyle.add_cart}>
+                    <View style={MainStyle.bgAddCart}>
+                        <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
+                        <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>
+                    </View>
                 </View>
             </Container>
         );

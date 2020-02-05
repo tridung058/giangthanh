@@ -105,7 +105,6 @@ export default {
     },
 
     tFooter:{
-        backgroundColor: "#red",
         paddingTop: 8,
         flexDirection: 'row',
         paddingBottom: 8,
@@ -369,5 +368,38 @@ export default {
         height:(width/13)*44/50,
         paddingTop:5,
         paddingRight:5
+    },
+    add_cart:{
+        paddingTop: 8,
+        flexDirection: 'row',
+        paddingBottom: 8,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 11,
+        height: 80,
+        borderTopWidth:10,
+        borderTopColor:'#eeeeee',
+        backgroundColor:'#ffffff',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    bgAddCart:{
+        flexDirection:'row', 
+        backgroundColor:'#ce1e1e',
+        width:screenWidth-40,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingBottom:10,
+        
+    },
+    imageDetail:{
+        borderColor:'#dddddd',
+        borderWidth:1,
+        justifyContent:'center',
+        alignItems:'center',
+        height: (screenWidth)*374/380
     }
 }

@@ -57,3 +57,12 @@ export function getListAr(cat_id){
     return fetch(url)
     .then(res => res.json());
 };
+
+//get list by accessary
+export function getProductDetail(id){
+    let url;
+    url = global.BASE_URL+`/get_pro_detail.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
