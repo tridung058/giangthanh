@@ -24,7 +24,7 @@ export default class HeaderCenter extends Component{
                         <Image style={MainStyle.logoHome} source={require('./../../assets/logo.png')}/>
                     </View>
                 )
-            }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'news' || this.props.page == 'news_detail')){
+            }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'news' || this.props.page == 'news_detail' || this.props.page == 'catalog' || this.props.page == 'catalog_detail')){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
                         <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 7, left: 20,zIndex:2 }} />

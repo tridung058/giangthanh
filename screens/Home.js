@@ -148,8 +148,8 @@ export default class Home extends React.Component{
     goCatDetail(id, name){
         this.props.navigation.navigate('CatProductScreen',{id:id, name:name});
     }
-    productDetail(id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    productDetail(id, cat_id){
+        this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
     }
 
     renderLoading  = () => {
@@ -178,7 +178,7 @@ export default class Home extends React.Component{
                             </View>
                             <View style={MainStyle.showProHot}>
                                 {this.state.list_pro_hot.map((item,i) =>{return(
-                                    <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.productDetail(item.id)}}>
+                                    <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.productDetail(item.id, item.cat_id)}}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
                                             <Text style={MainStyle.namePro}>{item.name}</Text>

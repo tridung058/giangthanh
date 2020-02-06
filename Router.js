@@ -7,6 +7,8 @@ import Cat from './screens/category/Cat';
 import ProductDetail from './screens/product/ProductDetail';
 import News from './screens/news/News';
 import NewsDetail from './screens/news/NewsDetail';
+import Catalog from './screens/catalog/Catalog';
+import CatalogDetail from './screens/catalog/CatalogDetail';
 export const GiangThanhStack = createStackNavigator({
     HomeScreen: {
         screen: Home
@@ -25,6 +27,12 @@ export const GiangThanhStack = createStackNavigator({
     },
     ProductDetailScreen: {
         screen: ProductDetail
+    },
+    CatalogScreen: {
+        screen: Catalog
+    },
+    CatalogDetailScreen: {
+        screen: CatalogDetail
     },
 });
 

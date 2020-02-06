@@ -388,7 +388,7 @@ export default {
     bgAddCart:{
         flexDirection:'row', 
         backgroundColor:'#ce1e1e',
-        width:screenWidth-40,
+        width:screenWidth-20,
         justifyContent:'center',
         alignItems:'center',
         paddingTop:10,
@@ -401,5 +401,116 @@ export default {
         justifyContent:'center',
         alignItems:'center',
         height: (screenWidth)*374/380
-    }
+    },
+    detailInfo:{
+        width:screenWidth/3.5,
+        fontFamily:'RobotoBold',
+        fontSize:15
+    },
+    detailInfoPrice:{
+        width:screenWidth/3.5,
+        color:'#ce1e1e',
+        fontFamily:'RobotoBold'
+    },
+    childDetail:{
+        fontFamily:'Roboto'
+    },
+    childOrderNumber:{
+        fontFamily:'Roboto',
+        borderWidth:1,
+        borderColor:'#dddddd',
+        height:30,
+        width:50,
+        paddingLeft:5
+    },
+    addCart:{
+        paddingTop:20,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    contact:{
+        marginTop:20
+    },
+    detailContact:{
+        flexDirection:'row'
+    },
+    detailContactN:{
+        flexDirection:'row',
+        paddingTop:20
+    },
+    contactAdd:{
+        fontFamily:'RobotoBold',
+        fontSize:20
+    },
+    contactInfo:{
+        fontFamily:'RobotoBold',
+        paddingTop:5
+    },
+    callIcon:{
+        width:(width-20)/8,
+        height:(width-20)/8,
+    },
+    description:{
+        flexDirection:'row',
+        marginTop:20
+    },
+    des:{
+        height:50,
+        width:(screenWidth-20)/2,
+        backgroundColor:'#f4f4f4',
+        borderTopColor:'#e0e0e0',
+        borderTopWidth:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    desActive:{
+        height:50,
+        width:(screenWidth-20)/2,
+        borderTopColor:'#ce1e1e',
+        borderTopWidth:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    titleDesActive:{
+        color:'#ce1e1e',
+        fontFamily:'RobotoBold',
+        fontSize:15
+    },
+    titleDes:{
+        fontSize:15
+    },
+    textComment:{
+        flexDirection:'row',
+        marginBottom:20
+    },
+    bgOtherPro:{
+        borderTopColor:'#eeeeee',
+        borderTopWidth:10,
+        position:'relative',
+        marginTop:5,
+        marginBottom:10,
+        backgroundColor:'#ce1e1e',
+        height:(screenWidth*90/750)+10,
+    },
+    subCatalog:{
+        width:width,
+    },
+    subCatalogDetail:{
+        marginTop:10,
+        flexDirection:'row',
+        flexWrap:'wrap',
+        alignItems:'center',
+        
+    },
+    itemsubCatalog:{
+        width:(screenWidth-60)/2,
+        marginLeft:15,
+        marginRight:15,
+        marginBottom:10
+    },
+    nameCatalog:{
+        fontFamily:'Roboto',
+        height:45,
+        padding:5
+    },
 }
