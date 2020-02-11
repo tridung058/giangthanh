@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,7 +24,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.maymaygiangthanh.app",
+      "buildNumber": "1.0.1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This application uses the camera to take photos of people when taking attendance",
+        "NSPhotoLibraryAddUsageDescription": "The application uses images to make avatar images",
+        "NSPhotoLibraryUsageDescription": "The application uses images to make avatar images"
+      }
+    },
+    "android": {
+      "package": "com.maymaygiangthanh.app",
+      "versionCode": 1,
+      "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"]
+  }
   }
 }

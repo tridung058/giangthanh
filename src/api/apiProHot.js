@@ -75,3 +75,11 @@ export function getOtherPro(cat_id, id){
     return fetch(url)
     .then(res => res.json());
 };
+
+export function getProductHot(type){
+    let url;
+    url = global.BASE_URL+`/get_product_hot_all.api?type=${type}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

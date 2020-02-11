@@ -228,9 +228,10 @@ export default {
         borderRadius:10
     },
     itemCat:{
-        width:(screenWidth-90)/4,
+        width:(screenWidth-80)/4,
         marginLeft:10,
         marginRight:10,
+        marginBottom:5
     },
     nameCat:{
         fontFamily:'Roboto',
@@ -513,4 +514,41 @@ export default {
         height:45,
         padding:5
     },
+    dowloadFile:{
+        flexDirection:'row', 
+        width:screenWidth-20,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingBottom:10,
+        borderColor:'#dddddd',
+        borderWidth:1
+        
+    },
+    textCatalog:{
+        flexDirection:'row',
+        marginBottom:20,
+        marginTop:20
+    },
+    info_other_catalog:{
+        paddingBottom:10,
+        flexDirection:'row',
+        marginTop:10,
+        borderBottomColor:'#cccccc',
+        borderBottomWidth:1,
+        borderStyle:'dotted'
+    },
+    detailCatalog:{
+        paddingLeft:10,
+        width: (screenWidth-20)*5/6
+    },
+    contact:{
+        marginTop:10
+    },
+    titleInfoCt:{
+        fontFamily:'RobotoBold',
+        fontSize:15,
+        paddingTop:10,
+        lineHeight:25
+    }
 }

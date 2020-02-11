@@ -7,7 +7,12 @@ import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import AutoHeightWebView from 'react-native-autoheight-webview';
 
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
+
 import { getCatalogDetail, getOtherCatalog} from '../../src/api/apiCatalog';
+
 import {getStorage} from '../../src/api/storage';
 
 let screenWidth = Dimensions.get('window').width;
@@ -21,15 +26,16 @@ export default class CatalogDetail extends Component{
         
         this.state = {
             loading: true,
-            news_detail: {},
-            list_other : []
+            catalog_detail: {},
+            list_other_catalog : []
         }
     }
-
+    
     componentDidMount() {
+        Permissions.askAsync(Permissions.CAMERA_ROLL).then(d => console.log(d))
+
         let id = this.props.navigation.state.params.id;
         let cat_id = this.props.navigation.state.params.cat_id;
-        Alert.alert(id);return;
         this.makeRemoteRequest(id, cat_id);
         
     }
@@ -63,11 +69,11 @@ export default class CatalogDetail extends Component{
 
             getOtherCatalog(id, cat_id)
             .then(resJSON => {
-                const {list_other, error } = resJSON;
+                const {list_other_catalog, error } = resJSON;
                 
                 if(error == false){
                     this.setState({
-                        list_other: list_other, 
+                        list_other_catalog: list_other_catalog, 
                         loading: false, 
                         refreshing: false ,
                         allow_more: false,
@@ -84,6 +90,29 @@ export default class CatalogDetail extends Component{
                 this.setState({ loading: false });
             });
         
+    }
+
+    async dowLoadFile(url){
+        const uri = url;
+        var filename = uri.substring(uri.lastIndexOf('/')+1);
+        let fileUri = FileSystem.documentDirectory + filename;
+        FileSystem.downloadAsync(uri, fileUri)
+        .then(({ uri }) => {
+            console.log(uri);
+            this.saveFile(uri);
+            Alert.alert('Thông báo', 'Lưu file thành công');
+        })
+        .catch(error => {
+            console.error(error);
+        })
+    }
+
+    saveFile = async (fileUri) => {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status === "granted") {
+            const asset = await MediaLibrary.createAssetAsync(fileUri)
+            await MediaLibrary.createAlbumAsync("Download", asset, false)
+        }
     }
 
 	renderLoading  = () => {
@@ -107,11 +136,10 @@ export default class CatalogDetail extends Component{
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
                                 <View style={{position:'relative'}}>
-                                    <Image style={{width:screenWidth-20, height: screenWidth/2}}  source={{uri:this.state.news_detail.image}}/>
                                     <View>
-                                        <Text style={{fontFamily:'RobotoBold', fontSize: 18, paddingTop:5}}>{this.state.news_detail.title}</Text>
-                                        <Text style={{fontFamily:'Roboto', fontSize: 16, paddingTop:5, color:'#777777'}}><Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 16}} /> {this.state.news_detail.created_time}</Text>
-                                        <Text style={{fontFamily:'Roboto', fontSize: 16, paddingTop:5}}>{this.state.news_detail.summary}</Text>
+                                        <Text style={{fontFamily:'RobotoBold', fontSize: 18, paddingTop:5}}>{this.state.catalog_detail.name}</Text>
+                                        <Text style={{fontFamily:'Roboto', fontSize: 16, paddingTop:5, color:'#777777'}}><Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 16}} /> {this.state.catalog_detail.time}</Text>
+                                    
                                         <AutoHeightWebView
                                             customScript={`document.body.style.background = 'transparent';`}
                                             style={{ width: screenWidth-20, marginTop: 10 }}
@@ -120,29 +148,43 @@ export default class CatalogDetail extends Component{
                                                 type: 'text/css',
                                                 rel: 'stylesheet'
                                             }]}
-                                            source={{ html: this.state.news_detail.content }}
+                                            source={{ html: this.state.catalog_detail.summary}}
                                             zoomable={false}
                                         />
+                                        <View style={MainStyle.dowloadFile}>
+                                            <Icon type="FontAwesome" name="arrow-circle-o-down" style={{ color: '#de0000',fontSize:20,paddingRight:5}} />
+                                            <TouchableOpacity onPress={()=>this.dowLoadFile(this.state.catalog_detail.file_upload)}>
+                                                <Text style={{fontFamily:'RobotoBold', fontSize:14}}>Tải về</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
                                 </View>
-                                
-                                <View>
-
+                                <View style={MainStyle.textCatalog}>
+                                    <View style={{width:(screenWidth-20)/2, borderBottomColor:'#eb1a20', borderBottomWidth:1}}>
+                                        <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', fontSize:18}}>CATALOG CÙNG HÃNG</Text>
+                                    </View>
+                                    <View style={{width:(screenWidth-20)/2, borderBottomColor:'#dddddd', borderBottomWidth:1}}>
+                                        
+                                    </View>
                                 </View>
-
-                                <View style={MainStyle.other_news}>
-                                    <Text style={{fontFamily:'RobotoBold',color:'#ce1e1e', textTransform:'uppercase', borderBottomColor:'#eb1a20', borderBottomWidth:1, marginBottom:10}}>Các tin khác</Text>
-                                    {this.state.list_other.map((item,i) =>{return(
-                                        <TouchableOpacity key={i} onPress={() =>this.makeRemoteRequest(item.id)}>
-                                            <Text style={{fontSize:14, lineHeight:25}}> <Icon type="Octicons" name="primitive-dot" style={{ color: '#d02929', fontSize: 15, fontFamily:'Roboto'}} /> {item.title} - <Text style={{color:'#ce1e1e'}}>{item.created_time}</Text></Text>
+                                {this.state.list_other_catalog.map((item,i) =>{return(
+                                <View key={i} style={MainStyle.info_other_catalog}>
+                                    <View>
+                                        <Image style={{ width: (screenWidth-20)/6, height:((screenWidth-20)/6)*61/52}} source={require('./../../assets/file.png')}/>
+                                    </View>
+                                    <View style={MainStyle.detailCatalog}>
+                                        <Text style={{fontFamily:'RobotoBold', fontSize:16}}>{item.name}</Text>
+                                        <Text>{item.summary}</Text>
+                                        <TouchableOpacity onPress={()=>this.makeRemoteRequest(item.id, item.cat_id)}>
+                                            <Text style={{fontStyle:'italic', fontFamily:'Roboto', color:'#de0000'}}>Chi tiết</Text>
                                         </TouchableOpacity>
-                                    )})}
+                                    </View>
                                 </View>
+                                )})}
                            </View>
                         </ScrollView>
                     </View>
                 </View>
-                <FooterBase navigation={navigation} page="news_detail"  />
             </Container>
         );
     }

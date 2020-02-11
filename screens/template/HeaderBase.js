@@ -95,7 +95,7 @@ export default class HeaderBase extends Component {
                                             </View>
                                             <Text style={MainStyle.textMenu}>Catalog</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu}>
+                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('SearchScreen')}}>
                                             <View >
                                                 <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cart_b.png')}/>
                                             </View>
@@ -107,7 +107,7 @@ export default class HeaderBase extends Component {
                                             </View>
                                             <Text style={MainStyle.textMenu}>Tin tức</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu}>
+                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('ContactScreen')}}>
                                             <View >
                                                 <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_contact.png')}/>
                                             </View>
@@ -245,6 +245,93 @@ export default class HeaderBase extends Component {
                             </View>
                         );
                         case 'catalog_detail':
+                        return (
+                            <View >
+                                <View style={MainStyle.SliderContainerStyle}>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    <View style={MainStyle.itemHeagerHome}>
+                                        <View style={MainStyle.headerItemCat}>
+                                            <View style={MainStyle.headerHomeLeftCat}>
+                                                <HeaderLeft page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeCenterCat}>
+                                                <HeaderCenter page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeRightCat}>
+                                                <HeaderRight page={page} title={title} navigation={navigation} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        );
+                        case 'contact':
+                        return (
+                            <View >
+                                <View style={MainStyle.SliderContainerStyle}>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    <View style={MainStyle.itemHeagerHome}>
+                                        <View style={MainStyle.headerItemCat}>
+                                            <View style={MainStyle.headerHomeLeftCat}>
+                                                <HeaderLeft page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeCenterCat}>
+                                                <HeaderCenter page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeRightCat}>
+                                                <HeaderRight page={page} title={title} navigation={navigation} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        );
+
+                        case 'search':
+                        return (
+                            <View >
+                                <View style={MainStyle.SliderContainerStyle}>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    <View style={MainStyle.itemHeagerHome}>
+                                        <View style={MainStyle.headerItemCat}>
+                                            <View style={MainStyle.headerHomeLeftCat}>
+                                                <HeaderLeft page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeCenterCat}>
+                                                <HeaderCenter page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeRightCat}>
+                                                <HeaderRight page={page} title={title} navigation={navigation} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        );
+
+                        case 'notifi':
+                        return (
+                            <View >
+                                <View style={MainStyle.SliderContainerStyle}>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    <View style={MainStyle.itemHeagerHome}>
+                                        <View style={MainStyle.headerItemCat}>
+                                            <View style={MainStyle.headerHomeLeftCat}>
+                                                <HeaderLeft page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeCenterCat}>
+                                                <HeaderCenter page={page} title={title} navigation={navigation} />
+                                            </View>
+                                            <View style={MainStyle.headerHomeRightCat}>
+                                                <HeaderRight page={page} title={title} navigation={navigation} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        );
+
+                        case 'member':
                         return (
                             <View >
                                 <View style={MainStyle.SliderContainerStyle}>

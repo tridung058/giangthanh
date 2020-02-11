@@ -26,3 +26,12 @@ export function getCat(level){
     return fetch(url)
     .then(res => res.json());
 };
+
+//get cat
+export function getCatAllMachin(type){
+    let url;
+    url = global.BASE_URL+`/get_cat_all_machin.api?type=${type}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

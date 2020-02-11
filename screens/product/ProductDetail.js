@@ -99,9 +99,9 @@ export default class ProductDetail extends Component{
                 })
             }
     }
-    productDetail(id, cat_id){
-        this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
-    }
+    // productDetail(id, cat_id){
+    //     this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
+    // }
 
 
 	renderLoading  = () => {
@@ -258,7 +258,7 @@ export default class ProductDetail extends Component{
                                 </View>
                                 <View style={MainStyle.showProHot}>
                                     {this.state.other_pro.map((item,i) =>{return(
-                                        <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.productDetail(item.id, item.cat_id)}}>
+                                        <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.makeRemoteRequest(item.id, item.cat_id)}}>
                                             <View>
                                                 <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
                                                 <Text style={MainStyle.namePro}>{item.name}</Text>

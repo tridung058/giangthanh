@@ -22,7 +22,7 @@ export default class FooterBase extends Component {
         const { navigation, page } = this.props;
         return (
             <View style={[MainStyle.tFooter]}>
-                <TouchableOpacity style={MainStyle.tFItem}  onPress={() => this.gotoHomeScreen()}>
+                <TouchableOpacity style={MainStyle.tFItem}  onPress={() => {navigation.navigate('HomeScreen')}}>
                     <View >
                         <Image style={{ width: 20, height: 23 }} source={require('./../../assets/icon_home.png')} />
                         {/* <Icon type="AntDesign" name="home" style={{ color: '#777777', fontSize: 25 }} /> */}
@@ -36,7 +36,7 @@ export default class FooterBase extends Component {
                     </View>
                     <Text style={MainStyle.textFooterBase} >Danh Mục</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { navigation.navigate('MessageTeacherScreen');}}>
+                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { navigation.navigate('SearchScreen');}}>
                     <View >
                     <Image style={{ width: 23, height: 23 ,marginTop:1}} source={require('./../../assets/icon_search.png')} />
                         {/* <Icon type="Ionicons" name="md-search" style={{ color: '#777777', fontSize: 25 }} /> */}
@@ -44,7 +44,7 @@ export default class FooterBase extends Component {
                     <Text style={MainStyle.textFooterBase}>Tìm Kiếm</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { navigation.navigate('CommentTeacherScreen')}}>
+                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { navigation.navigate('NotifiScreen')}}>
                     <View >
                     <Image style={{ width: 20, height: 23 }} source={require('./../../assets/icon_notifi.png')} />
                         {/* <Icon type="Ionicons" name="ios-notifications-outline" style={{ color: '#777777', fontSize: 25 }} /> */}
@@ -52,7 +52,7 @@ export default class FooterBase extends Component {
                     <Text style={MainStyle.textFooterBase}>Thông Báo</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={MainStyle.tFItem} onPress={() => {navigation.navigate('SurveyScreen');}}>
+                <TouchableOpacity style={MainStyle.tFItem} onPress={() => {navigation.navigate('MemberScreen');}}>
                     <View >
                         <Image style={{ width: 23, height: 23 }} source={require('./../../assets/icon_user.png')} />
                         {/* <Icon type="SimpleLineIcons" name="user" style={{ color: '#777777', fontSize: 25 }} /> */}

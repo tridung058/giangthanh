@@ -13,7 +13,7 @@ export function getCatalog(){
 //get detail
 export function getCatalogDetail(id){
     let url;
-    url = global.BASE_URL+`/get_catalog.api?id=${id}`;
+    url = global.BASE_URL+`/get_catalog_detail.api?id=${id}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
@@ -22,7 +22,7 @@ export function getCatalogDetail(id){
 //get list by cat # id
 export function getOtherCatalog(id, cat_id){
     let url;
-    url = global.BASE_URL+`/get_catalog.api?id=${id}&cat_id=${cat_id}`;
+    url = global.BASE_URL+`/get_other_catalog.api?id=${id}&cat_id=${cat_id}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

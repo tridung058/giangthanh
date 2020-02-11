@@ -83,6 +83,29 @@ export default class CatProduct extends Component{
 			this.setState({ loading: false });
 		});
     }
+    getPro(id){
+        getListBySubCat(id, this.state.type)
+        .then(resJSON => {
+            const {list_by_sub_cat, error } = resJSON;
+			if(error == false){
+				this.setState({
+					list_by_sub_cat: list_by_sub_cat, 
+					loading: false, 
+                    refreshing: false ,
+                    allow_more: false,
+				});
+			}else{
+				this.setState({ 
+					loading: false, 
+					allow_more: false
+				});
+			}
+				
+        }).catch(err => {
+			// console.log(err);
+			this.setState({ loading: false });
+		});
+    }
 
     ProductDetail(id){
         this.props.navigation.navigate('ProductDetailScreen',{id:id});
@@ -115,7 +138,7 @@ export default class CatProduct extends Component{
                                     </Text>
                                     <View style={MainStyle.subCatDetail}>
                                             {this.state.list_sub_cat.map((item,i) =>{return(
-                                                <TouchableOpacity key={i} style={MainStyle.itemSubCat}>
+                                                <TouchableOpacity key={i} style={MainStyle.itemSubCat} onPress={()=>this.getPro(item.id)}>
                                                     <View>
                                                         <View style={{backgroundColor:'#eeeeee', borderRadius:10, justifyContent:'center',alignItems:'center'}}>
                                                             <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3), }}  source={{uri:item.image}}/>
@@ -136,7 +159,7 @@ export default class CatProduct extends Component{
                                     {this.state.list_by_sub_cat.map((item,i) =>{return(
                                         <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>this.ProductDetail(item.id)}>
                                             <View>
-                                                <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
+                                                <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)*370/360}}  source={{uri:item.image}}/>
                                                 <Text style={MainStyle.namePro}>{item.name}</Text>
                                                 <Text style={MainStyle.pricePro}>Giá: {item.price}</Text>
                                             </View>

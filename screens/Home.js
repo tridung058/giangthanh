@@ -26,7 +26,8 @@ export default class Home extends React.Component{
             list_cat_in: [],
             list_pro_in: [],
             list_cat_ar: [],
-            list_pro_ar: []
+            list_pro_ar: [],
+            type: 'all'
         }; 
     }
 
@@ -144,12 +145,37 @@ export default class Home extends React.Component{
 			this.setState({ loading: false });
         });
     }
+
+    viewMore(row, rowperpage){
+        getListAr(cat_id_ar)
+        .then(resJSON => {
+			const {list_pro_ar, error} = resJSON;
+			if(error == false){	
+				this.setState({
+                    cat_id_ar:cat_id_ar,
+					list_pro_ar: list_pro_ar, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
     
     goCatDetail(id, name){
         this.props.navigation.navigate('CatProductScreen',{id:id, name:name});
     }
     productDetail(id, cat_id){
         this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
+    }
+    viewMoreProHot(){
+        let type = this.state.type;
+        this.props.navigation.navigate('ProductHotScreen',{type: type});
+    }
+    viewMoreCatMachin(){
+        let type = this.state.type;
+        this.props.navigation.navigate('CatMachinScreen',{type: type});
     }
 
     renderLoading  = () => {
@@ -172,7 +198,7 @@ export default class Home extends React.Component{
                             <View style={MainStyle.bgProHot}>
                                 <Text style={MainStyle.textProHot}>Sản phẩm nổi bật</Text>
                                 <Image style={{ width: screenWidth, height:(screenWidth*90/750)}} source={require('./../assets/bg_cat.png')}/>
-                                <TouchableOpacity style={MainStyle.viewMoreProHot}>
+                                <TouchableOpacity style={MainStyle.viewMoreProHot} onPress={()=>{this.viewMoreProHot()}}>
                                     <Text style={MainStyle.textVm}>Xem thêm</Text>
                                 </TouchableOpacity>
                             </View>
@@ -193,7 +219,7 @@ export default class Home extends React.Component{
                             <View style={MainStyle.bgProHot}>
                                 <Text style={MainStyle.textProHot}>Danh mục máy</Text>
                                 <Image style={{ width: screenWidth, height:(screenWidth*90/750)}} source={require('./../assets/bg_cat.png')}/>
-                                <TouchableOpacity style={MainStyle.viewMoreProHot}>
+                                <TouchableOpacity style={MainStyle.viewMoreProHot} onPress={()=>{this.viewMoreCatMachin()}}>
                                     <Text style={MainStyle.textVm}>Xem thêm</Text>
                                 </TouchableOpacity>
                             </View>
@@ -219,7 +245,7 @@ export default class Home extends React.Component{
                                         <View style={this.state.cat_id == 'all'?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
                                             <Text style={ this.state.cat_id == 'all'?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>Tất cả</Text>
                                         </View>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity >
                                     {this.state.list_cat_in.map((item,i) =>{return(
                                         <TouchableOpacity key={i} style={MainStyle.catLevel} onPress={() =>(this.proByIndustry(item.id)) }>
                                             <View style={this.state.cat_id == item.id?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
@@ -231,7 +257,7 @@ export default class Home extends React.Component{
                             </View>
                             <View style={[MainStyle.showProHot]}>
                                 {this.state.list_pro_in.map((item,i) =>{return(
-                                    <TouchableOpacity key={i} style={MainStyle.itemProHot}>
+                                    <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>this.productDetail(item.id, item.cat_id)}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
                                             <Text style={MainStyle.namePro}>{item.name}</Text>
@@ -241,14 +267,14 @@ export default class Home extends React.Component{
                                 )})}
                             </View>
                             <View>
-                                <TouchableOpacity style={MainStyle.moreCatMcTeach}>
+                                <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
                                         <Text style={MainStyle.textMoreCatMcTeach}>
                                             Xem thêm 30 sản phẩm 
                                             <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
                                         </Text>
                                     </View>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                         {/* DANH MỤC MÁY MAY CÔNG NGHIỆP */}
@@ -274,7 +300,7 @@ export default class Home extends React.Component{
                             </View>
                             <View style={[MainStyle.showProHot]}>
                                 {this.state.list_pro_in.map((item,i) =>{return(
-                                    <TouchableOpacity key={i} style={MainStyle.itemProHot}>
+                                    <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>this.productDetail(item.id, item.cat_id)}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
                                             <Text style={MainStyle.namePro}>{item.name}</Text>
@@ -284,14 +310,14 @@ export default class Home extends React.Component{
                                 )})}
                             </View>
                             <View>
-                                <TouchableOpacity style={MainStyle.moreCatMcTeach}>
+                                <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
                                         <Text style={MainStyle.textMoreCatMcTeach}>
                                             Xem thêm 30 sản phẩm 
                                             <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
                                         </Text>
                                     </View>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                         {/* PHỤ TÙNG*/}
@@ -317,7 +343,7 @@ export default class Home extends React.Component{
                             </View>
                             <View style={[MainStyle.showProHot]}>
                                 {this.state.list_pro_ar.map((item,i) =>{return(
-                                    <TouchableOpacity key={i} style={MainStyle.itemProHot}>
+                                    <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>this.productDetail(item.id, item.cat_id)}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
                                             <Text style={MainStyle.namePro}>{item.name}</Text>
@@ -327,14 +353,14 @@ export default class Home extends React.Component{
                                 )})}
                             </View>
                             <View>
-                                <TouchableOpacity style={MainStyle.moreCatMcTeach}>
+                                <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
                                         <Text style={MainStyle.textMoreCatMcTeach}>
                                             Xem thêm 30 sản phẩm 
                                             <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
                                         </Text>
                                     </View>
-                                </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                         {/* MUA BÁN*/}
@@ -343,7 +369,7 @@ export default class Home extends React.Component{
                                 <Text style={MainStyle.textProHot}>Mua bán quần áo, vải, phụ liệu</Text>
                             </View>
                             <View style={[MainStyle.showPurchase]}>
-                                <TouchableOpacity style={MainStyle.itemPurchase}>
+                                {/* <TouchableOpacity style={MainStyle.itemPurchase}>
                                     <View>
                                         <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/5.png')}/>
                                         <Text style={MainStyle.namePurchase}>Mua bán quần áo</Text>
@@ -360,7 +386,26 @@ export default class Home extends React.Component{
                                         <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/7.png')}/>
                                         <Text style={MainStyle.namePurchase}>Phụ liệu</Text>
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
+
+                                <View style={MainStyle.itemPurchase}>
+                                    <View>
+                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/5.png')}/>
+                                        <Text style={MainStyle.namePurchase}>Mua bán quần áo</Text>
+                                    </View>
+                                </View>
+                                <View style={MainStyle.itemPurchase}>
+                                    <View>
+                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/6.png')}/>
+                                        <Text style={MainStyle.namePurchase}>Vải vóc</Text>
+                                    </View>
+                                </View>
+                                <View style={MainStyle.itemPurchase}>
+                                    <View>
+                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/7.png')}/>
+                                        <Text style={MainStyle.namePurchase}>Phụ liệu</Text>
+                                    </View>
+                                </View>
                             </View>
                         </View>
                         {/* DỊCH VỤ*/}
@@ -369,7 +414,7 @@ export default class Home extends React.Component{
                                 <Text style={MainStyle.textProHot}>Dịch vụ ngành may</Text>
                             </View>
                             <View style={[MainStyle.showPurchase]}>
-                                <TouchableOpacity style={MainStyle.itemPurchase}>
+                                {/* <TouchableOpacity style={MainStyle.itemPurchase}>
                                     <View>
                                         <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/8.png')}/>
                                         <Text style={MainStyle.namePurchase}>Sửa chữa</Text>
@@ -386,7 +431,26 @@ export default class Home extends React.Component{
                                         <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/10.png')}/>
                                         <Text style={MainStyle.namePurchase}>Bảo trì</Text>
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
+
+                                <View style={MainStyle.itemPurchase}>
+                                    <View>
+                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/8.png')}/>
+                                        <Text style={MainStyle.namePurchase}>Sửa chữa</Text>
+                                    </View>
+                                </View>
+                                <View style={MainStyle.itemPurchase}>
+                                    <View>
+                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/9.png')}/>
+                                        <Text style={MainStyle.namePurchase}>Lắp đặt</Text>
+                                    </View>
+                                </View>
+                                <View style={MainStyle.itemPurchase}>
+                                    <View>
+                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/10.png')}/>
+                                        <Text style={MainStyle.namePurchase}>Bảo trì</Text>
+                                    </View>
+                                </View>
                             </View>
                         </View>
                     </ScrollView>
