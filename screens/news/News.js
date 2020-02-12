@@ -177,7 +177,7 @@ export default class News extends Component{
                                    )})}
                                 </ScrollView>
                                 </View>
-                                <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
+                                <View style={{width: screenWidth-20,marginLeft:10, marginTop:10, marginBottom:20}}>
                                 {this.state.list_type3.map((item,i) =>{return(
                                     <TouchableOpacity key={i} style={{marginBottom:20}} onPress={()=>this.newDetail(item.id)}>
                                         <View style={{position:'relative'}}>

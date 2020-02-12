@@ -150,7 +150,7 @@ export default class Contact extends Component{
                 <HeaderBase page="contact" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={{width:screenWidth-20,marginLeft:10, marginTop:20}}>
                                     <Text style={{fontFamily:'RobotoBold', fontSize:20, textTransform:'uppercase'}}>Thông tin liên hệ</Text>
@@ -184,13 +184,13 @@ export default class Contact extends Component{
                                         <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60, marginTop:10 }}  onChangeText={(content) => this.setState({ content })} value={this.state.content}
                                             placeholder="Nội dung liên hệ" multiline={true} 
                                         />
-                                        <View style={{flexDirection:'row',position:'relative'}}>
+                                        <View style={{flexDirection:'row',position:'relative', paddingBottom:50}}>
                                             <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10, width:(screenWidth-20)/2.5 }}  onChangeText={(re_code) => this.setState({ re_code })} value={this.state.re_code}
                                                 placeholder="Nhập mã bảo mật*" multiline={false} 
                                             />
                                             <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10,width:(screenWidth-20)/7,marginLeft:5,marginRight:5 }}editable = {false} value={this.state.code}
                                             />
-                                            <View style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10, position:'absolute', right:0, paddingTop:10, paddingBottom:20}}>
+                                            <View style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10, position:'absolute', right:0, paddingTop:10, paddingBottom:10, marginBottom:40}}>
                                                <TouchableOpacity onPress={()=>this.sendContact()}>
                                                     <Text style={{fontFamily:'RobotoBold', color:'#ffffff'}}>Gửi liên hệ</Text>
                                                 </TouchableOpacity>

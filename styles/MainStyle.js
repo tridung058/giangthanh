@@ -138,15 +138,19 @@ export default {
     menu:{
         flexDirection:'row',
         alignItems:'center',
-        paddingLeft:20,
         marginTop:20,
+        width:screenWidth-40,
+        justifyContent:'center',
+        alignItems:'center',
+        marginLeft:20
+        
     },
     itemTouchMenu:{
         width:(screenWidth-90)/5,
-        marginLeft:5,
-        marginRight:5,
         justifyContent:'center',
         alignItems:'center',
+        marginLeft:5,
+        marginRight:5
     },
     logoMenu:{
         width:(width-40)/7,
@@ -199,6 +203,7 @@ export default {
         flexDirection:'row',
         flexWrap:'wrap',
         alignItems:'center',
+        marginBottom:30
     },
     itemProHot:{
         width:(screenWidth-60)/3,
@@ -501,6 +506,7 @@ export default {
         flexDirection:'row',
         flexWrap:'wrap',
         alignItems:'center',
+        marginBottom:40
         
     },
     itemsubCatalog:{
