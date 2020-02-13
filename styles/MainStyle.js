@@ -1,4 +1,5 @@
 import { StyleSheet, PixelRatio, Dimensions, Platform, StatusBar } from 'react-native';
+import Constants from 'expo-constants';
 
 const {width, height} = Dimensions.get('window');
 const  screenWidth = Dimensions.get('window').width;
@@ -7,7 +8,6 @@ const diffHeight = (Platform.OS === 'android') ? 25 : 35;
 
 const footerHeight = 65;
 
-import Constants from 'expo-constants';
 const barHeight = Constants.statusBarHeight;
 
 export default { 
@@ -15,6 +15,7 @@ export default {
         flexDirection:'row',
         width:width,
         height:width*431/750,
+        paddingTop:barHeight-20,
     },
     itemHeagerHome:{
         position:'absolute',
@@ -24,13 +25,15 @@ export default {
         flexDirection:'row',
         width:width,
         height:width/6,
-        overflow:'hidden'
+        overflow:'hidden',
+        marginTop:barHeight
     },
     headerItemCat:{
         flexDirection:'row',
         width:width,
         height:width/5,
         overflow:'hidden',
+        paddingTop:10
     },
     goBack:{
         position:'relative'
@@ -138,7 +141,6 @@ export default {
     menu:{
         flexDirection:'row',
         alignItems:'center',
-        marginTop:20,
         width:screenWidth-40,
         justifyContent:'center',
         alignItems:'center',
@@ -158,7 +160,7 @@ export default {
     },
     textMenu:{
         paddingTop:5,
-        fontSize:14,
+        fontSize:12,
         color:'#333333',
         textAlign:'center',
         alignItems:'center',
@@ -240,7 +242,7 @@ export default {
     },
     nameCat:{
         fontFamily:'Roboto',
-        fontSize:14,
+        fontSize:13,
         paddingTop:5,
         color:'#333333',
         height:40
@@ -325,7 +327,8 @@ export default {
     bgHeaderCategory:{
         flexDirection:'row',
         width:width,
-        height:width*136/750,
+        height:width*136/750+10,
+        paddingTop:barHeight-20
     },
     subCat:{
         width:width,

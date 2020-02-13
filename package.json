@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/viewpager": "^3.3.0",
     "expo": "~36.0.0",
+    "expo-constants": "~8.0.0",
     "expo-file-system": "~8.0.0",
     "expo-media-library": "~8.0.0",
     "native-base": "^2.13.8",

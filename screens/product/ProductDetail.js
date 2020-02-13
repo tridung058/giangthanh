@@ -222,7 +222,7 @@ export default class ProductDetail extends Component{
                                     <View>
                                         <View style={MainStyle.textComment}>
                                             <View style={{width:(screenWidth-20)/4, borderBottomColor:'#eb1a20', borderBottomWidth:1}}>
-                                                <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', fontSize:18}}>BÌNH LUẬN</Text>
+                                                <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', fontSize:17}}>BÌNH LUẬN</Text>
                                             </View>
                                             <View style={{width:(screenWidth-20)*3/4, borderBottomColor:'#dddddd', borderBottomWidth:1}}>
                                                 

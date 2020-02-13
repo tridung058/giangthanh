@@ -80,7 +80,7 @@ export default class ProductHot extends Component{
                 <HeaderBase page="cat" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={MainStyle.subCat}>
                                     <View style={MainStyle.showProHot}>
