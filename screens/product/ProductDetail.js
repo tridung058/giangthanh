@@ -266,7 +266,7 @@ export default class ProductDetail extends Component{
                                             </View>
                                         </TouchableOpacity>
                                     )})}
-                                </View>
+                            </View>
                            </View>
                         </ScrollView>
                     </View>
