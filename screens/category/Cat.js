@@ -81,15 +81,15 @@ export default class Cat extends Component{
                 <HeaderBase page="cat" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:140}}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={MainStyle.subCat}>
                                     <View style={MainStyle.subCatDetail}>
                                         {this.state.list_cat.map((item,i) =>{return(
                                             <TouchableOpacity key={i} style={MainStyle.itemSubCat} onPress={()=>(this.goCatDetail(item.id, item.name))}>
                                                 <View>
-                                                    <View style={{backgroundColor:'#eeeeee', borderRadius:10, justifyContent:'center',alignItems:'center'}}>
-                                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3), }}  source={{uri:item.image}}/>
+                                                    <View style={{ justifyContent:'center',alignItems:'center'}}>
+                                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3),borderRadius:10 }}  source={{uri:item.image}}/>
                                                     </View>
                                                     <Text style={MainStyle.nameItem}>{item.name}</Text>
                                                 </View>

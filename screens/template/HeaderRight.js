@@ -24,14 +24,14 @@ export default class HeaderRight extends Component{
             return (
                 <View style={MainStyle.leftProductDetail}>
                         
-                    <Icon type="Ionicons" name="md-search" style={{ color: '#ffffff',fontSize:30, paddingRight:10 }} />
+                    {/* <Icon type="Ionicons" name="md-search" style={{ color: '#ffffff',fontSize:30, paddingRight:10 }} />
                 
                     <Icon type="Feather" name="share-2" style={{ color: '#ffffff', fontSize:30, paddingRight:10 }} />
                 
                 
                     <Image style={MainStyle.icon_cart_pro} source={require('./../../assets/icon_cart.png')}/>
                 
-                    <Icon type="Entypo" name="dots-three-horizontal" style={{ color: '#ffffff', fontSize:30,paddingLeft:15, paddingRight:10 }} />
+                    <Icon type="Entypo" name="dots-three-horizontal" style={{ color: '#ffffff', fontSize:30,paddingLeft:15, paddingRight:10 }} /> */}
                 </View>
             )
         }else{

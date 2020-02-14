@@ -144,7 +144,7 @@ export default {
         width:screenWidth-40,
         justifyContent:'center',
         alignItems:'center',
-        marginLeft:20
+        marginLeft:20,
         
     },
     itemTouchMenu:{
@@ -171,7 +171,7 @@ export default {
         marginBottom:(screenWidth/3)+105+(screenWidth-40)/7,
     },
     proHot:{
-
+        marginTop:20
     },
     bgProHot:{
        position:'relative',
@@ -331,7 +331,7 @@ export default {
         paddingTop:barHeight-20
     },
     subCat:{
-        width:width,
+        width:screenWidth,
     },
     subCatDetail:{
         marginTop:10,
@@ -344,13 +344,13 @@ export default {
         width:(screenWidth-120)/3,
         marginLeft:20,
         marginRight:20,
-        marginBottom:10
+        marginBottom:5
     },
     nameItem:{
         fontFamily:'Roboto',
         color:'#777777',
-        height:40,
-        paddingTop:5
+        height:60,
+        paddingTop:5,
     },
     list_type2:{
         marginRight:10

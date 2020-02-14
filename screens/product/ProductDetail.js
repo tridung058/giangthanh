@@ -154,7 +154,7 @@ export default class ProductDetail extends Component{
 
                                     <View style={MainStyle.addCart}>
                                         <View style={MainStyle.bgAddCart}>
-                                            <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
+                                            {/* <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} /> */}
                                             <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>
                                         </View>
                                     </View>
@@ -273,7 +273,7 @@ export default class ProductDetail extends Component{
                 </View>
                 <View style={MainStyle.add_cart}>
                     <View style={MainStyle.bgAddCart}>
-                        <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
+                        {/* <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} /> */}
                         <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>
                     </View>
                 </View>
