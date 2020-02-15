@@ -551,10 +551,41 @@ export default {
     contact:{
         marginTop:10
     },
+
+
+    //modal
     titleInfoCt:{
         fontFamily:'RobotoBold',
         fontSize:15,
         paddingTop:10,
         lineHeight:25
+    },
+    tContainerModal:{
+        flex:1,
+        backgroundColor: 'rgba(52, 52, 52, 0.6)',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    pBtnModal: {
+        paddingTop: 12,
+        paddingBottom: 12,
+        backgroundColor: '#8cc63f',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+    },
+    pBtnModalText:{
+        textAlign: 'center',
+        fontFamily: 'RobotoBold',
+        color: '#fff',
+        fontSize: 18,
+    },
+    pModalBody:{   
+        backgroundColor:'#fff',
+        width: screenWidth-40,
+        overflow: 'hidden',
+        padding: 0,
+        borderTopColor: '#25bdf1',
+        borderRadius: 20,
     }
 }

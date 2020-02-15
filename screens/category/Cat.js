@@ -88,7 +88,7 @@ export default class Cat extends Component{
                                         {this.state.list_cat.map((item,i) =>{return(
                                             <TouchableOpacity key={i} style={MainStyle.itemSubCat} onPress={()=>(this.goCatDetail(item.id, item.name))}>
                                                 <View>
-                                                    <View style={{backgroundColor:'#eeeeee', borderRadius:10, justifyContent:'center',alignItems:'center'}}>
+                                                    <View style={{ justifyContent:'center',alignItems:'center', backgroundColor:'#eeeeee', borderRadius:10}}>
                                                         <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3), }}  source={{uri:item.image}}/>
                                                     </View>
                                                     <Text style={MainStyle.nameItem}>{item.name}</Text>

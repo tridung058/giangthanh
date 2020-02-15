@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, TextInput, Modal, TouchableHighlight } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -24,7 +24,8 @@ export default class ProductDetail extends Component{
             product_detail: {},
             other_pro: [],
             change_des: '1',
-            comment: ''
+            comment: '',
+            modalVisible:false
         
         }
     }
@@ -103,7 +104,11 @@ export default class ProductDetail extends Component{
     //     this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
     // }
 
-
+    setModalVisible(visible){
+        this.setState({
+            modalVisible:visible
+        })
+    }
 	renderLoading  = () => {
         if (!this.state.loading) return null;
 
@@ -152,12 +157,12 @@ export default class ProductDetail extends Component{
                                         </View>
                                     </View>
 
-                                    <View style={MainStyle.addCart}>
+                                    {/* <View style={MainStyle.addCart}>
                                         <View style={MainStyle.bgAddCart}>
                                             <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
                                             <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>
                                         </View>
-                                    </View>
+                                    </View> */}
 
                                     <View style={MainStyle.contact}>
                                         <View style={MainStyle.detailContact}>
@@ -271,12 +276,39 @@ export default class ProductDetail extends Component{
                         </ScrollView>
                     </View>
                 </View>
-                <View style={MainStyle.add_cart}>
-                    <View style={MainStyle.bgAddCart}>
-                        <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
-                        <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>
+                {/* <View style={MainStyle.add_cart}>
+                    <TouchableOpacity onPress={()=>this.setModalVisible(true)}>
+                        <View style={MainStyle.bgAddCart}>
+                            <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
+                            <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View> */}
+
+                {/* <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                }}>
+                <View style={MainStyle.tContainerModal}>
+                        <View style={[MainStyle.pModalBody]}>
+                        <View style={{ paddingTop: 10, backgroundColor: "#8cc63f", borderTopLeftRadius: 25, borderTopRightRadius:25, marrginTop:15 }}></View>
+                            <View style={MainStyle.pModalContent}>
+                                <ScrollView>
+                                <View>
+                                        <Text>Wellcome</Text>
+                                </View>
+                                </ScrollView>
+                            </View>
+                            <TouchableHighlight style={[MainStyle.tBtnModal],[MainStyle.pBtnModal]}
+                                onPress={()=>this.setModalVisible(!this.state.modalVisible)}>
+                                <Text style={[MainStyle.tBtnModalText],[MainStyle.pBtnModalText]} >OK</Text>
+                            </TouchableHighlight>
+                        </View>
                     </View>
-                </View>
+                </Modal> */}
             </Container>
         );
     }

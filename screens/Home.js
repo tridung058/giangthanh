@@ -266,7 +266,7 @@ export default class Home extends React.Component{
                                     </TouchableOpacity>
                                 )})}
                             </View>
-                            <View>
+                            {/* <View>
                                 <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
                                         <Text style={MainStyle.textMoreCatMcTeach}>
@@ -275,7 +275,7 @@ export default class Home extends React.Component{
                                         </Text>
                                     </View>
                                 </View>
-                            </View>
+                            </View> */}
                         </View>
                         {/* DANH MỤC MÁY MAY CÔNG NGHIỆP */}
                         <View style={MainStyle.sewingMcIn}>
@@ -309,7 +309,7 @@ export default class Home extends React.Component{
                                     </TouchableOpacity>
                                 )})}
                             </View>
-                            <View>
+                            {/* <View>
                                 <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
                                         <Text style={MainStyle.textMoreCatMcTeach}>
@@ -318,7 +318,7 @@ export default class Home extends React.Component{
                                         </Text>
                                     </View>
                                 </View>
-                            </View>
+                            </View> */}
                         </View>
                         {/* PHỤ TÙNG*/}
                         <View style={MainStyle.accessary}>
@@ -352,7 +352,7 @@ export default class Home extends React.Component{
                                     </TouchableOpacity>
                                 )})}
                             </View>
-                            <View>
+                            {/* <View>
                                 <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
                                         <Text style={MainStyle.textMoreCatMcTeach}>
@@ -361,7 +361,7 @@ export default class Home extends React.Component{
                                         </Text>
                                     </View>
                                 </View>
-                            </View>
+                            </View> */}
                         </View>
                         {/* MUA BÁN*/}
                         <View style={MainStyle.purchase}>
