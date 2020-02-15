@@ -151,7 +151,6 @@ export default class CatProduct extends Component{
                                 </View>
                            </View>
 
-
                            <View style={{marginBottom:120}}>
                                 <View style={MainStyle.bgSewing}>
                                     <Text style={MainStyle.textProHot}>Tất cả sản phẩm</Text>
