@@ -161,7 +161,7 @@ export default class CatalogDetail extends Component{
                                 </View>
                                 <View style={MainStyle.textCatalog}>
                                     <View style={{width:(screenWidth-20)/2, borderBottomColor:'#eb1a20', borderBottomWidth:1}}>
-                                        <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', fontSize:18}}>CATALOG CÙNG HÃNG</Text>
+                                        <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', fontSize:17}}>CATALOG CÙNG HÃNG</Text>
                                     </View>
                                     <View style={{width:(screenWidth-20)/2, borderBottomColor:'#dddddd', borderBottomWidth:1}}>
                                         

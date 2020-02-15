@@ -27,8 +27,8 @@ export default class HeaderCenter extends Component{
             }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'news' || this.props.page == 'news_detail' || this.props.page == 'catalog' || this.props.page == 'catalog_detail'|| this.props.page == 'search'|| this.props.page == 'notifi'|| this.props.page == 'member')){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
-                        <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 7, left: 20,zIndex:2 }} />
-                        <TextInput style={{ height: 40, backgroundColor:'#ffffff', width:ScreenWidth - 40 -(ScreenWidth/4), borderRadius:3, fontFamily:'Roboto', paddingLeft:35 }} placeholderTextColor='#000000' placeholder={'Nhập mã hoặc tên sản phẩm'} />
+                        <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 5, left: 20,zIndex:2 }} />
+                        <TextInput style={{ height: 35, backgroundColor:'#ffffff', width:ScreenWidth - 40 -(ScreenWidth/4), borderRadius:3, fontFamily:'Roboto', paddingLeft:35 }} placeholderTextColor='#000000' placeholder={'Nhập mã hoặc tên sản phẩm'} />
                     </View>
                 )
             } else if(this.props.page && (this.props.page == 'product_detail')){
