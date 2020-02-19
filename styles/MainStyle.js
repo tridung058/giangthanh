@@ -205,7 +205,7 @@ export default {
         flexDirection:'row',
         flexWrap:'wrap',
         alignItems:'center',
-        marginBottom:30
+        marginBottom:150
     },
     itemProHot:{
         width:(screenWidth-60)/3,
@@ -590,5 +590,15 @@ export default {
         padding: 0,
         borderTopColor: '#25bdf1',
         borderRadius: 20,
+    },
+    nameItemNoImage:{
+        fontFamily:'Roboto',
+        color:'#ffffff',
+        height:60,
+        backgroundColor:'#ce1e1e',
+        padding:5,
+        fontFamily:'RobotoBold',
+        textTransform:'uppercase',
+        fontSize:12
     }
 }

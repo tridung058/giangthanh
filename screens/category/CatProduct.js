@@ -139,12 +139,18 @@ export default class CatProduct extends Component{
                                     <View style={MainStyle.subCatDetail}>
                                             {this.state.list_sub_cat.map((item,i) =>{return(
                                                 <TouchableOpacity key={i} style={MainStyle.itemSubCat} onPress={()=>this.getPro(item.id)}>
-                                                    <View>
-                                                        <View style={{justifyContent:'center',alignItems:'center', backgroundColor:'#eeeeee', borderRadius:10}}>
-                                                            <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3),borderRadius:10 }}  source={{uri:item.image}}/>
+                                                    { item.type !== '2'?
+                                                        <View>
+                                                            <View style={{justifyContent:'center',alignItems:'center', backgroundColor:'#eeeeee', borderRadius:10}}>
+                                                                <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3),borderRadius:10 }}  source={{uri:item.image}}/>
+                                                            </View>
+                                                            <Text style={MainStyle.nameItem}>{item.name}</Text>
+                                                        </View>:
+                                                        <View>
+                                                            <Text style={MainStyle.nameItemNoImage}>{item.name}</Text>
                                                         </View>
-                                                        <Text style={MainStyle.nameItem}>{item.name}</Text>
-                                                    </View>
+                                                     }
+                                                    
                                                 </TouchableOpacity>
                                             )})}
                                     </View>
