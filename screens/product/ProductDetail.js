@@ -296,8 +296,13 @@ export default class ProductDetail extends Component{
                                                 
                                             </View>
                                         </View>
-                                        <View style={MainStyle.formComment}>
+
+                                        {/* <View style={MainStyle.formComment}>
                                             <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60 }}  onChangeText={(comment) => this.setState({ comment })} value={this.state.comment}
+
+                                        <View style={MainStyle.formComment}>
+                                            <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60 }}  onChangeText={(comment) => this.setState({ comment })}
+
                                                 placeholder="Viết bình luận" multiline={true} 
                                             />
                                             <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(name) => this.setState({ name })} value={this.state.name}
@@ -318,7 +323,7 @@ export default class ProductDetail extends Component{
                                                     </View>
                                                 </TouchableOpacity>
                                             </View>
-                                        </View>
+                                        </View>  */}
                                     </View>
                                 </View>
                            </View>

@@ -34,14 +34,15 @@ export default class HeaderRight extends Component{
                     <Icon type="Entypo" name="dots-three-horizontal" style={{ color: '#ffffff', fontSize:30,paddingLeft:15, paddingRight:10 }} /> */}
                 </View>
             )
-        }else{
-            return (
-                    <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
-                //  <TouchableOpacity onPress={() => this.onLogout()}>
-                //     <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
-                // </TouchableOpacity>
-            )
         }
+        // else{
+        //     return (
+        //             <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
+        //         //  <TouchableOpacity onPress={() => this.onLogout()}>
+        //         //     <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
+        //         // </TouchableOpacity>
+        //     )
+        // }
         
     }
 
