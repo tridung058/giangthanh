@@ -84,8 +84,11 @@ export default class Search extends Component{
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={MainStyle.subCat}>
-                                    <View style={MainStyle.subCatDetail}>
-                                       <Text style={{paddingLeft:20}}>Tính năng đang phát triển, Vui lòng quay lại sau</Text>
+                                    <View style={{paddingTop:10, justifyContent:'center'}}>
+                                       <Text style={{paddingLeft:20, fontFamily:'Roboto', fontSize:16}}>Máy may công nghệ</Text>
+                                       <Text style={{paddingLeft:20,fontFamily:'Roboto', fontSize:18}}>Máy may công nghiệp</Text>
+                                       <Text style={{paddingLeft:20,fontFamily:'Roboto', fontSize:18}}>Thiết bị chuyên dụng</Text>
+                                       <Text style={{paddingLeft:20,fontFamily:'Roboto', fontSize:18}}>Phụ tùng</Text>
                                     </View>
                                 </View>
                            </View>

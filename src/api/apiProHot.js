@@ -83,3 +83,13 @@ export function getProductHot(type){
     return fetch(url)
     .then(res => res.json());
 };
+
+//search
+
+export function getSearchProducts(page, search){
+    let url;
+    url = global.BASE_URL+`/get_search_products.api?page=${page}&search=${search}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

@@ -118,12 +118,10 @@ export default class HeaderBase extends Component {
                                         onChangeText={search => this.setSearch(search)}
                                         value={this.state.search}
                                         placeholder={'Vui lòng nhập mã hoặc tên sản phẩm'} />
-
-                                        
                                     </View>
                                     <View >
                                         { this.state.count > 0 ? 
-                                            <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight-(ScreenHeight/3.7),width: ScreenWidth,marginTop:20 }}
+                                            <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight-(ScreenHeight/3.7),width: ScreenWidth,marginTop:10 }}
                                                 data={this.state.list_search}
                                                 renderItem={({ item }) => (
                                                     <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>

@@ -31,7 +31,7 @@ export default {
     headerItemCat:{
         flexDirection:'row',
         width:width,
-        height:width/5,
+        //height:width/5,
         overflow:'hidden',
         paddingTop:10
     },
@@ -430,7 +430,8 @@ export default {
         borderColor:'#dddddd',
         height:30,
         width:50,
-        paddingLeft:5
+        paddingLeft:5,
+        textAlign:'center'
     },
     addCart:{
         paddingTop:20,
@@ -565,30 +566,46 @@ export default {
     },
     tContainerModal:{
         flex:1,
-        backgroundColor: 'rgba(52, 52, 52, 0.6)',
-        flexDirection: 'row',
+        backgroundColor: 'rgba(0,0,0, 0.6)',
+        flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
     },
     pBtnModal: {
         paddingTop: 12,
         paddingBottom: 12,
-        backgroundColor: '#8cc63f',
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
+        backgroundColor: '#ffffff',
+        position:'absolute',
+        right: 0
     },
     pBtnModalText:{
         textAlign: 'center',
         fontFamily: 'RobotoBold',
-        color: '#fff',
         fontSize: 18,
     },
     pModalBody:{   
         backgroundColor:'#fff',
-        width: screenWidth-40,
+        width: screenWidth,
         overflow: 'hidden',
         padding: 0,
-        borderTopColor: '#25bdf1',
-        borderRadius: 20,
-    }
+        borderTopLeftRadius:20,
+        borderTopRightRadius:20,
+        position:'relative',
+        zIndex:999
+    },
+    view_cart:{
+        height: 60,
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    bgViewCart:{
+        flexDirection:'row', 
+        backgroundColor:'#ce1e1e',
+        width:screenWidth-20,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingBottom:10,
+        
+    },
 }

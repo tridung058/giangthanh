@@ -84,8 +84,9 @@ export default class Notifi extends Component{
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={MainStyle.subCat}>
-                                    <View style={MainStyle.subCatDetail}>
-                                       <Text style={{paddingLeft:20}}>Tính năng đang phát triển, Vui lòng quay lại sau</Text>
+                                    <View style={{justifyContent:'center', alignItems:'center'}}>
+                                        <Text style={{paddingTop:10}}>Đang update</Text>
+                                        <Image style={{width:screenWidth*(3/4),height:screenWidth*(3/4)}} source={require('./../../assets/notify.jpg')}/>
                                     </View>
                                 </View>
                            </View>
