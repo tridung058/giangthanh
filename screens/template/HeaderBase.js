@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { 
-    Text, View, Image, Dimensions , Alert, TextInput
+    Text, View, Image, Dimensions , Alert, TextInput, FlatList
 } from 'react-native';
 import { Container, Icon, CheckBox } from "native-base";
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,10 +12,11 @@ import HeaderRight from './HeaderRight';
 import HeaderCenter from './HeaderCenter';
 import HeaderLeft from './HeaderLeft';
 
-import {getBgHome} from './../../src/api/apiProHot';
+import {getBgHome, getSearchProducts} from './../../src/api/apiProHot';
 //import getStorage from './../api/getStorage';
 
 let ScreenWidth = Dimensions.get("window").width;
+let ScreenHeight = Dimensions.get("window").height;
 
 export default class HeaderBase extends Component {
     constructor(props) {
@@ -23,7 +24,10 @@ export default class HeaderBase extends Component {
 
         this.state = {
            loading:true,
-           list: []
+           list: [],
+           list_search: [],
+           search: '',
+           page: 1
         }
 
     }
@@ -48,6 +52,44 @@ export default class HeaderBase extends Component {
         }).catch(err => {
 			this.setState({ loading: false });
         });
+    
+    }
+
+    search(){
+        //search
+        getSearchProducts(this.state.page, this.state.search)
+        .then(resJSON => {
+            const { list_search,count, error} = resJSON;
+            if (error == false) {
+                this.setState({
+                    list_search: list_search,
+                    refreshing: false,
+                    loading: false,
+                    count: count,
+                });
+            
+            }else{
+                this.setState({
+                    count: 0,
+                });
+            }
+        }).catch(err => {
+            // this.setState({ loaded: true });  
+    });
+    }
+    
+    setSearch=(value)=>{
+        var search = value.toString();
+        this.setState(
+          {
+            "search": search,
+            "page": 1,
+          },
+          () => {
+            // here is our callback that will be fired after state change.
+            this.search();
+          }
+        );
     }
 
     render() {
@@ -72,9 +114,28 @@ export default class HeaderBase extends Component {
                                     </View>
                                     <View style={MainStyle.searchBox}>
                                         <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 8, left: 30,zIndex:2 }} />
-                                        <TextInput style={{ height: 40, backgroundColor:'#ffffff', width:ScreenWidth - 40, borderRadius:3, fontFamily:'Roboto', paddingLeft:35 }} placeholderTextColor='#000000' placeholder={'Vui lòng nhập mã hoặc tên sản phẩm'} />
+                                        <TextInput style={{ height: 40, backgroundColor:'#ffffff', width:ScreenWidth - 40, borderRadius:3, fontFamily:'Roboto', paddingLeft:35 }} placeholderTextColor='#000000'
+                                        onChangeText={search => this.setSearch(search)}
+                                        value={this.state.search}
+                                        placeholder={'Vui lòng nhập mã hoặc tên sản phẩm'} />
+
+                                        
                                     </View>
-                                
+                                    <View >
+                                        { this.state.count > 0 ? 
+                                            <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight-(ScreenHeight/3.7),width: ScreenWidth,marginTop:20 }}
+                                                data={this.state.list_search}
+                                                renderItem={({ item }) => (
+                                                    <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                                        <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                                    </View>
+                                                )}
+                                                // numColumns={6}
+                                            />
+                                            :
+                                            null
+                                        }
+                                    </View>
                                     <View style={MainStyle.slideBg}>
                                         <Swiper autoplay={true}>
                                             {this.state.list.map((item, i) =>{ return(
