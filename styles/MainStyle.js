@@ -328,7 +328,9 @@ export default {
         flexDirection:'row',
         width:width,
         height:width*136/750+10,
-        paddingTop:barHeight-20
+        paddingTop:barHeight-20,
+        position:'absolute',
+        zIndex:999
     },
     subCat:{
         width:screenWidth,
@@ -504,6 +506,8 @@ export default {
     },
     subCatalog:{
         width:width,
+        position:'relative',
+        zIndex:0
     },
     subCatalogDetail:{
         marginTop:10,

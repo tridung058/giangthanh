@@ -135,7 +135,7 @@ export default class CatalogDetail extends Component{
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
-                                <View style={{position:'relative'}}>
+                                <View style={{position:'relative',zIndex:0}}>
                                     <View>
                                         <Text style={{fontFamily:'RobotoBold', fontSize: 18, paddingTop:5}}>{this.state.catalog_detail.name}</Text>
                                         <Text style={{fontFamily:'Roboto', fontSize: 16, paddingTop:5, color:'#777777'}}><Icon type="FontAwesome" name="clock-o" style={{ color: '#777777', fontSize: 16}} /> {this.state.catalog_detail.time}</Text>

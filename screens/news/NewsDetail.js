@@ -104,7 +104,7 @@ export default class NewsDetail extends Component{
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
-                                <View style={{position:'relative'}}>
+                                <View style={{position:'relative', zIndex:0}}>
                                     <Image style={{width:screenWidth-20, height: screenWidth/2}}  source={{uri:this.state.news_detail.image}}/>
                                     <View>
                                         <Text style={{fontFamily:'RobotoBold', fontSize: 18, paddingTop:5}}>{this.state.news_detail.title}</Text>

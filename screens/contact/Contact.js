@@ -152,7 +152,7 @@ export default class Contact extends Component{
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
-                                <View style={{width:screenWidth-20,marginLeft:10, marginTop:20}}>
+                                <View style={{width:screenWidth-20,marginLeft:10, marginTop:20, position:'relative', zIndex:0}}>
                                     <Text style={{fontFamily:'RobotoBold', fontSize:20, textTransform:'uppercase'}}>Thông tin liên hệ</Text>
                                     <Text style={{fontFamily:'RobotoBold', fontSize:16, textTransform:'uppercase', marginTop:15}}>Công ty tnhh máy may Giang Thành</Text>
                                     <View style={MainStyle.contact}>

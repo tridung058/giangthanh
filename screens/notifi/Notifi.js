@@ -84,7 +84,7 @@ export default class Notifi extends Component{
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={MainStyle.subCat}>
-                                    <View style={{justifyContent:'center', alignItems:'center'}}>
+                                    <View style={{justifyContent:'center', alignItems:'center', position:'relative', zIndex:0}}>
                                         <Text style={{paddingTop:10}}>Đang update</Text>
                                         <Image style={{width:screenWidth*(3/4),height:screenWidth*(3/4)}} source={require('./../../assets/notify.jpg')}/>
                                     </View>

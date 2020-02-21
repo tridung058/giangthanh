@@ -191,7 +191,7 @@ export default class ProductDetail extends Component{
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
-                                <View style={{position:'relative'}}>
+                                <View style={{position:'relative', zIndex:0}}>
                                     <View style={MainStyle.imageDetail}>
                                         <Image style={{width:screenWidth-40, height: (screenWidth)*400/436, }}  source={{uri:this.state.product_detail.image}}/>
                                     </View>
@@ -389,11 +389,11 @@ export default class ProductDetail extends Component{
                                     </View>
                                 </View>
                                 </ScrollView>
-                                <View style={MainStyle.view_cart}>
+                                {/* <View style={MainStyle.view_cart}>
                                     <View style={MainStyle.bgViewCart}>
                                         <Text style={{fontFamily:'RobotoBold', fontSize:15, color:'#ffffff'}}>Xem giỏ hàng</Text>
                                     </View>
-                                </View>
+                                </View> */}
                             </View>
                         </View>
                     </View>

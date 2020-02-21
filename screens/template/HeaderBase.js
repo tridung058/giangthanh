@@ -181,8 +181,10 @@ export default class HeaderBase extends Component {
                 return (
                     <View >
                         <View style={MainStyle.SliderContainerStyle}>
-                            <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                            <View style={MainStyle.itemHeagerHome}>
+                        <View>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    </View>
+                            <View style={MainStyle.itemHeagerHomeSearch}>
                                 <View style={MainStyle.headerItemCat}>
                                     <View style={MainStyle.headerHomeLeftCat}>
                                         <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -202,8 +204,10 @@ export default class HeaderBase extends Component {
                 return (
                     <View >
                         <View style={MainStyle.SliderContainerStyle}>
-                            <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                            <View style={MainStyle.itemHeagerHome}>
+                        <View>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    </View>
+                            <View style={MainStyle.itemHeagerHomeSearch}>
                                 <View style={MainStyle.headerItemCat}>
                                     <View style={MainStyle.headerHomeLeftCat}>
                                         <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -223,8 +227,10 @@ export default class HeaderBase extends Component {
                 return (
                     <View >
                         <View style={MainStyle.SliderContainerStyle}>
-                            <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                            <View style={MainStyle.itemHeagerHome}>
+                        <View>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    </View>
+                            <View style={MainStyle.itemHeagerHomeSearch}>
                                 <View style={MainStyle.headerItemCat}>
                                     <View style={MainStyle.headerHomeLeftCat}>
                                         <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -244,8 +250,10 @@ export default class HeaderBase extends Component {
                     return (
                         <View >
                             <View style={MainStyle.SliderContainerStyle}>
-                                <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                <View style={MainStyle.itemHeagerHome}>
+                            <View>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    </View>
+                                <View style={MainStyle.itemHeagerHomeSearch}>
                                     <View style={MainStyle.headerItemCat}>
                                         <View style={MainStyle.headerHomeLeftCat}>
                                             <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -265,8 +273,10 @@ export default class HeaderBase extends Component {
                     return (
                         <View >
                             <View style={MainStyle.SliderContainerStyle}>
-                                <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                <View style={MainStyle.itemHeagerHome}>
+                            <View>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    </View>
+                                <View style={MainStyle.itemHeagerHomeSearch}>
                                     <View style={MainStyle.headerItemCat}>
                                         <View style={MainStyle.headerHomeLeftProduct}>
                                             <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -286,8 +296,10 @@ export default class HeaderBase extends Component {
                         return (
                             <View >
                                 <View style={MainStyle.SliderContainerStyle}>
+                                <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    <View style={MainStyle.itemHeagerHome}>
+                                    </View>
+                                    <View style={MainStyle.itemHeagerHomeSearch}>
                                         <View style={MainStyle.headerItemCat}>
                                             <View style={MainStyle.headerHomeLeftCat}>
                                                 <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -307,8 +319,10 @@ export default class HeaderBase extends Component {
                         return (
                             <View >
                                 <View style={MainStyle.SliderContainerStyle}>
+                                <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    <View style={MainStyle.itemHeagerHome}>
+                                    </View>
+                                    <View style={MainStyle.itemHeagerHomeSearch}>
                                         <View style={MainStyle.headerItemCat}>
                                             <View style={MainStyle.headerHomeLeftCat}>
                                                 <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -328,8 +342,10 @@ export default class HeaderBase extends Component {
                         return (
                             <View >
                                 <View style={MainStyle.SliderContainerStyle}>
+                                <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    <View style={MainStyle.itemHeagerHome}>
+                                    </View>
+                                    <View style={MainStyle.itemHeagerHomeSearch}>
                                         <View style={MainStyle.headerItemCat}>
                                             <View style={MainStyle.headerHomeLeftCat}>
                                                 <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -348,10 +364,12 @@ export default class HeaderBase extends Component {
 
                         case 'search':
                         return (
-                            <View >
+                            <View style={{ position:'relative'}} >
                                 <View style={MainStyle.SliderContainerStyle}>
+                                    <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    <View style={MainStyle.itemHeagerHome}>
+                                    </View>
+                                    <View style={MainStyle.itemHeagerHomeSearch}>
                                         <View style={MainStyle.headerItemCat}>
                                             <View style={MainStyle.headerHomeLeftCat}>
                                                 <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -372,8 +390,10 @@ export default class HeaderBase extends Component {
                         return (
                             <View >
                                 <View style={MainStyle.SliderContainerStyle}>
+                                <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    <View style={MainStyle.itemHeagerHome}>
+                                    </View>
+                                    <View style={MainStyle.itemHeagerHomeSearch}>
                                         <View style={MainStyle.headerItemCat}>
                                             <View style={MainStyle.headerHomeLeftCat}>
                                                 <HeaderLeft page={page} title={title} navigation={navigation} />
@@ -394,8 +414,10 @@ export default class HeaderBase extends Component {
                         return (
                             <View >
                                 <View style={MainStyle.SliderContainerStyle}>
+                                <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    <View style={MainStyle.itemHeagerHome}>
+                                    </View>
+                                    <View style={MainStyle.itemHeagerHomeSearch}>
                                         <View style={MainStyle.headerItemCat}>
                                             <View style={MainStyle.headerHomeLeftCat}>
                                                 <HeaderLeft page={page} title={title} navigation={navigation} />

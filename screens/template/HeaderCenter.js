@@ -80,7 +80,7 @@ export default class HeaderCenter extends Component{
                         
                         <View >
                             { this.state.count > 0 ? 
-                                <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight,width: ScreenWidth,marginTop:10,marginLeft:20  }}
+                                <FlatList style={{ position:'relative', zIndex:2,backgroundColor:'#fff', height:ScreenHeight,width: ScreenWidth,marginTop:10,marginLeft:20  }}
                                     data={this.state.list_search}
                                     renderItem={({ item }) => (
                                         <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>

@@ -132,7 +132,7 @@ export default class News extends Component{
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View>
-                                <View>
+                                <View style={{ position:'relative',zIndex:0 }}>
                                     <TouchableOpacity onPress={() =>this.newDetail(this.state.list_type1.id)}>
                                         <View style={{position:'relative'}}>
                                             <Image style={{width:screenWidth, height: screenWidth*(3/4)}}  source={{uri:this.state.list_type1.image}}/>
