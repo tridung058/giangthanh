@@ -77,7 +77,7 @@ export default class CatMachin extends Component{
 
         return(
             <Container>
-                <HeaderBase page="cat" title={''} navigation={navigation} />
+                <HeaderBase page="cat_machine" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
@@ -86,10 +86,17 @@ export default class CatMachin extends Component{
                                     <View style={MainStyle.showCat}>
                                         {this.state.list_cat.map((item,i) =>{return(
                                             <TouchableOpacity key={i} style={MainStyle.itemCat} onPress={()=>(this.goCatDetail(item.id, item.name))}>
-                                                <View style={MainStyle.colorBgCat}>
-                                                    <Image style={{width:(screenWidth-100)/4, height:((screenWidth-100)/4)}}  source={{uri:item.image}}/>
+                                                {item.type !=='2'?
+                                                <View>
+                                                    <View style={MainStyle.colorBgCat}>
+                                                        <Image style={{width:(screenWidth-100)/4, height:((screenWidth-100)/4)}}  source={{uri:item.image}}/>
+                                                    </View>
+                                                    <Text style={MainStyle.nameCat}>{item.name}</Text>
+                                                </View>:
+                                                <View>
+                                                    <Text style={MainStyle.nameItemNoImage}>{item.name}</Text>
                                                 </View>
-                                                <Text style={MainStyle.nameCat}>{item.name}</Text>
+                                                }
                                             </TouchableOpacity>
                                         )})}
                                     </View>

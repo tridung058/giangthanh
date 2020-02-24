@@ -130,7 +130,7 @@ export default class News extends Component{
                 <HeaderBase page="news" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130, marginTop:80}}>
                            <View>
                                 <View style={{ position:'relative',zIndex:0 }}>
                                     <TouchableOpacity onPress={() =>this.newDetail(this.state.list_type1.id)}>

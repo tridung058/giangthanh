@@ -11,6 +11,9 @@ const footerHeight = 65;
 const barHeight = Constants.statusBarHeight;
 
 export default { 
+    tDefaultScrollView:{
+        marginTop:80,
+    },
     bgHeaderHome:{
         flexDirection:'row',
         width:width,
@@ -169,6 +172,8 @@ export default {
     bodyHome:{
         marginTop:(width/3)+20,
         marginBottom:(screenWidth/3)+105+(screenWidth-40)/7,
+        position:'relative',
+        zIndex:-1
     },
     proHot:{
         marginTop:20
@@ -330,10 +335,12 @@ export default {
         height:width*136/750+10,
         paddingTop:barHeight-20,
         position:'absolute',
-        zIndex:999
+        zIndex:9999
     },
     subCat:{
         width:screenWidth,
+        position:'relative',
+        zIndex:0
     },
     subCatDetail:{
         marginTop:10,

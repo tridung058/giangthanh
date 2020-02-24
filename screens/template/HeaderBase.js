@@ -77,6 +77,9 @@ export default class HeaderBase extends Component {
             // this.setState({ loaded: true });  
     });
     }
+    ProductDetail(id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    }
     
     setSearch=(value)=>{
         var search = value.toString();
@@ -124,9 +127,11 @@ export default class HeaderBase extends Component {
                                             <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight-(ScreenHeight/3.7),width: ScreenWidth,marginTop:10 }}
                                                 data={this.state.list_search}
                                                 renderItem={({ item }) => (
-                                                    <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
-                                                        <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
-                                                    </View>
+                                                    <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                                        <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                                            <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
                                                 )}
                                                 // numColumns={6}
                                             />
@@ -201,6 +206,29 @@ export default class HeaderBase extends Component {
                     </View>
                 );
                 case 'cat':
+                return (
+                    <View >
+                        <View style={MainStyle.SliderContainerStyle}>
+                        <View>
+                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                    </View>
+                            <View style={MainStyle.itemHeagerHomeSearch}>
+                                <View style={MainStyle.headerItemCat}>
+                                    <View style={MainStyle.headerHomeLeftCat}>
+                                        <HeaderLeft page={page} title={title} navigation={navigation} />
+                                    </View>
+                                    <View style={MainStyle.headerHomeCenterCat}>
+                                        <HeaderCenter page={page} title={title} navigation={navigation} />
+                                    </View>
+                                    <View style={MainStyle.headerHomeRightCat}>
+                                        <HeaderRight page={page} title={title} navigation={navigation} />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                );
+                case 'cat_machine':
                 return (
                     <View >
                         <View style={MainStyle.SliderContainerStyle}>

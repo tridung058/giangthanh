@@ -46,6 +46,9 @@ export default class HeaderCenter extends Component{
             // this.setState({ loaded: true });  
     });
     }
+    ProductDetail(id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    }
     
     setSearch=(value)=>{
         var search = value.toString();
@@ -69,7 +72,7 @@ export default class HeaderCenter extends Component{
                         <Image style={MainStyle.logoHome} source={require('./../../assets/logo.png')}/>
                     </View>
                 )
-            }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'news' || this.props.page == 'news_detail' || this.props.page == 'catalog' || this.props.page == 'catalog_detail'|| this.props.page == 'search'|| this.props.page == 'notifi'|| this.props.page == 'member')){
+            }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'cat_machine' || this.props.page == 'news' || this.props.page == 'news_detail' || this.props.page == 'catalog' || this.props.page == 'catalog_detail'|| this.props.page == 'search'|| this.props.page == 'notifi'|| this.props.page == 'member')){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
                         <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 5, left: 20,zIndex:2 }} />
@@ -83,9 +86,11 @@ export default class HeaderCenter extends Component{
                                 <FlatList style={{ position:'relative', zIndex:2,backgroundColor:'#fff', height:ScreenHeight,width: ScreenWidth,marginTop:10,marginLeft:20  }}
                                     data={this.state.list_search}
                                     renderItem={({ item }) => (
+                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
                                         <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
                                             <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
                                         </View>
+                                        </TouchableOpacity>
                                     )}
                                     // numColumns={6}
                                 />
