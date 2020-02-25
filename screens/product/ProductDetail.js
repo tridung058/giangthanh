@@ -172,6 +172,38 @@ export default class ProductDetail extends Component{
             modalVisible:visible
         })
     }
+
+    // addCart(){
+	// 	if(this.state.amout < 1){
+	// 		Alert.alert('Thông báo', 'Bạn vui lòng nhập số lượng!');
+	// 		return false;
+	// 	}
+
+	// 	getStorage('cart')
+    //     .then(cart => {
+	// 		var tmp = [];
+	// 		var existID = false;
+    //         if(cart != ''){
+	// 			var arrCart = JSON.parse(cart);
+	// 			arrCart.map(c => {
+	// 				if(c.id == this.state.id){
+	// 					c.amout = parseInt(c.amout) + parseInt(this.state.amout);
+	// 					existID = true;
+	// 				}
+	// 				tmp.push(c);
+	// 			})
+	// 		}
+	// 		if(existID == false){
+	// 			tmp.push({
+	// 				id: this.state.id,
+	// 				amout: this.state.amout,
+	// 			});
+	// 		}
+	// 		saveStorage('cart', JSON.stringify(tmp));
+    //     })
+    //     .catch(err => console.log(err));
+    // }
+    
 	renderLoading  = () => {
         if (!this.state.loading) return null;
 
@@ -189,7 +221,7 @@ export default class ProductDetail extends Component{
                 <HeaderBase page="product_detail" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130, marginTop:80}}>
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
                                 <View style={{position:'relative', zIndex:0}}>
                                     <View style={MainStyle.imageDetail}>
@@ -347,7 +379,7 @@ export default class ProductDetail extends Component{
                     </View>
                 </View>
                 <View style={MainStyle.add_cart}>
-                    <TouchableOpacity onPress={()=>this.setModalVisible(true)}>
+                    <TouchableOpacity onPress={()=>{this.setModalVisible(true)}}>
                         <View style={MainStyle.bgAddCart}>
                             <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
                             <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>

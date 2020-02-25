@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -9,6 +9,8 @@ import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import { getNewsDetail, getOtherNews} from '../../src/api/apiNews';
 import {getStorage} from '../../src/api/storage';
+import { getSearchProducts } from './../../src/api/apiProHot';
+import global from '../../src/api/global';
 
 let screenWidth = Dimensions.get('window').width;
 export default class NewsDetail extends Component{
@@ -22,8 +24,11 @@ export default class NewsDetail extends Component{
         this.state = {
             loading: true,
             news_detail: {},
-            list_other : []
+            list_other : [],
+            key:'',
+            page:1
         }
+        global.onChangeSearch = this.onChangeSearch.bind(this);
     }
 
     componentDidMount() {
@@ -84,6 +89,36 @@ export default class NewsDetail extends Component{
         
     }
 
+    search(){
+        //search
+            getSearchProducts(this.state.page, this.state.key)
+            .then(resJSON => {
+                const { list_search,count, error} = resJSON;
+                if (error == false) {
+                    this.setState({
+                        list_search: list_search,
+                        refreshing: false,
+                        loading: false,
+                        count: count,
+                    });
+                
+                }else{
+                    this.setState({
+                        count: 0,
+                    });
+                }
+            }).catch(err => {
+                // this.setState({ loaded: true });  
+        });
+    }
+    onChangeSearch(key){
+        this.setState({key: key},this.search );
+    }
+
+    ProductDetail(id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    }
+
 	renderLoading  = () => {
         if (!this.state.loading) return null;
 
@@ -102,7 +137,19 @@ export default class NewsDetail extends Component{
                 <HeaderBase page="news_detail" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130, marginTop:80}}>
+                    { this.state.count > 0 ? 
+                        <FlatList style={{ width:screenWidth  }}
+                            data={this.state.list_search}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                    <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                </View>
+                                </TouchableOpacity>
+                            )}
+                            // numColumns={6}
+                        />:
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
                                 <View style={{position:'relative', zIndex:0}}>
                                     <Image style={{width:screenWidth-20, height: screenWidth/2}}  source={{uri:this.state.news_detail.image}}/>
@@ -138,6 +185,7 @@ export default class NewsDetail extends Component{
                                 </View>
                            </View>
                         </ScrollView>
+                    }
                     </View>
                 </View>
                 <FooterBase navigation={navigation} page="news_detail"  />

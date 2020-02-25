@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, FlatList } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 
+import global from '../../src/api/global';
+import { getSearchProducts } from './../../src/api/apiProHot';
 import { getCatalog} from '../../src/api/apiCatalog';
 import {getStorage} from '../../src/api/storage';
 
@@ -20,7 +22,10 @@ export default class Catalog extends Component{
         this.state = {
             loading: true,
             list_catalog: [],
+            key:'',
+            page:1
         }
+        global.onChangeSearch = this.onChangeSearch.bind(this);
     }
 
     componentDidMount() {
@@ -57,6 +62,36 @@ export default class Catalog extends Component{
         });
     }
 
+    search(){
+        //search
+            getSearchProducts(this.state.page, this.state.key)
+            .then(resJSON => {
+                const { list_search,count, error} = resJSON;
+                if (error == false) {
+                    this.setState({
+                        list_search: list_search,
+                        refreshing: false,
+                        loading: false,
+                        count: count,
+                    });
+                
+                }else{
+                    this.setState({
+                        count: 0,
+                    });
+                }
+            }).catch(err => {
+                // this.setState({ loaded: true });  
+        });
+    }
+    onChangeSearch(key){
+        this.setState({key: key},this.search );
+    }
+
+    ProductDetail(id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    }
+
     catalogDetail(id, cat_id){
         this.props.navigation.navigate('CatalogDetailScreen',{id:id, cat_id:cat_id});
     }
@@ -79,7 +114,19 @@ export default class Catalog extends Component{
                 <HeaderBase page="catalog" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100, marginTop:80}}>
+                    { this.state.count > 0 ? 
+                                <FlatList style={{ width:screenWidth  }}
+                                    data={this.state.list_search}
+                                    renderItem={({ item }) => (
+                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                        <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                            <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                        </View>
+                                        </TouchableOpacity>
+                                    )}
+                                    // numColumns={6}
+                                />:
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={MainStyle.subCatalog}>
                                     <View style={MainStyle.subCatalogDetail}>
@@ -96,6 +143,7 @@ export default class Catalog extends Component{
                                 </View>
                            </View>
                         </ScrollView>
+                    }
                     </View>
                 </View>
             

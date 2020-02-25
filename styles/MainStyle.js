@@ -12,7 +12,6 @@ const barHeight = Constants.statusBarHeight;
 
 export default { 
     tDefaultScrollView:{
-        marginTop:80,
     },
     bgHeaderHome:{
         flexDirection:'row',
@@ -100,7 +99,7 @@ export default {
         right:30,
         top:0
     },
-    tSliderContainerStyle: {
+    SliderContainerStyle: {
        position:'relative',
     },
     tBoundHeader: {
@@ -335,7 +334,11 @@ export default {
         height:width*136/750+10,
         paddingTop:barHeight-20,
         position:'absolute',
-        zIndex:9999
+        zIndex:0
+    },
+    heightHeader:{
+        height:width*136/750+10,
+        position:'relative'
     },
     subCat:{
         width:screenWidth,

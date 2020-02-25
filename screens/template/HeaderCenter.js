@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, Dimensions, TextInput, FlatList} from 'react-native';
+import { View, TouchableOpacity, Image, Text, Dimensions, TextInput, FlatList, Alert} from 'react-native';
 import { Icon } from "native-base";
 import MainStyle from './../../styles/MainStyle';
 
 import { getSearchProducts } from './../../src/api/apiProHot';
-//import global from "../api/global";
+import global from "../../src/api/global";
 
 const {width, height} = Dimensions.get('window');
 const ScreenWidth = Dimensions.get('window').width;
@@ -23,45 +23,16 @@ export default class HeaderCenter extends Component{
     componentDidMount() {
 
     }
-
-    search(){
-        //search
-        getSearchProducts(this.state.page, this.state.search)
-        .then(resJSON => {
-            const { list_search,count, error} = resJSON;
-            if (error == false) {
-                this.setState({
-                    list_search: list_search,
-                    refreshing: false,
-                    loading: false,
-                    count: count,
-                });
-            
-            }else{
-                this.setState({
-                    count: 0,
-                });
-            }
-        }).catch(err => {
-            // this.setState({ loaded: true });  
-    });
-    }
     ProductDetail(id){
         this.props.navigation.navigate('ProductDetailScreen',{id:id});
     }
-    
+
     setSearch=(value)=>{
-        var search = value.toString();
         this.setState(
-          {
-            "search": search,
-            "page": 1,
-          },
-          () => {
-            // here is our callback that will be fired after state change.
-            this.search();
-          }
-        );
+                  { "search": value},
+                );
+        var key = this.state.search;
+        global.onChangeSearch(key);
     }
 
     renderButton(){
@@ -80,25 +51,7 @@ export default class HeaderCenter extends Component{
                         onChangeText={search => this.setSearch(search)}
                         value={this.state.search}
                         placeholder={'Nhập mã hoặc tên sản phẩm'} />
-                        
-                        <View >
-                            { this.state.count > 0 ? 
-                                <FlatList style={{ position:'relative', zIndex:2,backgroundColor:'#fff', height:ScreenHeight,width: ScreenWidth,marginTop:10,marginLeft:20  }}
-                                    data={this.state.list_search}
-                                    renderItem={({ item }) => (
-                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
-                                        <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
-                                            <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
-                                        </View>
-                                        </TouchableOpacity>
-                                    )}
-                                    // numColumns={6}
-                                />
-                                    :
-                                    null
-                                }
-                            </View>
-                        </View>
+                    </View>
                 )
             } else if(this.props.page && (this.props.page == 'product_detail')){
                 return (

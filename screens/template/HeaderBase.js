@@ -184,7 +184,7 @@ export default class HeaderBase extends Component {
                 );
                 case 'category':
                 return (
-                    <View >
+                    <View style={ MainStyle.heightHeader }>
                         <View style={MainStyle.SliderContainerStyle}>
                         <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -207,7 +207,7 @@ export default class HeaderBase extends Component {
                 );
                 case 'cat':
                 return (
-                    <View >
+                    <View style={ MainStyle.heightHeader }>
                         <View style={MainStyle.SliderContainerStyle}>
                         <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -230,7 +230,7 @@ export default class HeaderBase extends Component {
                 );
                 case 'cat_machine':
                 return (
-                    <View >
+                    <View style={ MainStyle.heightHeader }>
                         <View style={MainStyle.SliderContainerStyle}>
                         <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -253,7 +253,7 @@ export default class HeaderBase extends Component {
                 );
                 case 'news':
                 return (
-                    <View >
+                    <View style={ MainStyle.heightHeader }>
                         <View style={MainStyle.SliderContainerStyle}>
                         <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -276,7 +276,7 @@ export default class HeaderBase extends Component {
                 );
                 case 'news_detail':
                     return (
-                        <View >
+                        <View style={ MainStyle.heightHeader }>
                             <View style={MainStyle.SliderContainerStyle}>
                             <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -299,7 +299,7 @@ export default class HeaderBase extends Component {
                     );
                     case 'product_detail':
                     return (
-                        <View >
+                        <View style={ MainStyle.heightHeader }>
                             <View style={MainStyle.SliderContainerStyle}>
                             <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -322,7 +322,7 @@ export default class HeaderBase extends Component {
                     );
                     case 'catalog':
                         return (
-                            <View >
+                            <View style={ MainStyle.heightHeader }>
                                 <View style={MainStyle.SliderContainerStyle}>
                                 <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -345,7 +345,7 @@ export default class HeaderBase extends Component {
                         );
                         case 'catalog_detail':
                         return (
-                            <View >
+                            <View style={ MainStyle.heightHeader }>
                                 <View style={MainStyle.SliderContainerStyle}>
                                 <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -368,7 +368,7 @@ export default class HeaderBase extends Component {
                         );
                         case 'contact':
                         return (
-                            <View >
+                            <View style={ MainStyle.heightHeader }>
                                 <View style={MainStyle.SliderContainerStyle}>
                                 <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -392,7 +392,7 @@ export default class HeaderBase extends Component {
 
                         case 'search':
                         return (
-                            <View style={{ position:'relative'}} >
+                            <View style={ MainStyle.heightHeader } >
                                 <View style={MainStyle.SliderContainerStyle}>
                                     <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -416,7 +416,7 @@ export default class HeaderBase extends Component {
 
                         case 'notifi':
                         return (
-                            <View >
+                            <View style={ MainStyle.heightHeader }>
                                 <View style={MainStyle.SliderContainerStyle}>
                                 <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
@@ -440,7 +440,7 @@ export default class HeaderBase extends Component {
 
                         case 'member':
                         return (
-                            <View >
+                            <View style={ MainStyle.heightHeader }>
                                 <View style={MainStyle.SliderContainerStyle}>
                                 <View>
                                     <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>

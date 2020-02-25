@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -8,6 +8,9 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 
 import { getNewsType} from '../../src/api/apiNews';
 import {getStorage} from '../../src/api/storage';
+import { getSearchProducts } from './../../src/api/apiProHot';
+import global from '../../src/api/global';
+
 
 let screenWidth = Dimensions.get('window').width;
 export default class News extends Component{
@@ -26,8 +29,11 @@ export default class News extends Component{
             list_type1: {},
             list_type2 : [],
             list_type3 : [],
+            key:'',
+            page:1
 
         }
+        global.onChangeSearch = this.onChangeSearch.bind(this);
     }
 
     componentDidMount() {
@@ -108,6 +114,37 @@ export default class News extends Component{
         
     }
 
+    search(){
+        //search
+            getSearchProducts(this.state.page, this.state.key)
+            .then(resJSON => {
+                const { list_search,count, error} = resJSON;
+                if (error == false) {
+                    this.setState({
+                        list_search: list_search,
+                        refreshing: false,
+                        loading: false,
+                        count: count,
+                    });
+                
+                }else{
+                    this.setState({
+                        count: 0,
+                    });
+                }
+            }).catch(err => {
+                // this.setState({ loaded: true });  
+        });
+    }
+    onChangeSearch(key){
+        this.setState({key: key},this.search );
+    }
+
+    ProductDetail(id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    }
+
+
     newDetail(id){
         this.props.navigation.navigate('NewsDetailScreen',{id:id});
     }
@@ -130,7 +167,19 @@ export default class News extends Component{
                 <HeaderBase page="news" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130, marginTop:80}}>
+                    { this.state.count > 0 ? 
+                        <FlatList style={{ width:screenWidth  }}
+                            data={this.state.list_search}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                    <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                </View>
+                                </TouchableOpacity>
+                            )}
+                            // numColumns={6}
+                        />:
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View>
                                 <View style={{ position:'relative',zIndex:0 }}>
                                     <TouchableOpacity onPress={() =>this.newDetail(this.state.list_type1.id)}>
@@ -194,6 +243,7 @@ export default class News extends Component{
                                 </View>
                            </View>
                         </ScrollView>
+                    }
                     </View>
                 </View>
                 <FooterBase navigation={navigation} page="news"  />

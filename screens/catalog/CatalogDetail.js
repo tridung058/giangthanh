@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -11,6 +11,8 @@ import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 
+import { getSearchProducts } from './../../src/api/apiProHot';
+import global from '../../src/api/global';
 import { getCatalogDetail, getOtherCatalog} from '../../src/api/apiCatalog';
 
 import {getStorage} from '../../src/api/storage';
@@ -27,8 +29,11 @@ export default class CatalogDetail extends Component{
         this.state = {
             loading: true,
             catalog_detail: {},
-            list_other_catalog : []
+            list_other_catalog : [],
+            key:'',
+            page:1
         }
+        global.onChangeSearch = this.onChangeSearch.bind(this);
     }
     
     componentDidMount() {
@@ -115,6 +120,36 @@ export default class CatalogDetail extends Component{
         }
     }
 
+    search(){
+        //search
+            getSearchProducts(this.state.page, this.state.key)
+            .then(resJSON => {
+                const { list_search,count, error} = resJSON;
+                if (error == false) {
+                    this.setState({
+                        list_search: list_search,
+                        refreshing: false,
+                        loading: false,
+                        count: count,
+                    });
+                
+                }else{
+                    this.setState({
+                        count: 0,
+                    });
+                }
+            }).catch(err => {
+                // this.setState({ loaded: true });  
+        });
+    }
+    onChangeSearch(key){
+        this.setState({key: key},this.search );
+    }
+
+    ProductDetail(id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    }
+
 	renderLoading  = () => {
         if (!this.state.loading) return null;
 
@@ -133,7 +168,19 @@ export default class CatalogDetail extends Component{
                 <HeaderBase page="catalog_detail" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130, marginTop:80}}>
+                    { this.state.count > 0 ? 
+                        <FlatList style={{ width:screenWidth  }}
+                            data={this.state.list_search}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                    <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                </View>
+                                </TouchableOpacity>
+                            )}
+                            // numColumns={6}
+                        />:
+                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
                                 <View style={{position:'relative',zIndex:0}}>
                                     <View>
@@ -183,6 +230,7 @@ export default class CatalogDetail extends Component{
                                 )})}
                            </View>
                         </ScrollView>
+                    }
                     </View>
                 </View>
             </Container>
