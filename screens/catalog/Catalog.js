@@ -88,8 +88,8 @@ export default class Catalog extends Component{
         this.setState({key: key},this.search );
     }
 
-    ProductDetail(id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    ProductDetail(id, cat_id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
     }
 
     catalogDetail(id, cat_id){
@@ -118,7 +118,7 @@ export default class Catalog extends Component{
                                 <FlatList style={{ width:screenWidth  }}
                                     data={this.state.list_search}
                                     renderItem={({ item }) => (
-                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id, item.cat_id)}>
                                         <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
                                             <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
                                         </View>

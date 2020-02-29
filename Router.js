@@ -15,6 +15,7 @@ import Notifi from './screens/notifi/Notifi';
 import Member from './screens/member/Member';
 import ProductHot from './screens/product/ProductHot';
 import CatMachin from './screens/category/CatMachin';
+import Carts from './screens/product/Carts';
 export const GiangThanhStack = createStackNavigator({
     HomeScreen: {
         screen: Home
@@ -57,6 +58,9 @@ export const GiangThanhStack = createStackNavigator({
     },
     CatMachinScreen: {
         screen: CatMachin
+    },
+    CartsScreen: {
+        screen: Carts
     },
 });
 

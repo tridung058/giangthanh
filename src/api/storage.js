@@ -4,8 +4,10 @@ export async function getStorage(key){
     try {
         const value = await AsyncStorage.getItem('@'+key);
         if (value !== null) {
+              console.log(value);
             return value;
         }
+        
         return '';
     } catch (error) {
         return '';

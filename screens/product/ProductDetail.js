@@ -8,7 +8,7 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 import AutoHeightWebView from 'react-native-autoheight-webview';
 
 import { getProductDetail, getOtherPro} from '../../src/api/apiProHot';
-import {getStorage} from '../../src/api/storage';
+import {getStorage, saveStorage} from '../../src/api/storage';
 
 let screenWidth = Dimensions.get('window').width;
 export default class ProductDetail extends Component{
@@ -30,7 +30,8 @@ export default class ProductDetail extends Component{
             code: '',
             name: '',
             email: '',
-            re_code: ''
+            re_code: '',
+            id: 0
 
         }
     }
@@ -44,9 +45,7 @@ export default class ProductDetail extends Component{
     }
 
     makeRemoteRequest = (id, cat_id) => {
-
         this.setState({ loading: true});
-
             getProductDetail(id)
             .then(resJSON => {
                 const {product_detail, error } = resJSON;
@@ -57,11 +56,12 @@ export default class ProductDetail extends Component{
                         loading: false, 
                         refreshing: false ,
                         allow_more: false,
+                        id: id
                     });
                 }else{
                     this.setState({ 
                         loading: false, 
-                        allow_more: false
+                        allow_more: false,
                     });
                 }
                     
@@ -173,36 +173,42 @@ export default class ProductDetail extends Component{
         })
     }
 
-    // addCart(){
-	// 	if(this.state.amout < 1){
-	// 		Alert.alert('Thông báo', 'Bạn vui lòng nhập số lượng!');
-	// 		return false;
-	// 	}
+    addCart(){
+        //Alert.alert(this.state.id);return;
+		if(this.state.amout < 1){
+			Alert.alert('Thông báo', 'Bạn vui lòng nhập số lượng!');
+			return false;
+		}
+		getStorage('cart')
+        .then(cart => {
+			var tmp = [];
+			var existID = false;
+            if(cart != ''){
+				var arrCart = JSON.parse(cart);
+				arrCart.map(c => {
+					if(c.id == this.state.id){
+						c.amout = parseInt(c.amout) + parseInt(this.state.amout);
+						existID = true;
+					}
+					tmp.push(c);
+				})
+            }
+			if(existID == false){
+				tmp.push({
+					id: this.state.id,
+					amout: this.state.amout,
+				});
+			}
+			saveStorage('cart', JSON.stringify(tmp));
+        })
+        .catch(err => console.log(err+'Lỗi'));
 
-	// 	getStorage('cart')
-    //     .then(cart => {
-	// 		var tmp = [];
-	// 		var existID = false;
-    //         if(cart != ''){
-	// 			var arrCart = JSON.parse(cart);
-	// 			arrCart.map(c => {
-	// 				if(c.id == this.state.id){
-	// 					c.amout = parseInt(c.amout) + parseInt(this.state.amout);
-	// 					existID = true;
-	// 				}
-	// 				tmp.push(c);
-	// 			})
-	// 		}
-	// 		if(existID == false){
-	// 			tmp.push({
-	// 				id: this.state.id,
-	// 				amout: this.state.amout,
-	// 			});
-	// 		}
-	// 		saveStorage('cart', JSON.stringify(tmp));
-    //     })
-    //     .catch(err => console.log(err));
-    // }
+        this.setModalVisible(true)
+    }
+    gotoCart(){
+        this.setModalVisible(!this.state.modalVisible);
+        this.props.navigation.navigate('CartsScreen');
+	}
     
 	renderLoading  = () => {
         if (!this.state.loading) return null;
@@ -227,7 +233,6 @@ export default class ProductDetail extends Component{
                                     <View style={MainStyle.imageDetail}>
                                         <Image style={{width:screenWidth-40, height: (screenWidth)*400/436, }}  source={{uri:this.state.product_detail.image}}/>
                                     </View>
-
                                     <View>
                                         <Text style={{paddingTop:10, paddingBottom:5, fontFamily:'RobotoBold', fontSize:18}}>{this.state.product_detail.name}</Text>
                                         <View style={{flexDirection:'row'}}>
@@ -251,7 +256,7 @@ export default class ProductDetail extends Component{
                                             <TextInput style={MainStyle.childOrderNumber} keyboardType='phone-pad' onChangeText={(amout) => this.setState({ amout })} value={this.state.amout} />
                                         </View>
                                     </View>
-                                    <TouchableOpacity onPress={()=>this.setModalVisible(true)}>
+                                    <TouchableOpacity onPress={ this.addCart.bind(this) }>
                                         <View style={MainStyle.addCart}>
                                             <View style={MainStyle.bgAddCart}>
                                                 <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
@@ -379,7 +384,7 @@ export default class ProductDetail extends Component{
                     </View>
                 </View>
                 <View style={MainStyle.add_cart}>
-                    <TouchableOpacity onPress={()=>{this.setModalVisible(true)}}>
+                    <TouchableOpacity onPress={this.addCart.bind(this)}>
                         <View style={MainStyle.bgAddCart}>
                             <Icon type="FontAwesome" name="cart-arrow-down" style={{ color: '#ffffff',fontSize:25,paddingRight:5}} />
                             <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Thêm vào giỏ hàng</Text>
@@ -421,11 +426,13 @@ export default class ProductDetail extends Component{
                                     </View>
                                 </View>
                                 </ScrollView>
-                                {/* <View style={MainStyle.view_cart}>
-                                    <View style={MainStyle.bgViewCart}>
-                                        <Text style={{fontFamily:'RobotoBold', fontSize:15, color:'#ffffff'}}>Xem giỏ hàng</Text>
-                                    </View>
-                                </View> */}
+                                <View style={MainStyle.view_cart}>
+                                    <TouchableOpacity onPress={ this.gotoCart.bind(this) }>
+                                        <View style={MainStyle.bgViewCart}>
+                                            <Text style={{fontFamily:'RobotoBold', fontSize:15, color:'#ffffff'}}>Xem giỏ hàng</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                     </View>

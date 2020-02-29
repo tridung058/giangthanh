@@ -3,4 +3,5 @@ module.exports = {
     BASE_URL: 'http://hoidetmay.vn',
     onRefresh: null,
     onChangeSearch: null,
+    onChangeCart: null,
 };       

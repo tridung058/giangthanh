@@ -138,8 +138,8 @@ export default class CatProduct extends Component{
         this.setState({key: key},this.search );
     }
 
-    ProductDetail(id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    ProductDetail(id, cat_id){
+        this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
     }
 
 	renderLoading  = () => {
@@ -165,7 +165,7 @@ export default class CatProduct extends Component{
                         <FlatList style={{ width:screenWidth  }}
                             data={this.state.list_search}
                             renderItem={({ item }) => (
-                                <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                <TouchableOpacity  onPress={()=>this.ProductDetail(item.id, item.cat_id)}>
                                 <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
                                     <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
                                 </View>
@@ -206,7 +206,7 @@ export default class CatProduct extends Component{
                                 </View> 
                                 <View style={[MainStyle.showProHot]}>
                                     {this.state.list_by_sub_cat.map((item,i) =>{return(
-                                        <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>this.ProductDetail(item.id)}>
+                                        <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>this.ProductDetail(item.id, item.cat_id)}>
                                             <View>
                                                 <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)*370/360}}  source={{uri:item.image}}/>
                                                 <Text style={MainStyle.namePro}>{item.name}</Text>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Image, PixelRatio, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Image, PixelRatio, Dimensions, Alert } from 'react-native';
 import MainStyle from './../../styles/MainStyle';
 import { Icon} from "native-base";
 
@@ -16,6 +16,10 @@ export default class HeaderRight extends Component{
 
     componentDidMount() {
        
+    }
+    gotoCart(){
+        const {navigation} = this.props;
+        navigation.navigate('CartsScreen');
     }
     renderButton(){
         const {navigation} = this.props;
@@ -34,15 +38,15 @@ export default class HeaderRight extends Component{
                     <Icon type="Entypo" name="dots-three-horizontal" style={{ color: '#ffffff', fontSize:30,paddingLeft:15, paddingRight:10 }} /> */}
                 </View>
             )
+        }else {
+            return (
+                <TouchableOpacity onPress={this.gotoCart.bind(this)}>
+                    <View>
+                        <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
+                    </View>
+                </TouchableOpacity>
+            )
         }
-        // else{
-        //     return (
-        //             <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
-        //         //  <TouchableOpacity onPress={() => this.onLogout()}>
-        //         //     <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
-        //         // </TouchableOpacity>
-        //     )
-        // }
         
     }
 

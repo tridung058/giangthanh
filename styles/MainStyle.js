@@ -62,11 +62,11 @@ export default {
     icon_cart:{
         width:width/13,
         height:(width/13)*44/50,
-        right:30
+        marginRight:20
 
     },
     headerHomeRight:{
-        width:width/3
+        width:width/3,
     },
     searchBox:{
         width:width,
@@ -209,7 +209,7 @@ export default {
         flexDirection:'row',
         flexWrap:'wrap',
         alignItems:'center',
-        marginBottom:150
+        marginBottom:30
     },
     itemProHot:{
         width:(screenWidth-60)/3,
@@ -631,5 +631,67 @@ export default {
         fontFamily:'RobotoBold',
         textTransform:'uppercase',
         fontSize:12
+    },
+    listCart:{ 
+        flexDirection:'row', 
+        justifyContent:'space-between',
+        alignItems:'center',
+        height:height/18,
+        marginTop:10,
+        backgroundColor:'#fff'
+    },
+    moneyStyle:{
+        flexDirection:'row', 
+        justifyContent:'space-between',
+        alignItems:'center',
+    },
+    list_cart:{
+        paddingTop: 8,
+        paddingBottom: 8,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 11,
+        height: height/6,
+        borderTopWidth:10,
+        borderTopColor:'#eeeeee',
+        backgroundColor:'#ffffff',
+        justifyContent:'space-between',
+    },
+    toMoney:{
+        flexDirection:'row', 
+        backgroundColor:'#ce1e1e',
+        width:screenWidth-20,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:10,
+        paddingBottom:10,
+        marginLeft:10
+    },
+    changeAmout:{
+        flexDirection:'row',
+    },
+    changeAmoutStyle:{
+        paddingTop:10,
+        flexDirection:'row',
+        justifyContent:'space-between'
+    },
+    plusChangeAmout:{ 
+        width:35, 
+        height:35, 
+        backgroundColor:'#e9e9e9', 
+        paddingTop:5, 
+        paddingLeft:5
+    },
+    changeTextAmout:{
+        backgroundColor:'#f3f3f3', 
+        width:35, 
+        height:35, 
+        textAlign:'center', 
+        borderLeftWidth:1,
+        borderLeftColor:'#fff', 
+        borderRightWidth:1,
+        borderRightColor:'#fff'
     }
 }

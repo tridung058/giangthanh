@@ -95,7 +95,7 @@ export default class Search extends Component{
     }
 
     ProductDetail(id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+        this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
     }
 
 	renderLoading  = () => {
@@ -122,7 +122,7 @@ export default class Search extends Component{
                                 <FlatList style={{   }}
                                     data={this.state.list_search}
                                     renderItem={({ item }) => (
-                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id, item.cat_id)}>
                                         <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
                                             <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
                                         </View>

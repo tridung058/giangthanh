@@ -461,6 +461,29 @@ export default class HeaderBase extends Component {
                                 </View>
                             </View>
                         );
+                        case 'carts':
+                            return (
+                                <View style={ MainStyle.heightHeader }>
+                                    <View style={MainStyle.SliderContainerStyle}>
+                                    <View>
+                                        <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                        </View>
+                                        <View style={MainStyle.itemHeagerHomeSearch}>
+                                            <View style={MainStyle.headerItemCat}>
+                                                <View style={MainStyle.headerHomeLeftCat}>
+                                                    <HeaderLeft page={page} title={title} navigation={navigation} />
+                                                </View>
+                                                <View style={MainStyle.headerHomeCenterCat}>
+                                                    <HeaderCenter page={page} title={title} navigation={navigation} />
+                                                </View>
+                                                <View style={MainStyle.headerHomeRightCat}>
+                                                    <HeaderRight page={page} title={title} navigation={navigation} />
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            );
             default:
                 // return (
                 //     <View >

@@ -88,35 +88,6 @@ export default class ProductHot extends Component{
         this.setState({key: key},this.search );
     }
 
-    search(){
-        //search
-            getSearchProducts(this.state.page, this.state.key)
-            .then(resJSON => {
-                const { list_search,count, error} = resJSON;
-                if (error == false) {
-                    this.setState({
-                        list_search: list_search,
-                        refreshing: false,
-                        loading: false,
-                        count: count,
-                    });
-                
-                }else{
-                    this.setState({
-                        count: 0,
-                    });
-                }
-            }).catch(err => {
-                // this.setState({ loaded: true });  
-        });
-    }
-    onChangeSearch(key){
-        this.setState({key: key},this.search );
-    }
-    ProductDetails(id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id});
-    }
-
     productDetail(id, cat_id){
         this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
     }
@@ -144,7 +115,7 @@ export default class ProductHot extends Component{
                         <FlatList style={{ width:screenWidth  }}
                             data={this.state.list_search}
                             renderItem={({ item }) => (
-                                <TouchableOpacity  onPress={()=>this.ProductDetails(item.id)}>
+                                <TouchableOpacity  onPress={()=>this.ProductDetails(item.id, item.cat_id)}>
                                 <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
                                     <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
                                 </View>

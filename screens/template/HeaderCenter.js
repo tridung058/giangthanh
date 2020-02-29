@@ -3,7 +3,8 @@ import { View, TouchableOpacity, Image, Text, Dimensions, TextInput, FlatList, A
 import { Icon } from "native-base";
 import MainStyle from './../../styles/MainStyle';
 
-import { getSearchProducts } from './../../src/api/apiProHot';
+import {getStorage, saveStorage} from '../../src/api/storage';
+import { getCart} from '../../src/api/apiCart';
 import global from "../../src/api/global";
 
 const {width, height} = Dimensions.get('window');
@@ -16,12 +17,42 @@ export default class HeaderCenter extends Component{
         this.state = {
             list_search: [],
             search: '',
-            page: 1
+            page: 1,
+            amout:'',
+            all_amout:0
         }
+        
     }
 
     componentDidMount() {
+        this.arr = [];
+        this.setState({ loading: true });
+        getStorage('cart')
+        .then(cart => {
+            if(cart != ''){
+                this.setState({cart});
 
+                var arrCart = JSON.parse(cart);
+                var ids = '';
+				arrCart.map(c => {
+                    if(ids == '')
+                        ids = c.id+','+c.amout;
+                    else
+                        ids = ids + '|' + c.id+','+c.amout;
+                });
+                getCart(ids, this.state.page)
+                .then(resJSON => {
+                    const { all_amout } = resJSON;
+                    this.setState({
+                        refreshing: false,
+                        loading: false,
+                        all_amout: all_amout
+                    });
+                })
+                .catch(err => console.log(err+'Lỗi'));
+            }
+        })
+        .catch(err => console.log(err));
     }
     ProductDetail(id){
         this.props.navigation.navigate('ProductDetailScreen',{id:id});
@@ -37,6 +68,7 @@ export default class HeaderCenter extends Component{
 
     renderButton(){
         const {navigation} = this.props;
+        const {all_amout} = this.state;
             if(this.props.page && this.props.page == 'home'){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/12}}>
@@ -53,7 +85,13 @@ export default class HeaderCenter extends Component{
                         placeholder={'Nhập mã hoặc tên sản phẩm'} />
                     </View>
                 )
-            } else if(this.props.page && (this.props.page == 'product_detail')){
+            } else if(this.props.page && (this.props.page == 'carts')){
+                return (
+                    <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
+                            <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Giỏ hàng ({all_amout.toString()})</Text>
+                    </View>
+                )
+            }else if(this.props.page && (this.props.page == 'product_detail')){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
                         
