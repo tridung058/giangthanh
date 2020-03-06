@@ -7,7 +7,7 @@ import { Container, Content, CheckBox, Icon } from "native-base";
 
 import { getCat} from '../../src/api/apiCatProduct';
 import { getSearchProducts } from './../../src/api/apiProHot';
-import {getStorage} from '../../src/api/storage';
+import { saveStorage, getStorage} from '../../src/api/storage';
 import global from '../../src/api/global';
 
 let screenWidth = Dimensions.get('window').width;
@@ -21,95 +21,85 @@ export default class Member extends Component{
         
         this.state = {
             loading: true,
-            list_cat: [],
-            level: '1',
-            key:'',
-            page:1
+            id:'',
+            name:'',
+            sex:'',
+            birthday:'',
+            time:'',
+            email:'',
+            is_login: false,
         }
-        global.onChangeSearch = this.onChangeSearch.bind(this);
+        global.onRefresh = this.onRefresh.bind(this);
     }
 
     componentDidMount() {
-        let level = this.state.level;
-    
-       // this.makeRemoteRequest(level);
-        
+        //saveStorage('member', '');
+        this.makeRemoteRequest();
     }
 
-    makeRemoteRequest = (level) => {
-
+    makeRemoteRequest = () => {
         this.setState({ loading: true});
-		
-		getCat(level)
-        .then(resJSON => {
-            const {list_cat, error } = resJSON;
-            //console.log(list_sub_cat);
-			if(error == false){
-				this.setState({
-					list_cat: list_cat, 
-					loading: false, 
-                    refreshing: false ,
-                    allow_more: false,
-				});
-			}else{
-				this.setState({ 
-					loading: false, 
-					allow_more: false
-				});
-			}
-				
-        }).catch(err => {
-			// console.log(err);
-			this.setState({ loading: false });
-        });
+        getStorage('member')
+        .then((member)=>{
+            if(member !=''){
+                let arrMember = JSON.parse(member);
+                this.setState({
+                    id: arrMember.id,
+                    name: arrMember.name,
+                    sex: arrMember.sex,
+                    birthday: arrMember.birthday,
+                    time: arrMember.time,
+                    email: arrMember.email,
+                    is_login: true
+                })
+            }
+        })
+        .catch((err)=>{
+            console.log(err+ 'LOI');
+        })
     }
 
-    goCatDetail(id, name){
-        this.props.navigation.navigate('CatProductScreen',{id:id, name:name});
+    onRefresh(){
+        this.makeRemoteRequest();
     }
 
-    search(){
-        //search
-            getSearchProducts(this.state.page, this.state.key)
-            .then(resJSON => {
-                const { list_search,count, error} = resJSON;
-                if (error == false) {
-                    this.setState({
-                        list_search: list_search,
-                        refreshing: false,
-                        loading: false,
-                        count: count,
-                    });
-                
-                }else{
-                    this.setState({
-                        count: 0,
-                    });
-                }
-            }).catch(err => {
-                // this.setState({ loaded: true });  
-        });
+    gotoAuthentication(){
+        const { navigation } = this.props;
+        navigation.navigate('AuthenticationScreen');
     }
-    onChangeSearch(key){
-        this.setState({key: key},this.search );
-    }
-
-    ProductDetail(id, cat_id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
-    }
-
-	renderLoading  = () => {
-        if (!this.state.loading) return null;
-
-        return (
-            <View style={{paddingVertical: 20}}>
-                <ActivityIndicator animating size="large" />
-            </View>
-        );
-	};
-    
     render() {
         const {navigation} = this.props;
+        const { is_login, name, time, email } = this.state;
+        const memberInfo = (
+            <View style={MainStyle.signInStyle}>
+                <View style={MainStyle.avatarMember}>
+                    <Image style={MainStyle.imageMember} source={require('./../../assets/member.png')}/>
+                </View>
+                <View style={MainStyle.txtWellcome}>
+                    <Text style={MainStyle.txtName}>{name}</Text>
+                    <Text style={MainStyle.txtEmail}>{email}</Text>
+                    <Text style={MainStyle.txtMemberTime}>Thành viên từ: {time}</Text>
+                </View>
+            </View>
+        )
+        const signInSignOut = (
+            <View style={MainStyle.signInStyle}>
+                <View style={MainStyle.avatarMember}>
+                    <Image style={MainStyle.imageMember} source={require('./../../assets/member.png')}/>
+                </View>
+                <View style={MainStyle.txtWellcome}>
+                    <TouchableOpacity onPress={this.gotoAuthentication.bind(this)}>
+                    <Text style={{fontFamily:'Roboto', color:'#777777', fontSize:15}}>Chào mừng bạn đến với HDM</Text>
+                    <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', fontSize:18, paddingTop:5}}>Đăng nhập/Đăng ký</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <Icon type="FontAwesome5" name="chevron-right" style={{ color: '#ce1e1e', fontSize:23 }} />
+                </View>
+        </View>
+        )
+        
+        const main = is_login === true?memberInfo:signInSignOut;
 
         return(
             <Container>
@@ -117,27 +107,58 @@ export default class Member extends Component{
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <View showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
-                        { this.state.count > 0 ? 
-                                <FlatList style={{ width:screenWidth  }}
-                                    data={this.state.list_search}
-                                    renderItem={({ item }) => (
-                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id, item.cat_id)}>
-                                        <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
-                                            <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
-                                        </View>
-                                        </TouchableOpacity>
-                                    )}
-                                    // numColumns={6}
-                                />:
-                           <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
+
+                           <View style={{}}>
                                 <View style={MainStyle.subCat}>
-                                <View style={{justifyContent:'center', alignItems:'center'}}>
-                                        <Text style={{paddingTop:10}}>Đang update</Text>
-                                        <Image style={{width:screenWidth*(3/4),height:screenWidth*(3/4)}} source={require('./../../assets/user.png')}/>
+                                    {main}
+                                    <View style={MainStyle.infoOrder}>
+                                         <TouchableOpacity style={MainStyle.itemInfoOrderFirst}>
+                                             <View style={{width:30}}>
+                                                <Icon type="AntDesign" name="filetext1" style={{ color:'#777777', fontSize:23 }} />
+                                             </View>
+                                             <View style={ MainStyle.txtTitle}>
+                                                <Text style={MainStyle.txtStyle}>Quản lý đơn hàng</Text>
+                                             </View>
+                                             <Icon type="FontAwesome5" name="chevron-right" style={{color:'#777777', fontSize:23 }} />
+                                         </TouchableOpacity>
+                                         <TouchableOpacity style={MainStyle.itemInfoOrder}>
+                                             <View style={{width:30}}>
+                                                <Icon type="Entypo" name="back-in-time" style={{color:'#777777', fontSize:23 }} />
+                                             </View>
+                                             <View style={ MainStyle.txtTitle}>
+                                                <Text style={MainStyle.txtStyle}>Lịch sử giao dịch</Text>
+                                             </View>
+                                             <Icon type="FontAwesome5" name="chevron-right" style={{ color:'#777777', fontSize:23 }} />
+                                         </TouchableOpacity>
+                                         <TouchableOpacity style={MainStyle.itemInfoOrder}>
+                                             <View style={{width:30}}>
+                                                <Icon type="FontAwesome" name="eye" style={{ color:'#777777', fontSize:23 }} />
+                                             </View>
+                                             <View style={ MainStyle.txtTitle}>
+                                                <Text style={MainStyle.txtStyle}>Sản phẩm đã xem</Text>
+                                             </View>
+                                             <Icon type="FontAwesome5" name="chevron-right" style={{color:'#777777', fontSize:23 }} />
+                                         </TouchableOpacity>
+                                         <TouchableOpacity style={MainStyle.itemInfoOrder}>
+                                             <View style={{width:30}}>
+                                                <Icon type="FontAwesome" name="user" style={{color:'#777777', fontSize:23 }} />
+                                             </View>
+                                             <View style={ MainStyle.txtTitle}>
+                                                <Text style={MainStyle.txtStyle}>Thông tin tài khoản</Text>
+                                             </View>
+                                             <Icon type="FontAwesome5" name="chevron-right" style={{color:'#777777', fontSize:23 }} />
+                                         </TouchableOpacity>
+                                         <View style={MainStyle.itemInfoOrder}>
+                                             <View style={{width:30}}>
+                                                <Icon type="FontAwesome" name="phone" style={{ color:'#777777', fontSize:23 }} />
+                                             </View>
+                                             <View style={ MainStyle.txtTitle}>
+                                                <Text style={MainStyle.txtStyle}>Hotline: <Text style={{color:'#ce1e1e', fontFamily:'Roboto', fontSize:16}}>0967 118879</Text> (tư vấn miễn phí)</Text>
+                                             </View>
+                                         </View>
                                     </View>
                                 </View>
                            </View>
-                        }
                         </View>
                     </View>
                 </View>

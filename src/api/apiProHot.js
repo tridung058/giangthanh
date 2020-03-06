@@ -93,3 +93,23 @@ export function getSearchProducts(page, search){
     return fetch(url)
     .then(res => res.json());
 };
+
+//comment
+
+export function postComment(name, email, comment, is_login, record_id){
+    let url;
+    url = global.BASE_URL+`/post_comment.api?name=${name}&email=${email}&comment=${comment}&is_login=${is_login}&record_id=${record_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+//comment
+
+export function getComment(id){
+    let url;
+    url = global.BASE_URL+`/get_comment.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

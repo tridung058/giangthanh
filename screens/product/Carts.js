@@ -63,7 +63,7 @@ export default class Carts extends Component{
                         all_amout: all_amout
                     });
                 })
-                .catch(err => console.log(err+'Lỗi'));
+                .catch(err => console.log(err+ 'Lỗi'));
             }
         })
         .catch(err => console.log(err));

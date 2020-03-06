@@ -7,8 +7,10 @@ import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 import AutoHeightWebView from 'react-native-autoheight-webview';
 
-import { getProductDetail, getOtherPro} from '../../src/api/apiProHot';
+import { getProductDetail, getOtherPro, postComment, getComment } from '../../src/api/apiProHot';
 import {getStorage, saveStorage} from '../../src/api/storage';
+
+import global from '../../src/api/global';
 
 let screenWidth = Dimensions.get('window').width;
 export default class ProductDetail extends Component{
@@ -31,9 +33,15 @@ export default class ProductDetail extends Component{
             name: '',
             email: '',
             re_code: '',
-            id: 0
+            id: 0,
+            is_login: false,
+            member: [],
+            list_comment: [],
+            list_sub_comment: [],
+            count_comment: 0
 
         }
+        //global.onSignIn = this.onSignIn.bind(this);
     }
 
     componentDidMount() {
@@ -70,6 +78,31 @@ export default class ProductDetail extends Component{
                 this.setState({ loading: false });
             });
 
+            getComment(id)
+            .then(resJSON => {
+                const {list_comment, list_sub_comment, count_comment, error } = resJSON;
+                
+                if(error == false){
+                    this.setState({
+                        list_comment: list_comment, 
+                        list_sub_comment: list_sub_comment,
+                        count_comment: count_comment,
+                        loading: false, 
+                        refreshing: false ,
+                        allow_more: false,
+                    });
+                }else{
+                    this.setState({ 
+                        loading: false, 
+                        allow_more: false
+                    });
+                }
+                    
+            }).catch(err => {
+                // console.log(err);
+                this.setState({ loading: false });
+            });
+
             getOtherPro(cat_id, id)
             .then(resJSON => {
                 const {other_pro, error } = resJSON;
@@ -92,7 +125,22 @@ export default class ProductDetail extends Component{
                 // console.log(err);
                 this.setState({ loading: false });
             });
+
+            getStorage('member')
+            .then((member)=>{
+                if(member !=''){
+                    this.setState({
+                        member:JSON.parse(member),
+                        is_login: true
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.log(err+ 'LOI');
+            })
+
         this.generateRandomString(3);
+
     }
 
     changeDes(change_des){
@@ -106,10 +154,7 @@ export default class ProductDetail extends Component{
                 })
             }
     }
-    // productDetail(id, cat_id){
-    //     this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
-    // }
-
+    
     generateRandomString(string_length)
     {
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -126,45 +171,75 @@ export default class ProductDetail extends Component{
     }
 
     sendComment(){
-        var { email, name,comment, code, re_code } = this.state;
+        var { email, name,comment, code, re_code, is_login, id, member } = this.state;
 
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         let number = /^[0-9 .]+$/;
-        if(comment == ''){
-            Alert.alert('Thông báo', 'Bạn vui lòng nhập bình luận.');
-            return;
-        }else if(name == ''){
-            Alert.alert('Thông báo','Vui lòng nhập tên');
-            return;
-        }else if (email == '') {
-            Alert.alert('Thông báo', 'Bạn vui lòng nhập email.');
-            return;
-        }else if(reg.test(email) === false){
-            Alert.alert('Thông báo', 'Email bạn nhập chưa hợp lệ.');
-            return;
-        }else if(re_code == ''){
-            Alert.alert('Thông báo', 'Vui lòng nhập mã bảo mật.');
-            return;
-        }else if(re_code !== code){
-            Alert.alert('Thông báo', 'Mã bảo mật bạn nhập chưa đúng');
-            return;
-        }else{
-            // send(name, phone, email, address, content)
-            // .then(resJSON => {
-            //     const {msg, error } = resJSON;
-            //     if(error == false){
-            //         Alert.alert(msg);
-            //         this.props.navigation.navigate('HomeScreen');
-            //     }else{
-            //         Alert.alert(msg);
-            //         return;
-            //     }	
-            // }).catch(err => {
-            //     this.setState({ loading: false });
-            // });
-            Alert.alert('Thông báo', 'Tính năng đang được cập nhật');
-            return;
+        switch(is_login){
+            case true:
+                if(comment == ''){
+                    Alert.alert('Thông báo', 'Bạn vui lòng nhập bình luận.');
+                    return;
+                }else if(re_code == ''){
+                    Alert.alert('Thông báo', 'Vui lòng nhập mã bảo mật.');
+                    return;
+                }else if(re_code !== code){
+                    Alert.alert('Thông báo', 'Mã bảo mật bạn nhập chưa đúng');
+                    return;
+                }else{
+                    postComment(member.name, member.email, comment, is_login, id)
+                    .then(resJSON => {
+                        const {msg, error } = resJSON;
+                        if(error == false){
+                            Alert.alert(msg);
+                            this.props.navigation.navigate('HomeScreen');
+                        }else{
+                            Alert.alert(msg);
+                            return;
+                        }	
+                    }).catch(err => {
+                        console.log(err+ 'LOI')
+                        this.setState({ loading: false });
+                    });
+                }
+            break;
+            case false:
+                if(comment == ''){
+                    Alert.alert('Thông báo', 'Bạn vui lòng nhập bình luận.');
+                    return;
+                }else if(name == ''){
+                    Alert.alert('Thông báo','Vui lòng nhập tên');
+                    return;
+                }else if (email == '') {
+                    Alert.alert('Thông báo', 'Bạn vui lòng nhập email.');
+                    return;
+                }else if(reg.test(email) === false){
+                    Alert.alert('Thông báo', 'Email bạn nhập chưa hợp lệ.');
+                    return;
+                }else if(re_code == ''){
+                    Alert.alert('Thông báo', 'Vui lòng nhập mã bảo mật.');
+                    return;
+                }else if(re_code !== code){
+                    Alert.alert('Thông báo', 'Mã bảo mật bạn nhập chưa đúng');
+                    return;
+                }else{
+                    postComment(name, email, comment, is_login, id)
+                    .then(resJSON => {
+                        const {msg, error } = resJSON;
+                        if(error == false){
+                            Alert.alert(msg);
+                            this.props.navigation.navigate('HomeScreen');
+                        }else{
+                            Alert.alert(msg);
+                            return;
+                        }	
+                    }).catch(err => {
+                        console.log(err+ 'LOI')
+                        this.setState({ loading: false });
+                    });
+                }
         }
+        
     }
 
     setModalVisible(visible){
@@ -175,35 +250,40 @@ export default class ProductDetail extends Component{
 
     addCart(){
         //Alert.alert(this.state.id);return;
-		if(this.state.amout < 1){
-			Alert.alert('Thông báo', 'Bạn vui lòng nhập số lượng!');
-			return false;
-		}
-		getStorage('cart')
-        .then(cart => {
-			var tmp = [];
-			var existID = false;
-            if(cart != ''){
-				var arrCart = JSON.parse(cart);
-				arrCart.map(c => {
-					if(c.id == this.state.id){
-						c.amout = parseInt(c.amout) + parseInt(this.state.amout);
-						existID = true;
-					}
-					tmp.push(c);
-				})
+        let {is_login} = this.state;
+        if(is_login === true){
+            if(this.state.amout < 1){
+                Alert.alert('Thông báo', 'Bạn vui lòng nhập số lượng!');
+                return false;
             }
-			if(existID == false){
-				tmp.push({
-					id: this.state.id,
-					amout: this.state.amout,
-				});
-			}
-			saveStorage('cart', JSON.stringify(tmp));
-        })
-        .catch(err => console.log(err+'Lỗi'));
-
-        this.setModalVisible(true)
+            getStorage('cart')
+            .then(cart => {
+                var tmp = [];
+                var existID = false;
+                if(cart != ''){
+                    var arrCart = JSON.parse(cart);
+                    arrCart.map(c => {
+                        if(c.id == this.state.id){
+                            c.amout = parseInt(c.amout) + parseInt(this.state.amout);
+                            existID = true;
+                        }
+                        tmp.push(c);
+                    })
+                }
+                if(existID == false){
+                    tmp.push({
+                        id: this.state.id,
+                        amout: this.state.amout,
+                    });
+                }
+                saveStorage('cart', JSON.stringify(tmp));
+            })
+            .catch(err => console.log(err+'Lỗi'));
+    
+            this.setModalVisible(true)
+        }else{
+            Alert.alert('Thông báo', 'Vui lòng đăng nhập để mua hàng');
+        }
     }
     gotoCart(){
         this.setModalVisible(!this.state.modalVisible);
@@ -222,6 +302,55 @@ export default class ProductDetail extends Component{
     
     render() {
         const {navigation} = this.props;
+        const {is_login, list_comment, list_sub_comment, count_comment } = this.state;
+        const memberComment = (
+            <View style={MainStyle.formComment}>
+                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60 }}  onChangeText={(comment) => this.setState({ comment })} value={this.state.comment}
+                    placeholder="Viết bình luận" multiline={true} 
+                />
+                <View style={{flexDirection:'row'}}>
+                    <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10, width:(screenWidth-20)/2.5 }}  onChangeText={(re_code) => this.setState({ re_code })} value={this.state.re_code}
+                        placeholder="Nhập mã bảo mật*" multiline={false} 
+                    />
+                    <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10,width:(screenWidth-20)/7,marginLeft:5,marginRight:5,textAlign:'center', fontSize:13, fontFamily:'Roboto' }}editable = {false} value={this.state.code}
+                    />
+                    <TouchableOpacity onPress={ () => this.sendComment()} style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10,}}>
+                        <View >
+                            <Text style={{fontFamily:'RobotoBold', color:'#ffffff'}}>Gửi bình luận</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View> 
+        )
+
+        const guestComment = (
+            <View style={MainStyle.formComment}>
+                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60 }}  onChangeText={(comment) => this.setState({ comment })} value={this.state.comment}
+                    placeholder="Viết bình luận" multiline={true} 
+                />
+                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(name) => this.setState({ name })} value={this.state.name}
+                    placeholder="Tên*" multiline={false} 
+                />
+                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(email) => this.setState({ email })} value={this.state.email}
+                    placeholder="Email*" multiline={false} 
+                />
+                <View style={{flexDirection:'row'}}>
+                    <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10, width:(screenWidth-20)/2.5 }}  onChangeText={(re_code) => this.setState({ re_code })} value={this.state.re_code}
+                        placeholder="Nhập mã bảo mật*" multiline={false} 
+                    />
+                    <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10,width:(screenWidth-20)/7,marginLeft:5,marginRight:5,textAlign:'center', fontSize:13, fontFamily:'Roboto' }}editable = {false} value={this.state.code}
+                    />
+                    <TouchableOpacity onPress={ () => this.sendComment()} style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10,}}>
+                        <View >
+                            <Text style={{fontFamily:'RobotoBold', color:'#ffffff'}}>Gửi bình luận</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View> 
+        )
+
+        const mainComment = is_login === true?memberComment:guestComment;
+
         return(
             <Container>
                 <HeaderBase page="product_detail" title={''} navigation={navigation} />
@@ -325,6 +454,52 @@ export default class ProductDetail extends Component{
                                     </View>
 
                                     <View>
+                                        <View>
+                                            <View>
+                                                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', paddingVertical:5}}>
+                                                    <Icon type="FontAwesome" name="comments-o" style={{fontSize:20}} />
+                                                    <Text style={{fontFamily:'RobotoBold', paddingLeft:10, flex:1}}>ĐÁNH GIÁ VÀ NHẬN XÉT</Text>
+                                                    <View/>
+                                                </View>
+                                                <Text style={{fontFamily:'Roboto',paddingBottom:10, fontSize:15}}>Danh sách thảo luận ({count_comment})</Text>
+                                            </View>
+                                            {list_comment.map((item, i) =>{
+                                                return(
+                                                    <View key={i}>
+                                                        <View style={MainStyle.commentStyle}>
+                                                            <Image style={{ width: screenWidth/7, height:(screenWidth/7)}} source={require('./../../assets/gus_cm.png')}/>
+                                                            <View style={{flex:1, paddingHorizontal:15}}>
+                                                                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                                                                    <Text style={{fontFamily:'RobotoBold', color:'#000000',}}>{item.name} - </Text>
+                                                                    <Text style={{fontFamily:'Roboto', color:'#333333', flex: 1}}>{item.time}</Text>
+                                                                    <View/>
+                                                                </View>
+                                                                <Text>{item.comment}</Text>
+                                                            </View>
+                                                            <View/>
+                                                        </View>
+                                                        {list_sub_comment[item.id].length != 0?
+                                                        <View>
+                                                            {list_sub_comment[item.id].map((res,i2)=>{return(
+                                                                <View key={i2} style={MainStyle.subCommentStyle}>
+                                                                    <Image style={{ width: screenWidth/7, height:(screenWidth/7)}} source={require('./../../assets/member.png')}/>
+                                                                    <View style={{flex:1, paddingHorizontal:15}}>
+                                                                        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                                                                            <Text style={{fontFamily:'RobotoBold' , color:'#000000'}}>{res.sub_name} - </Text>
+                                                                            <Text style={{fontFamily:'Roboto', color:'#333333', flex: 1}}>{res.sub_time}</Text>
+                                                                            <View/>
+                                                                        </View>
+                                                                        <Text>{res.sub_comment}</Text>
+                                                                    </View>
+                                                                    <View/>
+                                                                </View>
+                                                            )})}
+                                                        </View>:null
+                                                        }
+                                                        
+                                                    </View>
+                                                )})}
+                                        </View>
                                         <View style={MainStyle.textComment}>
                                             <View style={{width:(screenWidth-20)/4, borderBottomColor:'#eb1a20', borderBottomWidth:1}}>
                                                 <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', fontSize:18}}>BÌNH LUẬN</Text>
@@ -333,34 +508,7 @@ export default class ProductDetail extends Component{
                                                 
                                             </View>
                                         </View>
-
-                                        {/* <View style={MainStyle.formComment}>
-                                            <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60 }}  onChangeText={(comment) => this.setState({ comment })} value={this.state.comment}
-
-                                        <View style={MainStyle.formComment}>
-                                            <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60 }}  onChangeText={(comment) => this.setState({ comment })}
-
-                                                placeholder="Viết bình luận" multiline={true} 
-                                            />
-                                            <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(name) => this.setState({ name })} value={this.state.name}
-                                                placeholder="Tên*" multiline={false} 
-                                            />
-                                            <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(email) => this.setState({ email })} value={this.state.email}
-                                                placeholder="Email*" multiline={false} 
-                                            />
-                                            <View style={{flexDirection:'row'}}>
-                                                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10, width:(screenWidth-20)/2.5 }}  onChangeText={(re_code) => this.setState({ re_code })} value={this.state.re_code}
-                                                    placeholder="Nhập mã bảo mật*" multiline={false} 
-                                                />
-                                                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10,width:(screenWidth-20)/7,marginLeft:5,marginRight:5,textAlign:'center', fontSize:13, fontFamily:'Roboto' }}editable = {false} value={this.state.code}
-                                                />
-                                                <TouchableOpacity onPress={ () => this.sendComment()} style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10,}}>
-                                                    <View >
-                                                        <Text style={{fontFamily:'RobotoBold', color:'#ffffff'}}>Gửi bình luận</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>  */}
+                                        {mainComment}
                                     </View>
                                 </View>
                            </View>

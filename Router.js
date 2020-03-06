@@ -16,6 +16,7 @@ import Member from './screens/member/Member';
 import ProductHot from './screens/product/ProductHot';
 import CatMachin from './screens/category/CatMachin';
 import Carts from './screens/product/Carts';
+import Authentication from './screens/authentication/Authentication';
 export const GiangThanhStack = createStackNavigator({
     HomeScreen: {
         screen: Home
@@ -61,6 +62,9 @@ export const GiangThanhStack = createStackNavigator({
     },
     CartsScreen: {
         screen: Carts
+    },
+    AuthenticationScreen: {
+        screen: Authentication
     },
 });
 

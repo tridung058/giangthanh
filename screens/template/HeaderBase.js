@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { 
-    Text, View, Image, Dimensions , Alert, TextInput, FlatList
+    Text, View, Image, Dimensions , Alert, TextInput, FlatList, TouchableOpacity
 } from 'react-native';
 import { Container, Icon, CheckBox } from "native-base";
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Swiper from 'react-native-swiper';
 //import ViewPager from '@react-native-community/viewpager';
 
@@ -93,6 +92,10 @@ export default class HeaderBase extends Component {
             this.search();
           }
         );
+    }
+    goBack(){
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
     render() {
@@ -484,6 +487,20 @@ export default class HeaderBase extends Component {
                                     </View>
                                 </View>
                             );
+                            case 'authentication':
+                            return (
+                                <View style={ MainStyle.heightHeaderAuthentication }>
+                                    <View style={MainStyle.SliderContainerStyle}>
+                                        <View>
+                                            <Image style={MainStyle.bgHeaderLogin} source={require('./../../assets/bg_login.png')}/>
+                                        </View>
+                                        <TouchableOpacity style={{position:'absolute', top:40,left:20}} onPress={this.goBack.bind(this)}>
+                                            <Icon type="Feather" name="x" style={{ color: '#ffffff', fontSize:35}} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            );
+                            
             default:
                 // return (
                 //     <View >
