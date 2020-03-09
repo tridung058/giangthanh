@@ -113,3 +113,13 @@ export function getComment(id){
     return fetch(url)
     .then(res => res.json());
 };
+
+//complete order
+
+export function getOrder(ids, member_id){
+    let url;
+    url = global.BASE_URL+`/complete_order.api?ids=${ids}&member_id=${member_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

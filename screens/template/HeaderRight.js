@@ -38,7 +38,13 @@ export default class HeaderRight extends Component{
                     <Icon type="Entypo" name="dots-three-horizontal" style={{ color: '#ffffff', fontSize:30,paddingLeft:15, paddingRight:10 }} /> */}
                 </View>
             )
-        }else {
+        }else if(this.props.page && this.props.page == 'carts'){
+            return (
+                <View style={MainStyle.leftProductDetail}>
+                        
+                </View>
+            )
+        } else {
             return (
                 <TouchableOpacity onPress={this.gotoCart.bind(this)}>
                     <View>

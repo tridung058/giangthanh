@@ -5,7 +5,7 @@ import MainStyle from '../../styles/MainStyle';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 
-import { getProductHot} from '../../src/api/apiProHot';
+import { getProductHot, getOrder} from '../../src/api/apiProHot';
 import { getCart} from '../../src/api/apiCart';
 import {getStorage, saveStorage} from '../../src/api/storage';
 import global from '../../src/api/global';
@@ -27,7 +27,9 @@ export default class Carts extends Component{
 			page: 1,
 			refreshing: false,
             loading: false,
-            all_amout: 0
+            all_amout: 0,
+            member: [],
+            is_login: false
         }
     }
 
@@ -38,6 +40,20 @@ export default class Carts extends Component{
     makeRemoteRequest = () => {
         this.arr = [];
         this.setState({ loading: true });
+
+        getStorage('member')
+            .then((member)=>{
+                if(member !=''){
+                    this.setState({
+                        member:JSON.parse(member),
+                        is_login: true
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.log(err+ 'LOI');
+            })
+
         getStorage('cart')
         .then(cart => {
             if(cart != ''){
@@ -51,7 +67,7 @@ export default class Carts extends Component{
                     else
                         ids = ids + '|' + c.id+','+c.amout;
                 });
-                getCart(ids, this.state.page)
+                getCart(ids, this.state.member.id)
                 .then(resJSON => {
                     const {list, total_money_cart, all_amout } = resJSON;
                     this.arr = list.concat(this.arr);
@@ -138,6 +154,38 @@ export default class Carts extends Component{
             this.makeRemoteRequest();
     }
 
+    completeOrder(){
+        getStorage('cart')
+        .then(cart => {
+            if(cart != ''){
+                this.setState({cart});
+
+                var arrCart = JSON.parse(cart);
+                var ids = '';
+				arrCart.map(c => {
+                    if(ids == '')
+                        ids = c.id+','+c.amout;
+                    else
+                        ids = ids + '|' + c.id+','+c.amout;
+                });
+                getOrder(ids, this.state.member.id )
+                .then(resJSON => {
+                    const {error, msg } = resJSON;
+                    if(error == false){
+                        Alert.alert(msg);
+                        saveStorage('cart', '');
+                        this.props.navigation.navigate('HomeScreen');
+                    }else{
+                        Alert.alert(msg);
+                        return;
+                    }	
+                })
+                .catch(err => console.log(err+ 'Lỗi'));
+            }
+        })
+        .catch(err => console.log(err));
+    }
+
 	renderLoading  = () => {
         if (!this.state.loading) return null;
 
@@ -200,10 +248,10 @@ export default class Carts extends Component{
                             <Text style={{ paddingRight:10, color:'#000'}}>Đã bao gồm VAT</Text>
                         </View>
                     </View>
-                    <View style={MainStyle.toMoney}>
+                    <TouchableOpacity style={MainStyle.toMoney} onPress={() =>{this.completeOrder()}}>
                         <Icon type="Ionicons" name="ios-checkmark-circle-outline" style={{ color: '#ffffff',fontSize:20,paddingRight:5}} />
                         <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Hoàn tất đơn hàng</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </Container>
         );
