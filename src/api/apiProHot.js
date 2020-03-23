@@ -123,3 +123,45 @@ export function getOrder(ids, member_id){
     return fetch(url)
     .then(res => res.json());
 };
+// viewed 
+export function getViewed(str, page){
+    let url;
+    url = global.BASE_URL+`/get_viewed.api?str=${str}&page=${page}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+// get order 
+export function getOrderMannager(id_member, order_id){
+    let url;
+    url = global.BASE_URL+`/get_order_mannager.api?id=${id_member}&order_id=${order_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+// get notification
+export function getProductNotification(id_member){
+    let url;
+    url = global.BASE_URL+`/get_product_notification.api?id=${id_member}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+// get count notification
+export function getCountNotification(id_member){
+    let url;
+    url = global.BASE_URL+`/get_count_notification.api?id=${id_member}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+// update notification
+export function updateNotification(id_member){
+    let url;
+    url = global.BASE_URL+`/update_notification.api?id=${id_member}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};

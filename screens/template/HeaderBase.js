@@ -100,428 +100,153 @@ export default class HeaderBase extends Component {
 
     render() {
         const { navigation, page, title, heading } = this.props;
-        switch (page) {
-            case 'home':
-                return (
-                    <View >
-                        <View style={MainStyle.SliderContainerStyle}>
-                            <Image style={MainStyle.bgHeaderHome} source={require('./../../assets/bg_home.png')}/>
-                                <View style={MainStyle.itemHeagerHome}>
-                                    <View style={MainStyle.headerItem}>
-                                        <View style={MainStyle.headerHomeLeft}>
-                                            <HeaderLeft page={page} title={title} navigation={navigation} />
-                                        </View>
-                                        <View style={MainStyle.headerHomeCenter}>
-                                            <HeaderCenter page={page} title={title} navigation={navigation} />
-                                        </View>
-                                        <View style={MainStyle.headerHomeRight}>
-                                            <HeaderRight page={page} title={title} navigation={navigation} />
-                                        </View>
-                                    </View>
-                                    <View style={MainStyle.searchBox}>
-                                        <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 8, left: 30,zIndex:2 }} />
-                                        <TextInput style={{ height: 40, backgroundColor:'#ffffff', width:ScreenWidth - 40, borderRadius:3, fontFamily:'Roboto', paddingLeft:35 }} placeholderTextColor='#000000'
-                                        onChangeText={search => this.setSearch(search)}
-                                        value={this.state.search}
-                                        placeholder={'Vui lòng nhập mã hoặc tên sản phẩm'} />
-                                    </View>
-                                    <View >
-                                        { this.state.count > 0 ? 
-                                            <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight-(ScreenHeight/3.7),width: ScreenWidth,marginTop:10 }}
-                                                data={this.state.list_search}
-                                                renderItem={({ item }) => (
-                                                    <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
-                                                        <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
-                                                            <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                )}
-                                                // numColumns={6}
-                                            />
-                                            :
-                                            null
-                                        }
-                                    </View>
-                                    <View style={MainStyle.slideBg}>
-                                        <Swiper autoplay={true}>
-                                            {this.state.list.map((item, i) =>{ return(
-                                                <Image key={i} style={{width:ScreenWidth-40, height:(ScreenWidth/3), borderRadius:8}}  source={{uri:item.image}}/>
-                                            )})}
-                                        </Swiper >
-                                    </View>
-                                    <View style={MainStyle.menu}>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatScreen')}}>
-                                            <View>
-                                                <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cat_b.png')}/>
-                                            </View>
-                                            <Text style={MainStyle.textMenu}>Danh mục</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatalogScreen')}}>
-                                            <View >
-                                                <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_catalog.png')}/>
-                                            </View>
-                                            <Text style={MainStyle.textMenu}>Catalog</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('SearchScreen')}}>
-                                            <View >
-                                                <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cart_b.png')}/>
-                                            </View>
-                                            <Text style={MainStyle.textMenu}>Đơn hàng</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('NewsScreen')}}>
-                                            <View >
-                                                <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_news.png')}/>
-                                            </View>
-                                            <Text style={MainStyle.textMenu}>Tin tức</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('ContactScreen')}}>
-                                            <View >
-                                                <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_contact.png')}/>
-                                            </View>
-                                            <Text style={MainStyle.textMenu}>Liên hệ</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                         </View>
-                    </View>
-                );
-                case 'category':
-                return (
-                    <View style={ MainStyle.heightHeader }>
-                        <View style={MainStyle.SliderContainerStyle}>
-                        <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                            <View style={MainStyle.itemHeagerHomeSearch}>
-                                <View style={MainStyle.headerItemCat}>
-                                    <View style={MainStyle.headerHomeLeftCat}>
+        if(page == 'home'){
+            return (
+                <View >
+                    <View style={MainStyle.SliderContainerStyle}>
+                        <Image style={MainStyle.bgHeaderHome} source={require('./../../assets/bg_home.png')}/>
+                            <View style={MainStyle.itemHeagerHome}>
+                                <View style={MainStyle.headerItem}>
+                                    <View style={MainStyle.headerHomeLeft}>
                                         <HeaderLeft page={page} title={title} navigation={navigation} />
                                     </View>
-                                    <View style={MainStyle.headerHomeCenterCat}>
+                                    <View style={MainStyle.headerHomeCenter}>
                                         <HeaderCenter page={page} title={title} navigation={navigation} />
                                     </View>
-                                    <View style={MainStyle.headerHomeRightCat}>
+                                    <View style={MainStyle.headerHomeRight}>
                                         <HeaderRight page={page} title={title} navigation={navigation} />
                                     </View>
                                 </View>
-                            </View>
-                        </View>
-                    </View>
-                );
-                case 'cat':
-                return (
-                    <View style={ MainStyle.heightHeader }>
-                        <View style={MainStyle.SliderContainerStyle}>
-                        <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                            <View style={MainStyle.itemHeagerHomeSearch}>
-                                <View style={MainStyle.headerItemCat}>
-                                    <View style={MainStyle.headerHomeLeftCat}>
-                                        <HeaderLeft page={page} title={title} navigation={navigation} />
-                                    </View>
-                                    <View style={MainStyle.headerHomeCenterCat}>
-                                        <HeaderCenter page={page} title={title} navigation={navigation} />
-                                    </View>
-                                    <View style={MainStyle.headerHomeRightCat}>
-                                        <HeaderRight page={page} title={title} navigation={navigation} />
-                                    </View>
+                                <View style={MainStyle.searchBox}>
+                                    <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 8, left: 30,zIndex:2 }} />
+                                    <TextInput style={{ height: 40, backgroundColor:'#ffffff', width:ScreenWidth - 40, borderRadius:3, fontFamily:'Roboto', paddingLeft:35 }} placeholderTextColor='#000000'
+                                    onChangeText={search => this.setSearch(search)}
+                                    value={this.state.search}
+                                    placeholder={'Vui lòng nhập mã hoặc tên sản phẩm'} />
                                 </View>
-                            </View>
-                        </View>
-                    </View>
-                );
-                case 'cat_machine':
-                return (
-                    <View style={ MainStyle.heightHeader }>
-                        <View style={MainStyle.SliderContainerStyle}>
-                        <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                            <View style={MainStyle.itemHeagerHomeSearch}>
-                                <View style={MainStyle.headerItemCat}>
-                                    <View style={MainStyle.headerHomeLeftCat}>
-                                        <HeaderLeft page={page} title={title} navigation={navigation} />
-                                    </View>
-                                    <View style={MainStyle.headerHomeCenterCat}>
-                                        <HeaderCenter page={page} title={title} navigation={navigation} />
-                                    </View>
-                                    <View style={MainStyle.headerHomeRightCat}>
-                                        <HeaderRight page={page} title={title} navigation={navigation} />
-                                    </View>
+                                <View >
+                                    { this.state.count > 0 ? 
+                                        <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight-(ScreenHeight/3.7),width: ScreenWidth,marginTop:10 }}
+                                            data={this.state.list_search}
+                                            renderItem={({ item }) => (
+                                                <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                                    <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                                        <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            )}
+                                            // numColumns={6}
+                                        />
+                                        :
+                                        null
+                                    }
                                 </View>
-                            </View>
-                        </View>
-                    </View>
-                );
-                case 'news':
-                return (
-                    <View style={ MainStyle.heightHeader }>
-                        <View style={MainStyle.SliderContainerStyle}>
-                        <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                            <View style={MainStyle.itemHeagerHomeSearch}>
-                                <View style={MainStyle.headerItemCat}>
-                                    <View style={MainStyle.headerHomeLeftCat}>
-                                        <HeaderLeft page={page} title={title} navigation={navigation} />
-                                    </View>
-                                    <View style={MainStyle.headerHomeCenterCat}>
-                                        <HeaderCenter page={page} title={title} navigation={navigation} />
-                                    </View>
-                                    <View style={MainStyle.headerHomeRightCat}>
-                                        <HeaderRight page={page} title={title} navigation={navigation} />
-                                    </View>
+                                <View style={MainStyle.slideBg}>
+                                    <Swiper autoplay={true}>
+                                        {this.state.list.map((item, i) =>{ return(
+                                            <Image key={i} style={{width:ScreenWidth-40, height:(ScreenWidth/3), borderRadius:8}}  source={{uri:item.image}}/>
+                                        )})}
+                                    </Swiper >
                                 </View>
-                            </View>
-                        </View>
-                    </View>
-                );
-                case 'news_detail':
-                    return (
-                        <View style={ MainStyle.heightHeader }>
-                            <View style={MainStyle.SliderContainerStyle}>
-                            <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                <View style={MainStyle.itemHeagerHomeSearch}>
-                                    <View style={MainStyle.headerItemCat}>
-                                        <View style={MainStyle.headerHomeLeftCat}>
-                                            <HeaderLeft page={page} title={title} navigation={navigation} />
-                                        </View>
-                                        <View style={MainStyle.headerHomeCenterCat}>
-                                            <HeaderCenter page={page} title={title} navigation={navigation} />
-                                        </View>
-                                        <View style={MainStyle.headerHomeRightCat}>
-                                            <HeaderRight page={page} title={title} navigation={navigation} />
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                    );
-                    case 'product_detail':
-                    return (
-                        <View style={ MainStyle.heightHeader }>
-                            <View style={MainStyle.SliderContainerStyle}>
-                            <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                <View style={MainStyle.itemHeagerHomeSearch}>
-                                    <View style={MainStyle.headerItemCat}>
-                                        <View style={MainStyle.headerHomeLeftProduct}>
-                                            <HeaderLeft page={page} title={title} navigation={navigation} />
-                                        </View>
-                                        <View style={MainStyle.headerHomeCenterProduct}>
-                                            <HeaderCenter page={page} title={title} navigation={navigation} />
-                                        </View>
-                                        <View style={MainStyle.headerHomeRightProduct}>
-                                            <HeaderRight page={page} title={title} navigation={navigation} />
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                    );
-                    case 'catalog':
-                        return (
-                            <View style={ MainStyle.heightHeader }>
-                                <View style={MainStyle.SliderContainerStyle}>
-                                <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                    <View style={MainStyle.itemHeagerHomeSearch}>
-                                        <View style={MainStyle.headerItemCat}>
-                                            <View style={MainStyle.headerHomeLeftCat}>
-                                                <HeaderLeft page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeCenterCat}>
-                                                <HeaderCenter page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeRightCat}>
-                                                <HeaderRight page={page} title={title} navigation={navigation} />
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        );
-                        case 'catalog_detail':
-                        return (
-                            <View style={ MainStyle.heightHeader }>
-                                <View style={MainStyle.SliderContainerStyle}>
-                                <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                    <View style={MainStyle.itemHeagerHomeSearch}>
-                                        <View style={MainStyle.headerItemCat}>
-                                            <View style={MainStyle.headerHomeLeftCat}>
-                                                <HeaderLeft page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeCenterCat}>
-                                                <HeaderCenter page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeRightCat}>
-                                                <HeaderRight page={page} title={title} navigation={navigation} />
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        );
-                        case 'contact':
-                        return (
-                            <View style={ MainStyle.heightHeader }>
-                                <View style={MainStyle.SliderContainerStyle}>
-                                <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                    <View style={MainStyle.itemHeagerHomeSearch}>
-                                        <View style={MainStyle.headerItemCat}>
-                                            <View style={MainStyle.headerHomeLeftCat}>
-                                                <HeaderLeft page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeCenterCat}>
-                                                <HeaderCenter page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeRightCat}>
-                                                <HeaderRight page={page} title={title} navigation={navigation} />
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        );
-
-                        case 'search':
-                        return (
-                            <View style={ MainStyle.heightHeader } >
-                                <View style={MainStyle.SliderContainerStyle}>
-                                    <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                    <View style={MainStyle.itemHeagerHomeSearch}>
-                                        <View style={MainStyle.headerItemCat}>
-                                            <View style={MainStyle.headerHomeLeftCat}>
-                                                <HeaderLeft page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeCenterCat}>
-                                                <HeaderCenter page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeRightCat}>
-                                                <HeaderRight page={page} title={title} navigation={navigation} />
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        );
-
-                        case 'notifi':
-                        return (
-                            <View style={ MainStyle.heightHeader }>
-                                <View style={MainStyle.SliderContainerStyle}>
-                                <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                    <View style={MainStyle.itemHeagerHomeSearch}>
-                                        <View style={MainStyle.headerItemCat}>
-                                            <View style={MainStyle.headerHomeLeftCat}>
-                                                <HeaderLeft page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeCenterCat}>
-                                                <HeaderCenter page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeRightCat}>
-                                                <HeaderRight page={page} title={title} navigation={navigation} />
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        );
-
-                        case 'member':
-                        return (
-                            <View style={ MainStyle.heightHeader }>
-                                <View style={MainStyle.SliderContainerStyle}>
-                                <View>
-                                    <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                    </View>
-                                    <View style={MainStyle.itemHeagerHomeSearch}>
-                                        <View style={MainStyle.headerItemCat}>
-                                            <View style={MainStyle.headerHomeLeftCat}>
-                                                <HeaderLeft page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeCenterCat}>
-                                                <HeaderCenter page={page} title={title} navigation={navigation} />
-                                            </View>
-                                            <View style={MainStyle.headerHomeRightCat}>
-                                                <HeaderRight page={page} title={title} navigation={navigation} />
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        );
-                        case 'carts':
-                            return (
-                                <View style={ MainStyle.heightHeader }>
-                                    <View style={MainStyle.SliderContainerStyle}>
-                                    <View>
-                                        <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                                        </View>
-                                        <View style={MainStyle.itemHeagerHomeSearch}>
-                                            <View style={MainStyle.headerItemCat}>
-                                                <View style={MainStyle.headerHomeLeftCat}>
-                                                    <HeaderLeft page={page} title={title} navigation={navigation} />
-                                                </View>
-                                                <View style={MainStyle.headerHomeCenterCat}>
-                                                    <HeaderCenter page={page} title={title} navigation={navigation} />
-                                                </View>
-                                                <View style={MainStyle.headerHomeRightCat}>
-                                                    <HeaderRight page={page} title={title} navigation={navigation} />
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            );
-                            case 'authentication':
-                            return (
-                                <View style={ MainStyle.heightHeaderAuthentication }>
-                                    <View style={MainStyle.SliderContainerStyle}>
+                                <View style={MainStyle.menu}>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatScreen')}}>
                                         <View>
-                                            <Image style={MainStyle.bgHeaderLogin} source={require('./../../assets/bg_login.png')}/>
+                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cat_b.png')}/>
                                         </View>
-                                        <TouchableOpacity style={{position:'absolute', top:40,left:20}} onPress={this.goBack.bind(this)}>
-                                            <Icon type="Feather" name="x" style={{ color: '#ffffff', fontSize:35}} />
-                                        </TouchableOpacity>
-                                    </View>
+                                        <Text style={MainStyle.textMenu}>Danh mục</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatalogScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_catalog.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Catalog</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('OrderMemberScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cart_b.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Đơn hàng</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('NewsScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_news.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Tin tức</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('ContactScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_contact.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Liên hệ</Text>
+                                    </TouchableOpacity>
                                 </View>
-                            );
-                            
-            default:
-                // return (
-                //     <View >
-                //         <View style={MainStyle.SliderContainerStyle}>
-                //             <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
-                //             <View style={MainStyle.itemHeagerHome}>
-                //                 <View style={MainStyle.headerItem}>
-                //                     <View style={MainStyle.headerHomeLeft}>
-                //                         <HeaderLeft page={page} title={title} navigation={navigation} />
-                //                     </View>
-                //                     <View style={MainStyle.headerHomeCenter}>
-                //                         <HeaderCenter page={page} title={title} navigation={navigation} />
-                //                     </View>
-                //                     <View style={MainStyle.headerHomeRight}>
-                //                         <HeaderRight page={page} title={title} navigation={navigation} />
-                //                     </View>
-                //                 </View>
-                //             </View>
-                //         </View>
-                //     </View>
-                // );
+                            </View>
+                     </View>
+                </View>
+            );
+        }else if(page == 'category' || page == 'cat' || page == 'cat_machine' || page == 'news'
+        || page == 'news_detail'|| page == 'product_detail' || page == 'catalog' ||
+         page == 'catalog_detail' || page == 'contact' || page == 'search' || page == 'notifi'
+        || page == 'member' || page == 'carts' || page == 'info_member' || page == 'order_member'
+        || page == 'order_member_detail' || page == 'change_pass_word' || page == 'forget_password'){
+            return (
+                <View style={ MainStyle.heightHeader }>
+                    <View style={MainStyle.SliderContainerStyle}>
+                    <View>
+                                <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                                </View>
+                        <View style={MainStyle.itemHeagerHomeSearch}>
+                            <View style={MainStyle.headerItemCat}>
+                                <View style={MainStyle.headerHomeLeftCat}>
+                                    <HeaderLeft page={page} title={title} navigation={navigation} />
+                                </View>
+                                <View style={MainStyle.headerHomeCenterCat}>
+                                    <HeaderCenter page={page} title={title} navigation={navigation} />
+                                </View>
+                                <View style={MainStyle.headerHomeRightCat}>
+                                    <HeaderRight page={page} title={title} navigation={navigation} />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            );
+        }else if(page == 'product_detail'){
+            return (
+                <View style={ MainStyle.heightHeader }>
+                    <View style={MainStyle.SliderContainerStyle}>
+                    <View>
+                            <Image style={MainStyle.bgHeaderCategory} source={require('./../../assets/bg_cat_hd.png')}/>
+                            </View>
+                        <View style={MainStyle.itemHeagerHomeSearch}>
+                            <View style={MainStyle.headerItemCat}>
+                                <View style={MainStyle.headerHomeLeftProduct}>
+                                    <HeaderLeft page={page} title={title} navigation={navigation} />
+                                </View>
+                                <View style={MainStyle.headerHomeCenterProduct}>
+                                    <HeaderCenter page={page} title={title} navigation={navigation} />
+                                </View>
+                                <View style={MainStyle.headerHomeRightProduct}>
+                                    <HeaderRight page={page} title={title} navigation={navigation} />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            );
+        }else if(page == 'authentication'){
+            return (
+                <View style={ MainStyle.heightHeaderAuthentication }>
+                    <View style={MainStyle.SliderContainerStyle}>
+                        <View>
+                            <Image style={MainStyle.bgHeaderLogin} source={require('./../../assets/bg_login.png')}/>
+                        </View>
+                        <TouchableOpacity style={{position:'absolute', top:40,left:20}} onPress={this.goBack.bind(this)}>
+                            <Icon type="Feather" name="x" style={{ color: '#ffffff', fontSize:35}} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            );
         }
 
      }

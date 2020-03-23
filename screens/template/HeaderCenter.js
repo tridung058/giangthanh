@@ -75,7 +75,8 @@ export default class HeaderCenter extends Component{
                         <Image style={MainStyle.logoHome} source={require('./../../assets/logo.png')}/>
                     </View>
                 )
-            }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'cat_machine' || this.props.page == 'news' || this.props.page == 'news_detail' || this.props.page == 'catalog' || this.props.page == 'catalog_detail'|| this.props.page == 'search'|| this.props.page == 'notifi')){
+            }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'cat_machine' || this.props.page == 'news' || this.props.page == 'news_detail' || this.props.page == 'catalog' 
+            || this.props.page == 'catalog_detail'|| this.props.page == 'search' )){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
                         <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 5, left: 20,zIndex:2 }} />
@@ -91,10 +92,46 @@ export default class HeaderCenter extends Component{
                             <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Giỏ hàng ({all_amout.toString()})</Text>
                     </View>
                 )
-            }else if(this.props.page && (this.props.page == 'member')){
+            }else if(this.props.page && (this.props.page == 'member' )){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
                             <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Cá Nhân</Text>
+                    </View>
+                )
+            }else if(this.props.page && (this.props.page == 'info_member' )){
+                return (
+                    <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
+                            <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Thông tin tài khoản</Text>
+                    </View>
+                )
+            }else if( this.props.page == 'order_member'){
+                return (
+                    <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
+                            <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Đơn hàng của tôi</Text>
+                    </View>
+                )
+            }else if( this.props.page == 'order_member_detail'){
+                return (
+                    <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
+                            <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Chi tiết đơn hàng</Text>
+                    </View>
+                )
+            }else if( this.props.page == 'change_pass_word'){
+                return (
+                    <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
+                            <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Đổi mật khẩu</Text>
+                    </View>
+                )
+            }else if( this.props.page == 'notifi'){
+                return (
+                    <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
+                            <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Thông báo</Text>
+                    </View>
+                )
+            }else if( this.props.page == 'forget_password'){
+                return (
+                    <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
+                            <Text style={{fontFamily:'RobotoBold',color:'#fff', fontSize:16, paddingTop:10}}>Quên mật khẩu</Text>
                     </View>
                 )
             }else if(this.props.page && (this.props.page == 'product_detail')){

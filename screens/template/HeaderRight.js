@@ -27,6 +27,11 @@ export default class HeaderRight extends Component{
         if(this.props.page && this.props.page == 'product_detail'){
             return (
                 <View style={MainStyle.leftProductDetail}>
+                     <TouchableOpacity onPress={this.gotoCart.bind(this)}>
+                        <View>
+                            <Image style={MainStyle.icon_cart} source={require('./../../assets/icon_cart.png')}/>
+                        </View>
+                    </TouchableOpacity>
                         
                     {/* <Icon type="Ionicons" name="md-search" style={{ color: '#ffffff',fontSize:30, paddingRight:10 }} />
                 

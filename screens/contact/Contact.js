@@ -237,7 +237,7 @@ export default class Contact extends Component{
                                             />
                                             <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10,width:(screenWidth-20)/5,marginLeft:5,marginRight:5 }}editable = {false} value={this.state.code}
                                             />
-                                            <View style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10, position:'absolute', right:0, height:30, marginBottom:40}}>
+                                            <View style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10, position:'absolute', right:0, paddingVertical:10, marginBottom:40}}>
                                                <TouchableOpacity onPress={()=>this.sendContact()}>
                                                     <Text style={{fontFamily:'RobotoBold', color:'#ffffff'}}>Gửi liên hệ</Text>
                                                 </TouchableOpacity>

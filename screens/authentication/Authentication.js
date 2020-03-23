@@ -10,6 +10,10 @@ import { saveStorage, getStorage } from '../../src/api/storage';
 import {signUp, signIn} from '../../src/api/apiMember';
 import global from '../../src/api/global';
 
+import { registerForPushNotificationsAsync } from './../../src/api/registerForPushNotificationsAsync';
+import { Notifications } from 'expo';
+import Constants from 'expo-constants';
+
 let screenWidth = Dimensions.get('window').width;
 export default class Authentication extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -32,16 +36,40 @@ export default class Authentication extends Component{
             btnSignIn: 'ĐĂNG NHẬP',
             password_si: '',
             email_si: '',
-            type_si: 1
+            type_si: 1,
+            token: '',
         }
     }
 
-    componentDidMount() {
-        let level = this.state.level;
-    
-       // this.makeRemoteRequest(level);
-        
+    async componentDidMount() {
+        getStorage('member')
+        .then(member => { 
+            if(member != '')
+                this.gotoHomeScreen();
+            else{
+                registerForPushNotificationsAsync();
+            }
+        });
+
+        try {
+            if (!Constants.isDevice) {
+                var token = '';
+            }else{
+                var token = await Notifications.getExpoPushTokenAsync();
+            }
+
+            this.setState({token});
+            
+        } catch (e) {
+            console.log('Error');
+        }
     }
+
+    gotoHomeScreen() {
+        this.props.navigation.navigate('HomeScreen');
+            
+    }
+
 
     makeRemoteRequest = (level) => {
 
@@ -123,7 +151,7 @@ export default class Authentication extends Component{
     }
 
     onSignIn(){
-        var { email_si, password_si, type_si } = this.state;
+        var { email_si, password_si, type_si, token } = this.state;
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if (email_si == '') {
             Alert.alert('Thông báo', 'Bạn vui lòng nhập email.');
@@ -140,7 +168,7 @@ export default class Authentication extends Component{
 
         this.setState({ btnSignIn: 'ĐANG XỬ LÝ...' });
 
-        signIn(email_si, password_si, type_si)
+        signIn(email_si, password_si, type_si, token)
         .then((resJSON) => {
             if (resJSON.error == false) {
                 saveStorage('member', JSON.stringify(resJSON.member));
@@ -156,7 +184,7 @@ export default class Authentication extends Component{
             }
         }).catch(err => {
             console.log(err + 'LOI');
-            Alert.alert('Thông báo', 'Có lỗi trong quá trình xử lý. Vui lòng kiểm tra lại kết nối!');
+            //Alert.alert('Thông báo', 'Có lỗi trong quá trình xử lý. Vui lòng kiểm tra lại kết nối!');
             this.setState({ btnSignIn: 'ĐĂNG NHẬP' });
         });
     }
@@ -164,6 +192,10 @@ export default class Authentication extends Component{
     gotoMember(){
         const {navigation} = this.props;
         navigation.goBack();
+    }
+    gotoForgetPassword(){
+        const {navigation} = this.props;
+        navigation.navigate('ForgetPassWordScreen');
     }
 
     isSignIn(){
@@ -192,7 +224,7 @@ export default class Authentication extends Component{
                     <TouchableOpacity style={MainStyle.btnSignIn} onPress={() => this.onSignIn()}>
                         <Text style={{color:'#ffffff', fontFamily:'RobotoBold', fontSize:18}}>ĐĂNG NHẬP</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={MainStyle.btnFogotPass}>
+                    <TouchableOpacity style={MainStyle.btnFogotPass} onPress={() => this.gotoForgetPassword()}>
                         <Text style={{color:'#ce1e1e', fontFamily:'Roboto', textAlign:'center', fontSize:16}}>Quên mật khẩu?</Text>
                     </TouchableOpacity>
                 </View>

@@ -36,6 +36,7 @@ export default class ProductDetail extends Component{
             id: 0,
             is_login: false,
             member: [],
+            viewed: [],
             list_comment: [],
             list_sub_comment: [],
             count_comment: 0
@@ -137,6 +138,22 @@ export default class ProductDetail extends Component{
             })
             .catch((err)=>{
                 console.log(err+ 'LOI');
+            })
+
+            getStorage('viewed')
+            .then((viewed)=>{
+                if(viewed !=''){
+                    this.setState({
+                        viewed:JSON.parse(viewed),
+                        is_login: true
+                    })
+                    console.log(this.state.viewed);
+                }else{
+                    console.log('NULL');
+                }
+            })
+            .catch((err)=>{
+                console.log(err+ 'LOI viewed');
             })
 
         this.generateRandomString(3);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, FlatList, Linking } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
@@ -63,10 +63,42 @@ export default class Member extends Component{
         this.makeRemoteRequest();
     }
 
+    logOut(){
+        saveStorage('member', '');
+        global.onRefresh();
+        this.props.navigation.navigate('AuthenticationScreen');
+    }
+
     gotoAuthentication(){
         const { navigation } = this.props;
         navigation.navigate('AuthenticationScreen');
     }
+    gotoInfomation(){
+        const { navigation } = this.props;
+        if(this.state.is_login === true)
+        return navigation.navigate('InfoMemberScreen');
+        return Alert.alert('Thông báo','Bạn phải đăng nhập để sử dụng chức năng này!');
+    }
+    gotoOrderMember(){
+        const { navigation } = this.props;
+        if(this.state.is_login === true)
+        return navigation.navigate('OrderMemberScreen',{id:this.state.id});
+        return Alert.alert('Thông báo','Bạn phải đăng nhập để sử dụng chức năng này!');
+    }
+    gotoChangePassWord(){
+        const { navigation } = this.props;
+        if(this.state.is_login === true)
+        return navigation.navigate('ChangePassWordScreen');
+        return Alert.alert('Thông báo','Bạn phải đăng nhập để sử dụng chức năng này!');
+    }
+    
+    dialCall = (number) => {
+        let phoneNumber = '';
+        if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
+        else {phoneNumber = `telprompt:${number}`; }
+        Linking.openURL(phoneNumber);
+     };
+    
     render() {
         const {navigation} = this.props;
         const { is_login, name, time, email } = this.state;
@@ -112,7 +144,7 @@ export default class Member extends Component{
                                 <View style={MainStyle.subCat}>
                                     {main}
                                     <View style={MainStyle.infoOrder}>
-                                         <TouchableOpacity style={MainStyle.itemInfoOrderFirst}>
+                                         <TouchableOpacity style={MainStyle.itemInfoOrderFirst} onPress={this.gotoOrderMember.bind(this)}>
                                              <View style={{width:30}}>
                                                 <Icon type="AntDesign" name="filetext1" style={{ color:'#777777', fontSize:23 }} />
                                              </View>
@@ -121,25 +153,7 @@ export default class Member extends Component{
                                              </View>
                                              <Icon type="FontAwesome5" name="chevron-right" style={{color:'#777777', fontSize:23 }} />
                                          </TouchableOpacity>
-                                         <TouchableOpacity style={MainStyle.itemInfoOrder}>
-                                             <View style={{width:30}}>
-                                                <Icon type="Entypo" name="back-in-time" style={{color:'#777777', fontSize:23 }} />
-                                             </View>
-                                             <View style={ MainStyle.txtTitle}>
-                                                <Text style={MainStyle.txtStyle}>Lịch sử giao dịch</Text>
-                                             </View>
-                                             <Icon type="FontAwesome5" name="chevron-right" style={{ color:'#777777', fontSize:23 }} />
-                                         </TouchableOpacity>
-                                         <TouchableOpacity style={MainStyle.itemInfoOrder}>
-                                             <View style={{width:30}}>
-                                                <Icon type="FontAwesome" name="eye" style={{ color:'#777777', fontSize:23 }} />
-                                             </View>
-                                             <View style={ MainStyle.txtTitle}>
-                                                <Text style={MainStyle.txtStyle}>Sản phẩm đã xem</Text>
-                                             </View>
-                                             <Icon type="FontAwesome5" name="chevron-right" style={{color:'#777777', fontSize:23 }} />
-                                         </TouchableOpacity>
-                                         <TouchableOpacity style={MainStyle.itemInfoOrder}>
+                                         <TouchableOpacity style={MainStyle.itemInfoOrder} onPress={()=>this.gotoInfomation()}>
                                              <View style={{width:30}}>
                                                 <Icon type="FontAwesome" name="user" style={{color:'#777777', fontSize:23 }} />
                                              </View>
@@ -148,14 +162,34 @@ export default class Member extends Component{
                                              </View>
                                              <Icon type="FontAwesome5" name="chevron-right" style={{color:'#777777', fontSize:23 }} />
                                          </TouchableOpacity>
+                                         <TouchableOpacity style={MainStyle.itemInfoOrder} onPress={() =>this.gotoChangePassWord()}>
+                                             <View style={{width:30}}>
+                                                <Icon type="FontAwesome" name="key" style={{ color:'#777777', fontSize:23 }} />
+                                             </View>
+                                             <View style={ MainStyle.txtTitle}>
+                                                <Text style={MainStyle.txtStyle}>Đổi mật khẩu</Text>
+                                             </View>
+                                             <Icon type="FontAwesome5" name="chevron-right" style={{color:'#777777', fontSize:23 }} />
+                                         </TouchableOpacity>
                                          <View style={MainStyle.itemInfoOrder}>
                                              <View style={{width:30}}>
                                                 <Icon type="FontAwesome" name="phone" style={{ color:'#777777', fontSize:23 }} />
                                              </View>
-                                             <View style={ MainStyle.txtTitle}>
+                                             <TouchableOpacity style={ MainStyle.txtTitle} onPress={()=>{this.dialCall('0967118879')}}>
                                                 <Text style={MainStyle.txtStyle}>Hotline: <Text style={{color:'#ce1e1e', fontFamily:'Roboto', fontSize:16}}>0967 118879</Text> (tư vấn miễn phí)</Text>
-                                             </View>
+                                             </TouchableOpacity>
                                          </View>
+                                         {is_login === true?
+                                            <TouchableOpacity style={MainStyle.itemInfoOrder} onPress={()=> this.logOut()}>
+                                                <View style={{width:30}}>
+                                                    <Icon type="FontAwesome" name="power-off" style={{color:'#777777', fontSize:23 }} />
+                                                </View>
+                                                <View style={ MainStyle.txtTitle}>
+                                                    <Text style={MainStyle.txtStyle}>Đăng xuất</Text>
+                                                </View>
+                                            </TouchableOpacity>:null
+                                         }
+                                        
                                     </View>
                                 </View>
                            </View>

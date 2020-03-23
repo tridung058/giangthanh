@@ -11,6 +11,10 @@ const footerHeight = 65;
 const barHeight = Constants.statusBarHeight;
 
 export default { 
+    tSplash:{
+        width: width,
+        height: height
+    },
     tDefaultScrollView:{
     },
     bgHeaderHome:{
@@ -127,6 +131,7 @@ export default {
         flex: 1,
         textAlign: "center",
         alignItems: 'center',
+        position:'relative'
     },
     textFooterBase:{
         fontFamily:'Roboto',
@@ -824,5 +829,35 @@ export default {
         borderBottomColor:'#f4f4f4',
         borderBottomWidth:1,
         paddingVertical:10
-    }
+    },
+    titleOrderDetail:{
+        fontSize:18,
+        fontFamily:'RobotoBold',
+    },
+    titleSubDetail:{
+        fontFamily:'Roboto',
+        color:'#777777',
+        paddingVertical:3
+    },
+    codeProStyle:{
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    txtCodeStyle:{
+        fontFamily:'RobotoBold',
+        flex:1,
+    },
+    txtResStyle:{
+        flex:1,
+        paddingVertical:3
+    },
+    changeInfo:{
+        
+    },
+    notificationStyle:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        padding:10
+    },
 }

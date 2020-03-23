@@ -5,8 +5,7 @@ import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 
-import { getCat} from '../../src/api/apiCatProduct';
-import { getSearchProducts } from './../../src/api/apiProHot';
+import { getProductNotification, updateNotification } from './../../src/api/apiProHot';
 import {getStorage} from '../../src/api/storage';
 import global from '../../src/api/global';
 
@@ -24,44 +23,71 @@ export default class Notifi extends Component{
             list_cat: [],
             level: '1',
             key:'',
-            page:1
+            page:1,
+            id:''
         }
         global.onChangeSearch = this.onChangeSearch.bind(this);
     }
 
     componentDidMount() {
         let level = this.state.level;
-    
-       // this.makeRemoteRequest(level);
-        
+        this.makeRemoteRequest();
     }
 
-    makeRemoteRequest = (level) => {
+    makeRemoteRequest = () => {
 
         this.setState({ loading: true});
+        
+        getStorage('member')
+        .then((member)=>{
+            if(member !=''){
+                let arrMember = JSON.parse(member);
+                this.setState({
+                    id: arrMember.id,
+                    is_login: true
+                })
+                //update
+                updateNotification(this.state.id)
+                .then(resJSON => {
+                    const { error } = resJSON;
+                    if(error == false){
+                        this.setState({
+                            loading: false, 
+                        });
+                    }
+                        
+                }).catch(err => {
+                    console.log(err+ 'ERR UPDATE notification');
+                });
+                //get 
+                getProductNotification(this.state.id)
+                .then(resJSON => {
+                    const {list, error } = resJSON;
+                    //console.log(list_sub_cat);
+                    if(error == false){
+                        this.setState({
+                            list: list, 
+                            loading: false, 
+                            refreshing: false ,
+                            allow_more: false,
+                        });
+                    }else{
+                        this.setState({ 
+                            loading: false, 
+                            allow_more: false
+                        });
+                    }
+                        
+                }).catch(err => {
+                    console.log(err+ 'ERR notification');
+                    this.setState({ loading: false });
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log(err+ 'LOI');
+        })
 		
-		getCat(level)
-        .then(resJSON => {
-            const {list_cat, error } = resJSON;
-            //console.log(list_sub_cat);
-			if(error == false){
-				this.setState({
-					list_cat: list_cat, 
-					loading: false, 
-                    refreshing: false ,
-                    allow_more: false,
-				});
-			}else{
-				this.setState({ 
-					loading: false, 
-					allow_more: false
-				});
-			}
-				
-        }).catch(err => {
-			// console.log(err);
-			this.setState({ loading: false });
-        });
     }
     search(){
         //search
@@ -92,11 +118,6 @@ export default class Notifi extends Component{
     ProductDetail(id, cat_id){
         this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
     }
-
-    goCatDetail(id, name){
-        this.props.navigation.navigate('CatProductScreen',{id:id, name:name});
-    }
-
 	renderLoading  = () => {
         if (!this.state.loading) return null;
 
@@ -106,10 +127,10 @@ export default class Notifi extends Component{
             </View>
         );
 	};
-    
+
     render() {
         const {navigation} = this.props;
-
+        const {list} = this.state;
         return(
             <Container>
                 <HeaderBase page="notifi" title={''} navigation={navigation} />
@@ -128,11 +149,32 @@ export default class Notifi extends Component{
                                     )}
                                     // numColumns={6}
                                 />:
-                           <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
+                           <View style={{}}>
                                 <View style={MainStyle.subCat}>
-                                    <View style={{justifyContent:'center', alignItems:'center', position:'relative', zIndex:0}}>
-                                        <Text style={{paddingTop:10}}>Đang update</Text>
-                                        <Image style={{width:screenWidth*(3/4),height:screenWidth*(3/4)}} source={require('./../../assets/notify.jpg')}/>
+                                    <View style={{}}>
+                                        <FlatList style={{   }}
+                                            data={list}
+                                            renderItem={({ item }) => (
+                                            <View style={{borderBottomWidth:10, borderBottomColor:'#f4f4f4',}}>
+                                                <View style={MainStyle.notificationStyle}>
+                                                    <Image style={{ width: screenWidth/7, height:(screenWidth/7), borderRadius: (screenWidth/7)/2}} source={{uri:item.image}}/>
+                                                    <View style={{flex:1, paddingHorizontal:15}}>
+                                                        <TouchableOpacity style={{}} onPress={() => this.ProductDetail(item.product_id, item.cat_id)}>
+                                                            <Text style={{fontFamily:'RobotoBold', color:'#000000', textTransform:'uppercase'}}>{item.title}</Text>
+                                                            <View style={{flexDirection:'row', paddingVertical:5}}>
+                                                                <Text style={{fontFamily:'Roboto', color:'#333333'}}>mới được </Text>
+                                                                <Text style={{fontFamily:'RobotoBold'}}>{item.member}</Text>
+                                                                <Text> đăng bán</Text>
+                                                            </View>
+                                                            <Text style={{fontFamily:'Roboto', color:'#333333'}}>{item.time}</Text>
+                                                            <View/>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    <View/>
+                                                </View>
+                                            </View>
+                                            )}
+                                        />
                                     </View>
                                 </View>
                            </View>
@@ -140,6 +182,7 @@ export default class Notifi extends Component{
                         </View>
                     </View>
                 </View>
+                <FooterBase navigation={navigation} page="notifi"  />
             </Container>
         );
     }

@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, ActivityIndicator, Platform, Button, Alert} from 'react-native';
-import { Container, Icon } from "native-base";
+import { Container, Icon, Form } from "native-base";
 import Swiper from 'react-native-swiper'
 
 import MainStyle from '../styles/MainStyle.js';
 import HeaderBase from './template/HeaderBase';
 import FooterBase from './template/FooterBase';
+
+import {getStorage, saveStorage} from '../src/api/storage';
 
 import {getProHot, getCat, getSubCatIn, getListIn, getSubCatAr, getListAr } from './../src/api/apiProHot';
 
@@ -27,6 +29,7 @@ export default class Home extends React.Component{
             list_pro_in: [],
             list_cat_ar: [],
             list_pro_ar: [],
+            id: 0,
             type: 'all'
         }; 
     }
@@ -167,6 +170,28 @@ export default class Home extends React.Component{
         this.props.navigation.navigate('CatProductScreen',{id:id, name:name});
     }
     productDetail(id, cat_id){
+        getStorage('viewed')
+            .then(viewed => {
+                var tmp = [];
+                var existID = false;
+                if(viewed != ''){
+                    var arrViewed = JSON.parse(viewed);
+                    arrViewed.map(c => {
+                        if(c.id == id){
+                            existID = true;
+                        }
+                        tmp.push(c);
+                    })
+                }
+                if(existID == false){
+                    tmp.push({
+                        id: id,
+                    });
+                }
+                saveStorage('viewed', JSON.stringify(tmp));
+            })
+            .catch(err => console.log(err+'Lỗi'));
+
         this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
     }
     viewMoreProHot(){

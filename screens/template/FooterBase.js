@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Image, Alert } from 'react-native';
 import { Icon } from "native-base";
 
-//import global from './../api/global';
+import {getCountNotification, updateNotification} from './../../src/api/apiProHot';
+import {getStorage} from './../../src/api/storage';
+import global from '../../src/api/global';
 import MainStyle from './../../styles/MainStyle';
 
 export default class FooterBase extends Component {
@@ -10,16 +12,56 @@ export default class FooterBase extends Component {
         super(props);
 
         this.state = {
-        
+            count: 0,
+            id: ''
         }
     } 
 
     componentDidMount() {
-        
+        getStorage('member')
+        .then((member)=>{
+            if(member !=''){
+                let arrMember = JSON.parse(member);
+                this.setState({
+                    id: arrMember.id,
+                    is_login: true
+                })
+
+                getCountNotification(this.state.id)
+                .then(resJSON => {
+                    const {count, error } = resJSON;
+                    //console.log(list_sub_cat);
+                    if(error == false){
+                        this.setState({
+                            count: count, 
+                            loading: false, 
+                            refreshing: false ,
+                            allow_more: false,
+                        });
+                    }else{
+                        this.setState({ 
+                            loading: false, 
+                            allow_more: false
+                        });
+                    }
+                        
+                }).catch(err => {
+                    console.log(err+ 'ERR notification');
+                    this.setState({ loading: false });
+                });
+                    }
+            }).catch((err)=>{
+                console.log(err+ 'LOI');
+        })
+    }
+    gotoNotification(){
+        const {navigation} = this.props;
+        navigation.navigate('NotifiScreen');
     }
     render() {
 
         const { navigation, page } = this.props;
+        const { count } = this.state;
         return (
             <View style={[MainStyle.tFooter]}>
                 <TouchableOpacity style={MainStyle.tFItem}  onPress={() => {navigation.navigate('HomeScreen')}}>
@@ -41,11 +83,16 @@ export default class FooterBase extends Component {
                     <Text style={MainStyle.textFooterBase}>Tìm Kiếm</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { navigation.navigate('NotifiScreen')}}>
+                <TouchableOpacity style={MainStyle.tFItem} onPress={() => { this.gotoNotification()}}>
                     <View >
                     <Image style={{ width: 20, height: 23 }} source={require('./../../assets/icon_notifi.png')} />
                     </View>
                     <Text style={MainStyle.textFooterBase}>Thông Báo</Text>
+                    {count > 0?
+                        <Text style={{position:'absolute',top:0, right:10, backgroundColor:'#ce1e1e',
+                        color:'#fff', paddingHorizontal:9, height:20,borderRadius:10}}>{count}</Text>:
+                        null
+                    }
                 </TouchableOpacity>
 
                 <TouchableOpacity style={MainStyle.tFItem} onPress={() => {navigation.navigate('MemberScreen');}}>

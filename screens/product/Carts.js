@@ -67,7 +67,7 @@ export default class Carts extends Component{
                     else
                         ids = ids + '|' + c.id+','+c.amout;
                 });
-                getCart(ids, this.state.member.id)
+                getCart(ids, this.state.page)
                 .then(resJSON => {
                     const {list, total_money_cart, all_amout } = resJSON;
                     this.arr = list.concat(this.arr);
@@ -223,7 +223,7 @@ export default class Carts extends Component{
                                                     <Icon type="AntDesign" style={{fontSize:25, color:'#333333'}} name="plus"  />
                                                 </TouchableOpacity>
                                             </View>
-                                            <Text style={{color:'#ce1e1e', fontFamily:'Roboto', paddingTop:5}}>Mua sau</Text>
+                                            {/* <Text style={{color:'#ce1e1e', fontFamily:'Roboto', paddingTop:5}}>Mua sau</Text> */}
                                         </View>
                                     </View>
                                     <View>
@@ -248,10 +248,13 @@ export default class Carts extends Component{
                             <Text style={{ paddingRight:10, color:'#000'}}>Đã bao gồm VAT</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={MainStyle.toMoney} onPress={() =>{this.completeOrder()}}>
-                        <Icon type="Ionicons" name="ios-checkmark-circle-outline" style={{ color: '#ffffff',fontSize:20,paddingRight:5}} />
-                        <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Hoàn tất đơn hàng</Text>
-                    </TouchableOpacity>
+                    {list != '' ? 
+                        <TouchableOpacity style={MainStyle.toMoney} onPress={() =>{this.completeOrder()}}>
+                            <Icon type="Ionicons" name="ios-checkmark-circle-outline" style={{ color: '#ffffff',fontSize:20,paddingRight:5}} />
+                            <Text style={{fontFamily:'RobotoBold',textTransform:'uppercase', fontSize:14, color:'#ffffff'}}>Hoàn tất đơn hàng</Text>
+                        </TouchableOpacity>:null
+                    }
+                    
                 </View>
             </Container>
         );
