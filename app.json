@@ -34,7 +34,7 @@
       }
     },
     "android": {
-      "package": "com.maymaygiangthanh.app",
+      "package": "com.hoidetmay.app",
       "versionCode": 2,
       "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"]
   }
