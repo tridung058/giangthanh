@@ -9,7 +9,7 @@ import FooterBase from './template/FooterBase';
 
 import {getStorage, saveStorage} from '../src/api/storage';
 
-import {getProHot, getCat, getSubCatIn, getListIn, getSubCatAr, getListAr } from './../src/api/apiProHot';
+import {getProHot, getCat, getSubCatTech, getSubCatIn, getListTech, getListIn, getSubCatAr, getListAr, getSubCatB, getSubCatSer } from './../src/api/apiProHot';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -25,10 +25,17 @@ export default class Home extends React.Component{
             loading: true,
             list_pro_hot: [],
             list_cat: [],
+            list_cat_tech: [],
             list_cat_in: [],
+            cat_ids: '',
+            cat_idsar: '',
+            cat_idste: '',
+            list_pro_tech: [],
             list_pro_in: [],
             list_cat_ar: [],
             list_pro_ar: [],
+            list_cat_buy: [],
+            list_cat_service: [],
             id: 0,
             type: 'all'
         }; 
@@ -43,6 +50,7 @@ export default class Home extends React.Component{
         this.setState({ loading: true}); 
         let cat_id = 'all';
         let cat_id_ar = 'all_ar';
+        let cat_id_te = 'all_te';
         let is_hot = '1';
         getProHot(is_hot)
         .then(resJSON => {
@@ -72,14 +80,40 @@ export default class Home extends React.Component{
 			this.setState({ loading: false });
         });
 
+        //sub cat techology
+        this.getSubCatTechology();
         //sub cat industry
         this.getSubCatIndustry();
+         //get list by techology
+         this.proByTechology(cat_id_te);
         //get list by industry
         this.proByIndustry(cat_id);
         //sub cat Accessary
         this.getSubCatAccessary();
         //get list by accessary
         this.proByAccessary(cat_id_ar);
+        //get list cat buy
+        this.getSubCatBuy();
+        //get list cat service
+        this.getSubCatService();
+    }
+
+
+    getSubCatTechology(){
+        let id = '9';
+        getSubCatTech(id)
+        .then(resJSON => {
+			const {list_cat_tech, error} = resJSON;
+			if(error == false){	
+				this.setState({
+					list_cat_tech: list_cat_tech, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
     }
 
     getSubCatIndustry(){
@@ -114,15 +148,72 @@ export default class Home extends React.Component{
 			this.setState({ loading: false });
         });
     }
-    
-    proByIndustry(cat_id){
-        getListIn(cat_id)
+
+    //sub cat buy
+
+    getSubCatBuy(){
+        let id = '308';
+        getSubCatB(id)
         .then(resJSON => {
-			const {list_pro_in, error} = resJSON;
+			const {list_cat_buy, error} = resJSON;
+			if(error == false){	
+				this.setState({
+					list_cat_buy: list_cat_buy, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
+
+    //sub cat service
+
+    getSubCatService(){
+        let id = '321';
+        getSubCatSer(id)
+        .then(resJSON => {
+			const {list_cat_service, error} = resJSON;
+			if(error == false){	
+				this.setState({
+					list_cat_service: list_cat_service, 
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
+    
+    proByTechology(cat_id){
+        getListTech(cat_id)
+        .then(resJSON => {
+			const {list_pro_tech, cat_idste, error} = resJSON;
 			if(error == false){	
 				this.setState({
                     cat_id:cat_id,
-					list_pro_in: list_pro_in, 
+                    list_pro_tech: list_pro_tech, 
+                    cat_idste: cat_idste
+				});
+			}else{
+				this.setState({ loading: false });
+			}
+        }).catch(err => {
+			this.setState({ loading: false });
+        });
+    }
+
+    proByIndustry(cat_id){
+        getListIn(cat_id)
+        .then(resJSON => {
+			const {list_pro_in, cat_ids, error} = resJSON;
+			if(error == false){	
+				this.setState({
+                    cat_id:cat_id,
+                    list_pro_in: list_pro_in, 
+                    cat_ids: cat_ids
 				});
 			}else{
 				this.setState({ loading: false });
@@ -135,11 +226,12 @@ export default class Home extends React.Component{
     proByAccessary(cat_id_ar){
         getListAr(cat_id_ar)
         .then(resJSON => {
-			const {list_pro_ar, error} = resJSON;
+			const {list_pro_ar, cat_idsar, error} = resJSON;
 			if(error == false){	
 				this.setState({
                     cat_id_ar:cat_id_ar,
-					list_pro_ar: list_pro_ar, 
+                    list_pro_ar: list_pro_ar, 
+                    cat_idsar: cat_idsar
 				});
 			}else{
 				this.setState({ loading: false });
@@ -198,6 +290,10 @@ export default class Home extends React.Component{
         let type = this.state.type;
         this.props.navigation.navigate('ProductHotScreen',{type: type});
     }
+    viewMorePro(cat_id){
+       // Alert.alert(cat_id);return;
+        this.props.navigation.navigate('ProductsScreen',{cat_id: cat_id});
+    }
     viewMoreCatMachin(){
         let type = this.state.type;
         this.props.navigation.navigate('CatMachinScreen',{type: type});
@@ -219,6 +315,38 @@ export default class Home extends React.Component{
                 <HeaderBase page="home" navigation={navigation} />
                 <View style={[MainStyle.bodyHome]}>
                     <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={MainStyle.menu}>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatScreen')}}>
+                                        <View>
+                                            <Image style={MainStyle.logoMenu} source={require('./../assets/icon_cat_b.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Danh mục</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatalogScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../assets/icon_catalog.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Catalog</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('OrderMemberScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../assets/icon_cart_b.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Đơn hàng</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('NewsScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../assets/icon_news.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Tin tức</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('ContactScreen')}}>
+                                        <View >
+                                            <Image style={MainStyle.logoMenu} source={require('./../assets/icon_contact.png')}/>
+                                        </View>
+                                        <Text style={MainStyle.textMenu}>Liên hệ</Text>
+                                    </TouchableOpacity>
+                                </View>
                         <View style={MainStyle.proHot}>
                             <View style={MainStyle.bgProHot}>
                                 <Text style={MainStyle.textProHot}>Sản phẩm nổi bật</Text>
@@ -273,13 +401,13 @@ export default class Home extends React.Component{
                             </View>
                             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',paddingLeft:20}}>
                                 <ScrollView horizontal={true} showsVerticalScrollIndicator={false} >
-                                    <TouchableOpacity style={MainStyle.catLevel} onPress={() =>(this.proByIndustry('all')) }>
+                                    <TouchableOpacity style={MainStyle.catLevel} onPress={() =>(this.proByTechology('all')) }>
                                         <View style={this.state.cat_id == 'all'?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
                                             <Text style={ this.state.cat_id == 'all'?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>Tất cả</Text>
                                         </View>
                                     </TouchableOpacity >
-                                    {this.state.list_cat_in.map((item,i) =>{return(
-                                        <TouchableOpacity key={i} style={MainStyle.catLevel} onPress={() =>(this.proByIndustry(item.id)) }>
+                                    {this.state.list_cat_tech.map((item,i) =>{return(
+                                        <TouchableOpacity key={i} style={MainStyle.catLevel} onPress={() =>(this.proByTechology(item.id)) }>
                                             <View style={this.state.cat_id == item.id?MainStyle.boxCatLevel:MainStyle.boxCatLevelActive}>
                                                 <Text style={this.state.cat_id == item.id?MainStyle.nameCatLevel:MainStyle.nameCatLevelActvie}>{item.name}</Text>
                                             </View>
@@ -288,7 +416,7 @@ export default class Home extends React.Component{
                                 </ScrollView>
                             </View>
                             <View style={[MainStyle.showProHot]}>
-                                {this.state.list_pro_in.map((item,i) =>{return(
+                                {this.state.list_pro_tech.map((item,i) =>{return(
                                     <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>this.productDetail(item.id, item.cat_id)}>
                                         <View>
                                             <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
@@ -298,16 +426,18 @@ export default class Home extends React.Component{
                                     </TouchableOpacity>
                                 )})}
                             </View>
-                            {/* <View>
+                            <View>
                                 <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
-                                        <Text style={MainStyle.textMoreCatMcTeach}>
-                                            Xem thêm 30 sản phẩm 
-                                            <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
-                                        </Text>
+                                        <TouchableOpacity onPress={()=>(this.viewMorePro(this.state.cat_idste))}>
+                                            <Text style={MainStyle.textMoreCatMcTeach}>
+                                                Xem thêm
+                                                <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                            </View> */}
+                            </View>
                         </View>
                         {/* DANH MỤC MÁY MAY CÔNG NGHIỆP */}
                         <View style={MainStyle.sewingMcIn}>
@@ -341,16 +471,19 @@ export default class Home extends React.Component{
                                     </TouchableOpacity>
                                 )})}
                             </View>
-                            {/* <View>
+                            
+                            <View>
                                 <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
-                                        <Text style={MainStyle.textMoreCatMcTeach}>
-                                            Xem thêm 30 sản phẩm 
-                                            <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
-                                        </Text>
+                                        <TouchableOpacity onPress={()=>(this.viewMorePro(this.state.cat_ids))}>
+                                            <Text style={MainStyle.textMoreCatMcTeach}>
+                                                Xem thêm
+                                                <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                            </View> */}
+                            </View>
                         </View>
                         {/* PHỤ TÙNG*/}
                         <View style={MainStyle.accessary}>
@@ -384,16 +517,18 @@ export default class Home extends React.Component{
                                     </TouchableOpacity>
                                 )})}
                             </View>
-                            {/* <View>
+                            <View>
                                 <View style={MainStyle.moreCatMcTeach}>
                                     <View style={MainStyle.boxMoreCat}>
-                                        <Text style={MainStyle.textMoreCatMcTeach}>
-                                            Xem thêm 30 sản phẩm 
-                                            <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
-                                        </Text>
+                                        <TouchableOpacity onPress={()=>(this.viewMorePro(this.state.cat_idsar))}>
+                                            <Text style={MainStyle.textMoreCatMcTeach}>
+                                                Xem thêm
+                                                <Icon type="AntDesign" name="right" style={{ color: '#228fca',fontSize:13,paddingLeft:20}} />
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                            </View> */}
+                            </View>
                         </View>
                         {/* MUA BÁN*/}
                         <View style={MainStyle.purchase}>
@@ -401,43 +536,16 @@ export default class Home extends React.Component{
                                 <Text style={MainStyle.textProHot}>Mua bán quần áo, vải, phụ liệu</Text>
                             </View>
                             <View style={[MainStyle.showPurchase]}>
-                                {/* <TouchableOpacity style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/5.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Mua bán quần áo</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/6.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Vải vóc</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/7.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Phụ liệu</Text>
-                                    </View>
-                                </TouchableOpacity> */}
-
-                                <View style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/5.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Mua bán quần áo</Text>
-                                    </View>
-                                </View>
-                                <View style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/6.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Vải vóc</Text>
-                                    </View>
-                                </View>
-                                <View style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/7.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Phụ liệu</Text>
-                                    </View>
-                                </View>
+                                {this.state.list_cat_buy.map((item, i)=>{
+                                    return(
+                                        <TouchableOpacity style={MainStyle.itemPurchase} onPress={()=>(this.goCatDetail(item.id, item.name))}>
+                                            <View>
+                                                <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={{uri:item.image}}/>
+                                                <Text style={MainStyle.namePurchase}>{item.name}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                })}
                             </View>
                         </View>
                         {/* DỊCH VỤ*/}
@@ -446,43 +554,17 @@ export default class Home extends React.Component{
                                 <Text style={MainStyle.textProHot}>Dịch vụ ngành may</Text>
                             </View>
                             <View style={[MainStyle.showPurchase]}>
-                                {/* <TouchableOpacity style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/8.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Sửa chữa</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/9.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Lắp đặt</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/10.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Bảo trì</Text>
-                                    </View>
-                                </TouchableOpacity> */}
-
-                                <View style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/8.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Sửa chữa</Text>
-                                    </View>
-                                </View>
-                                <View style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/9.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Lắp đặt</Text>
-                                    </View>
-                                </View>
-                                <View style={MainStyle.itemPurchase}>
-                                    <View>
-                                        <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={require('./../assets/10.png')}/>
-                                        <Text style={MainStyle.namePurchase}>Bảo trì</Text>
-                                    </View>
-                                </View>
+                                {this.state.list_cat_service.map((item,i)=>{
+                                    return(
+                                        <TouchableOpacity style={MainStyle.itemPurchase} onPress={()=>(this.goCatDetail(item.id, item.name))}>
+                                            <View>
+                                                <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={{uri:item.image}}/>
+                                                <Text style={MainStyle.namePurchase}>{item.name}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                })}
+                        
                             </View>
                         </View>
                     </ScrollView>

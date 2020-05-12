@@ -68,58 +68,60 @@ export default class OrderMemberDetail extends Component{
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <View showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
-                           <View style={{paddingHorizontal:10}}>
-                               {list.map((item, i) =>{
-                                   return(
-                                    <View key={i}>
-                                        <View style={{borderBottomWidth:10, borderBottomColor:'#f8f8ff', paddingVertical:10}}>
-                                            <Text style={MainStyle.titleOrderDetail}>Mã đơn hàng: {item.order_code}</Text>
-                                            <Text style={MainStyle.titleSubDetail}>Đặt hàng: {item.order_time}, {item.order_day}</Text>
-                                            <Text style={MainStyle.titleSubDetail}>Trạng thái: {item.status}</Text>
-                                        </View>
-                                        <View style={{borderBottomWidth:10, borderBottomColor:'#f8f8ff',paddingVertical:10}}>
-                                            <Text style={MainStyle.titleOrderDetail}>Địa chỉ người nhận</Text>
-                                            <Text style={MainStyle.titleSubDetail}>{item.name}</Text>
-                                            <Text style={MainStyle.titleSubDetail}>{item.phone}</Text>
-                                            <Text style={MainStyle.titleSubDetail}>{item.address}</Text>
-                                        </View>
-                                       
-                                        <View style={{borderBottomWidth:10, borderBottomColor:'#f8f8ff', paddingVertical:10}}>
-                                            <Text style={MainStyle.titleOrderDetail}>Thông tin đơn hàng</Text>
-                                            {list_item[item.order_id].map((res, i2) =>{
-                                                return(
-                                                    <View key={i2}>
-                                                        <View style={{flexDirection:'row', justifyContent:'space-between', paddingVertical:10}}>
-                                                            <View >
-                                                                <Image style={{width:(screenWidth-20)/2.7, height: (screenWidth-20)/2.7}} source={{uri:res.image}}/>
+                            <ScrollView>
+                                <View style={{paddingHorizontal:10}}>
+                                    {list.map((item, i) =>{
+                                        return(
+                                            <View key={i}>
+                                                <View style={{borderBottomWidth:10, borderBottomColor:'#f8f8ff', paddingVertical:10}}>
+                                                    <Text style={MainStyle.titleOrderDetail}>Mã đơn hàng: {item.order_code}</Text>
+                                                    <Text style={MainStyle.titleSubDetail}>Đặt hàng: {item.order_time}, {item.order_day}</Text>
+                                                    <Text style={MainStyle.titleSubDetail}>Trạng thái: {item.status}</Text>
+                                                </View>
+                                                <View style={{borderBottomWidth:10, borderBottomColor:'#f8f8ff',paddingVertical:10}}>
+                                                    <Text style={MainStyle.titleOrderDetail}>Địa chỉ người nhận</Text>
+                                                    <Text style={MainStyle.titleSubDetail}>{item.name}</Text>
+                                                    <Text style={MainStyle.titleSubDetail}>{item.phone}</Text>
+                                                    <Text style={MainStyle.titleSubDetail}>{item.address}</Text>
+                                                </View>
+                                            
+                                                <View style={{borderBottomWidth:10, borderBottomColor:'#f8f8ff', paddingVertical:10}}>
+                                                    <Text style={MainStyle.titleOrderDetail}>Thông tin đơn hàng</Text>
+                                                    {list_item[item.order_id].map((res, i2) =>{
+                                                        return(
+                                                            <View key={i2} style={{paddingVertical:10, borderTopColor:'#f8f8ff', borderTopWidth:1, marginTop:10}}>
+                                                                <View style={{flexDirection:'row', justifyContent:'space-between', paddingVertical:10}}>
+                                                                    <View >
+                                                                        <Image style={{width:(screenWidth-20)/2.7, height: (screenWidth-20)/2.7}} source={{uri:res.image}}/>
+                                                                    </View>
+                                                                    <View style={{flex:1, paddingHorizontal:10}}>
+                                                                        <Text style={{fontFamily:'Roboto', fontSize:15}} >{res.product_name}</Text>
+                                                                        <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', paddingVertical:3}}>{res.total}</Text>
+                                                                        <View style={MainStyle.codeProStyle}>
+                                                                            <Text style={MainStyle.txtCodeStyle}>Mã SP: </Text>
+                                                                            <Text style={MainStyle.txtResStyle}>{res.code_pro}</Text>
+                                                                        </View>
+                                                                        <View style={MainStyle.codeProStyle}>
+                                                                            <Text style={MainStyle.txtCodeStyle}>Xuất xứ: </Text>
+                                                                            <Text style={MainStyle.txtResStyle}>{res.origin}</Text>
+                                                                        </View>
+                                                                        <View style={MainStyle.codeProStyle}>
+                                                                            <Text style={MainStyle.txtCodeStyle}>Số lượng: </Text>
+                                                                            <Text style={MainStyle.txtResStyle}>{res.amount}</Text>
+                                                                            <Text/>
+                                                                        </View>
+                                                                    </View>
+                                                                    <View/>
+                                                                </View>
                                                             </View>
-                                                            <View style={{flex:1, paddingHorizontal:10}}>
-                                                                <Text style={{fontFamily:'Roboto', fontSize:15}} >{res.product_name}</Text>
-                                                                <Text style={{fontFamily:'RobotoBold', color:'#ce1e1e', paddingVertical:3}}>{res.total}</Text>
-                                                                <View style={MainStyle.codeProStyle}>
-                                                                    <Text style={MainStyle.txtCodeStyle}>Mã SP: </Text>
-                                                                    <Text style={MainStyle.txtResStyle}>{res.code_pro}</Text>
-                                                                </View>
-                                                                <View style={MainStyle.codeProStyle}>
-                                                                    <Text style={MainStyle.txtCodeStyle}>Xuất xứ: </Text>
-                                                                    <Text style={MainStyle.txtResStyle}>{res.origin}</Text>
-                                                                </View>
-                                                                <View style={MainStyle.codeProStyle}>
-                                                                    <Text style={MainStyle.txtCodeStyle}>Số lượng: </Text>
-                                                                    <Text style={MainStyle.txtResStyle}>{res.amount}</Text>
-                                                                    <Text/>
-                                                                </View>
-                                                            </View>
-                                                            <View/>
-                                                        </View>
-                                                    </View>
-                                                )
-                                            })}
-                                        </View>
-                                    </View>
-                                   )
-                               })}
-                           </View>
+                                                        )
+                                                    })}
+                                                </View>
+                                            </View>
+                                        )
+                                    })}
+                                </View>
+                             </ScrollView>
                         </View>
                     </View>
                 </View>

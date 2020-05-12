@@ -261,7 +261,7 @@ export default class InfoMember extends Component{
                                     </View>
                                     <TextInput style={MainStyle.txtInput} 
                                          placeholder= {this.state.member.address_detail == ''?'Cập nhật địa chỉ chi tiết':''} 
-                                        onChangeText={(address) => this.setState({ address })} 
+                                        onChangeText={(address_detail) => this.setState({ address_detail })} 
                                         value={this.state.address_detail} returnKeyType='done' 
                                     />
                                     <TouchableOpacity style={MainStyle.btnSignIn} onPress={() => this.updateInfo()}>

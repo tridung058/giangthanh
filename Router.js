@@ -19,6 +19,8 @@ import OrderMemberDetail from './screens/member/OrderMemberDetail';
 import ChangePassWord from './screens/member/ChangePassWord';
 import ForgetPassWord from './screens/member/ForgetPassWord';
 import ProductHot from './screens/product/ProductHot';
+import Products from './screens/product/Products';
+import SearchKey from './screens/product/SearchKey';
 import CatMachin from './screens/category/CatMachin';
 import Carts from './screens/product/Carts';
 import Authentication from './screens/authentication/Authentication';
@@ -62,6 +64,9 @@ export const GiangThanhStack = createStackNavigator({
     ProductHotScreen: {
         screen: ProductHot
     },
+    ProductsScreen: {
+        screen: Products
+    },
     CatMachinScreen: {
         screen: CatMachin
     },
@@ -85,6 +90,9 @@ export const GiangThanhStack = createStackNavigator({
     },
     ForgetPassWordScreen: {
         screen: ForgetPassWord
+    },
+    SearchKeyScreen:{
+        screen: SearchKey
     }
 });
 

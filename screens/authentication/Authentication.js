@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image, ScrollView,Dimensions, Alert, FlatList, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, Image, ScrollView,Dimensions, Alert, FlatList, TextInput, KeyboardAvoidingView,Platform } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -250,7 +250,7 @@ export default class Authentication extends Component{
                         />
                     </View>
                     <TouchableOpacity style={MainStyle.btnSignIn} onPress={() =>this.onSignUp()}>
-          <Text style={{color:'#ffffff', fontFamily:'RobotoBold', fontSize:18}}>{this.state.btnSignIn}</Text>
+                        <Text style={{color:'#ffffff', fontFamily:'RobotoBold', fontSize:18}}>{this.state.btnSignUp}</Text>
                     </TouchableOpacity>
                 </View>
       )
@@ -270,7 +270,11 @@ export default class Authentication extends Component{
                                         <Text style={ !isSignIn ==true?MainStyle.txtsignIn:MainStyle.txtsignUp}>Đăng ký</Text>
                                     </TouchableOpacity>
                                 </View>
-                                {main}
+                                <KeyboardAvoidingView style={[ {backgroundColor: '#f5fdff'}]} keyboardVerticalOffset={40} behavior={Platform.OS === "ios" ? 'padding' : 'height'}>
+                                    <ScrollView>
+                                        {main}
+                                    </ScrollView>
+                                </KeyboardAvoidingView>
                             </View>
                         </View>
                     </View>

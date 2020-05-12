@@ -123,11 +123,24 @@ export default class ProductHot extends Component{
                             )}
                             // numColumns={6}
                         />:
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
+                        <View showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:120}}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
                                 <View style={MainStyle.subCat}>
                                     <View style={MainStyle.showProHot}>
-                                        {this.state.list_pro_hot.map((item,i) =>{return(
+                                        <FlatList
+                                            data={this.state.list_pro_hot}
+                                            renderItem={({ item }) => (
+                                                <TouchableOpacity  style={MainStyle.itemProHot} onPress={()=>{this.productDetail(item.id, item.cat_id)}}>
+                                                    <View>
+                                                        <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
+                                                        <Text style={MainStyle.namePro}>{item.name}</Text>
+                                                        <Text style={MainStyle.pricePro}>Giá: {item.price}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            )}
+                                            numColumns={3}
+                                        />
+                                        {/* {this.state.list_pro_hot.map((item,i) =>{return(
                                             <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.productDetail(item.id, item.cat_id)}}>
                                                 <View>
                                                     <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
@@ -135,11 +148,11 @@ export default class ProductHot extends Component{
                                                     <Text style={MainStyle.pricePro}>Giá: {item.price}</Text>
                                                 </View>
                                             </TouchableOpacity>
-                                        )})}
+                                        )})} */}
                                     </View>
                                 </View>
                            </View>
-                        </ScrollView>
+                        </View>
                     }
                     </View>
                 </View>

@@ -20,11 +20,20 @@ export default class HeaderLeft extends Component{
     }
 
     renderButton(){
-        const {navigation} = this.props;
+        const {navigation, page} = this.props;
             if(this.props.page && this.props.page == 'home'){
                 return (
                     null
                 )
+            }else if(page =='contact'){
+                return(
+                    <TouchableOpacity style={MainStyle.goBack} onPress={() => this.gotoBack()}>
+                        <View style={{flexDirection:'row', alignItems:'center'}}>
+                            <Icon style={{marginTop:width/13, paddingLeft:10,fontSize:35,color:'#ffffff'}} type="Entypo" name="chevron-left"  />
+                            <Text style={{fontFamily:'RobotoBold', marginTop:width/13, color:'#ffffff', fontSize:18}}>Liên hệ</Text>
+                        </View>
+                    </TouchableOpacity>
+                    )
             }else{
                 return (
                     <TouchableOpacity style={MainStyle.goBack} onPress={() => this.gotoBack()}>

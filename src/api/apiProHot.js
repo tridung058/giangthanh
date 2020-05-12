@@ -24,10 +24,28 @@ export function getCat(){
     return fetch(url)
     .then(res => res.json());
 };
+
+//get sub cat techology
+export function getSubCatTech(id){
+    let url;
+    url = global.BASE_URL+`/get_sub_cat_tech.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
 //get sub cat industry
 export function getSubCatIn(id){
     let url;
     url = global.BASE_URL+`/get_sub_cat_in.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+//get list by techology
+export function getListTech(cat_id){
+    let url;
+    url = global.BASE_URL+`/get_list_tech.api?cat_id=${cat_id}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
@@ -53,6 +71,23 @@ export function getSubCatAr(id){
 export function getListAr(cat_id){
     let url;
     url = global.BASE_URL+`/get_list_ar.api?cat_id=${cat_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+//get sub cat buy
+export function getSubCatB(id){
+    let url;
+    url = global.BASE_URL+`/get_sub_cat_buy.api?id=${id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+//get sub cat service
+export function getSubCatSer(id){
+    let url;
+    url = global.BASE_URL+`/get_sub_cat_service.api?id=${id}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());
@@ -84,6 +119,13 @@ export function getProductHot(type){
     .then(res => res.json());
 };
 
+export function getProducts(cat_id){
+    let url;
+    url = global.BASE_URL+`/get_product_all.api?cat_id=${cat_id}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
 //search
 
 export function getSearchProducts(page, search){
@@ -161,6 +203,24 @@ export function getCountNotification(id_member){
 export function updateNotification(id_member){
     let url;
     url = global.BASE_URL+`/update_notification.api?id=${id_member}`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+// get key hot
+export function getKeyHot(){
+    let url;
+    url = global.BASE_URL+`/get_key_hot.api`;
+    console.log(url);
+    return fetch(url)
+    .then(res => res.json());
+};
+
+// get search by key
+export function getProductByKey(key){
+    let url;
+    url = global.BASE_URL+`/get_product_by_key.api?key=${key}`;
     console.log(url);
     return fetch(url)
     .then(res => res.json());

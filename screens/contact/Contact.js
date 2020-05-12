@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, TextInput, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, TextInput, FlatList, KeyboardAvoidingView,Platform } from 'react-native';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
@@ -197,57 +197,59 @@ export default class Contact extends Component{
                             )}
                             // numColumns={6}
                         />:
-                        <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
-                           <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
-                                <View style={{width:screenWidth-20,marginLeft:10, marginTop:20, position:'relative', zIndex:0}}>
-                                    <Text style={{fontFamily:'RobotoBold', fontSize:20, textTransform:'uppercase'}}>Thông tin liên hệ</Text>
-                                    <Text style={{fontFamily:'RobotoBold', fontSize:16, textTransform:'uppercase', marginTop:15}}>Công ty tnhh máy may Giang Thành</Text>
-                                    <View style={MainStyle.contact}>
-                                        <Text><Text style={MainStyle.titleInfoCt}>Trụ sở Hà Nội:</Text>{this.state.list_contact.hanoi}</Text>
-                                        <Text><Text style={MainStyle.titleInfoCt}>Hotline:</Text>{this.state.list_contact.hotline_hn}</Text>
-                                        <Text><Text style={MainStyle.titleInfoCt}>Email:</Text>{this.state.list_contact.email_hn}</Text>
-                                    </View>
-                                    <View style={MainStyle.contact}>
-                                        <Text><Text style={MainStyle.titleInfoCt}>Trụ sở HCM:</Text>{this.state.list_contact.hcm}</Text>
-                                        <Text><Text style={MainStyle.titleInfoCt}>Hotline:</Text>{this.state.list_contact.hotline_hcm}</Text>
-                                        <Text><Text style={MainStyle.titleInfoCt}>Email:</Text>{this.state.list_contact.email_hcm}</Text>
-                                        <Text><Text style={MainStyle.titleInfoCt}>Website:</Text>{this.state.list_contact.website}</Text>
-                                    </View>
-                                    <Text style={{fontStyle:'italic', fontFamily:'RobotoBold', fontSize:15, marginTop:10}}>Hãy điền vào mẫu bên dưới để được chúng tôi giải đáp thắc mắc của bạn sớm nhất </Text>
-                                    <View>
-                                    <View style={MainStyle.formComment}>
-                                        <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(name) => this.setState({ name })} value={this.state.name}
-                                            placeholder="Họ và tên*" multiline={false} 
-                                        />
-                                        <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(phone) => this.setState({ phone })} value={this.state.phone}
-                                            placeholder="Số điện thoại*" multiline={false} 
-                                        />
-                                        <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(email) => this.setState({ email })} value={this.state.email}
-                                            placeholder="Email*" multiline={false} 
-                                        />
-                                        <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(address) => this.setState({ address })} value={this.state.address}
-                                            placeholder="Địa chỉ*" multiline={false} 
-                                        />
-                                        <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60, marginTop:10 }}  onChangeText={(content) => this.setState({ content })} value={this.state.content}
-                                            placeholder="Nội dung liên hệ" multiline={true} 
-                                        />
-                                        <View style={{flexDirection:'row',position:'relative', paddingBottom:50}}>
-                                            <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10, width:(screenWidth-20)/2.5 }}  onChangeText={(re_code) => this.setState({ re_code })} value={this.state.re_code}
-                                                placeholder="Nhập mã bảo mật*" multiline={false} 
-                                            />
-                                            <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10,width:(screenWidth-20)/5,marginLeft:5,marginRight:5 }}editable = {false} value={this.state.code}
-                                            />
-                                            <View style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10, position:'absolute', right:0, paddingVertical:10, marginBottom:40}}>
-                                               <TouchableOpacity onPress={()=>this.sendContact()}>
-                                                    <Text style={{fontFamily:'RobotoBold', color:'#ffffff'}}>Gửi liên hệ</Text>
-                                                </TouchableOpacity>
+                        <KeyboardAvoidingView style={[ {backgroundColor: '#f5fdff'}]} keyboardVerticalOffset={0} behavior={Platform.OS === "ios" ? 'padding' : 'height'}>
+                            <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
+                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
+                                    <View style={{width:screenWidth-20,marginLeft:10, marginTop:20, position:'relative', zIndex:0}}>
+                                        <Text style={{fontFamily:'RobotoBold', fontSize:20, textTransform:'uppercase'}}>Thông tin liên hệ</Text>
+                                        <Text style={{fontFamily:'RobotoBold', fontSize:16, textTransform:'uppercase', marginTop:15}}>Công ty tnhh máy may Giang Thành</Text>
+                                        <View style={MainStyle.contact}>
+                                            <Text><Text style={MainStyle.titleInfoCt}>Trụ sở Hà Nội:</Text>{this.state.list_contact.hanoi}</Text>
+                                            <Text><Text style={MainStyle.titleInfoCt}>Hotline:</Text>{this.state.list_contact.hotline_hn}</Text>
+                                            <Text><Text style={MainStyle.titleInfoCt}>Email:</Text>{this.state.list_contact.email_hn}</Text>
+                                        </View>
+                                        <View style={MainStyle.contact}>
+                                            <Text><Text style={MainStyle.titleInfoCt}>Trụ sở HCM:</Text>{this.state.list_contact.hcm}</Text>
+                                            <Text><Text style={MainStyle.titleInfoCt}>Hotline:</Text>{this.state.list_contact.hotline_hcm}</Text>
+                                            <Text><Text style={MainStyle.titleInfoCt}>Email:</Text>{this.state.list_contact.email_hcm}</Text>
+                                            <Text><Text style={MainStyle.titleInfoCt}>Website:</Text>{this.state.list_contact.website}</Text>
+                                        </View>
+                                        <Text style={{fontStyle:'italic', fontFamily:'RobotoBold', fontSize:15, marginTop:10}}>Hãy điền vào mẫu bên dưới để được chúng tôi giải đáp thắc mắc của bạn sớm nhất </Text>
+                                        <View>
+                                            <View style={MainStyle.formComment}>
+                                                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(name) => this.setState({ name })} value={this.state.name}
+                                                    placeholder="Họ và tên*" multiline={false} 
+                                                />
+                                                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(phone) => this.setState({ phone })} value={this.state.phone}
+                                                    placeholder="Số điện thoại*" multiline={false} 
+                                                />
+                                                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(email) => this.setState({ email })} value={this.state.email}
+                                                    placeholder="Email*" multiline={false} 
+                                                />
+                                                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10 }}  onChangeText={(address) => this.setState({ address })} value={this.state.address}
+                                                    placeholder="Địa chỉ*" multiline={false} 
+                                                />
+                                                <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, height:60, marginTop:10 }}  onChangeText={(content) => this.setState({ content })} value={this.state.content}
+                                                    placeholder="Nội dung liên hệ" multiline={true} 
+                                                />
+                                                <View style={{flexDirection:'row',position:'relative', paddingBottom:50}}>
+                                                    <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10, width:(screenWidth-20)/2.5 }}  onChangeText={(re_code) => this.setState({ re_code })} value={this.state.re_code}
+                                                        placeholder="Nhập mã bảo mật*" multiline={false} 
+                                                    />
+                                                    <TextInput style={{fontSize:14,borderColor:'#dddddd', borderWidth:1, padding:5, marginTop:10,width:(screenWidth-20)/5,marginLeft:5,marginRight:5 }}editable = {false} value={this.state.code}
+                                                    />
+                                                    <View style={{width:(screenWidth-20)/3,backgroundColor:'#ce1e1e', justifyContent:'center',alignItems:'center',  marginTop:10, position:'absolute', right:0, paddingVertical:10, marginBottom:40}}>
+                                                    <TouchableOpacity onPress={()=>this.sendContact()}>
+                                                            <Text style={{fontFamily:'RobotoBold', color:'#ffffff'}}>Gửi liên hệ</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
                                             </View>
                                         </View>
                                     </View>
-                                    </View>
-                                </View>
-                           </View>
-                        </ScrollView>
+                            </View>
+                            </ScrollView>
+                        </KeyboardAvoidingView>
                     }
                     </View>
                 </View>
