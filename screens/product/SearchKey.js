@@ -5,13 +5,13 @@ import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 
+//import { getProductHot} from '../../src/api/apiProHot';
+import {getStorage} from '../../src/api/storage';
+import { getSearchProducts, getProductByKey } from './../../src/api/apiProHot';
 import global from '../../src/api/global';
-import { getSearchProducts } from './../../src/api/apiProHot';
-import { getCatalog} from '../../src/api/apiCatalog';
-import {getStorage, saveStorage} from '../../src/api/storage';
 
 let screenWidth = Dimensions.get('window').width;
-export default class Catalog extends Component{
+export default class SearchKey extends Component{
     static navigationOptions = ({ navigation }) => ({
 		header: null,
     });
@@ -21,7 +21,7 @@ export default class Catalog extends Component{
         
         this.state = {
             loading: true,
-            list_catalog: [],
+            list: [],
             key:'',
             page:1
         }
@@ -29,22 +29,22 @@ export default class Catalog extends Component{
     }
 
     componentDidMount() {
-    
-        this.makeRemoteRequest();
+        let key = this.props.navigation.state.params.key;
+        this.makeRemoteRequest(key);
         
     }
 
-    makeRemoteRequest = () => {
+    makeRemoteRequest = (key) => {
 
         this.setState({ loading: true});
 		
-		getCatalog()
+		getProductByKey(key)
         .then(resJSON => {
-            const {list_catalog, error } = resJSON;
+            const {list, error } = resJSON;
             //console.log(list_sub_cat);
 			if(error == false){
 				this.setState({
-					list_catalog: list_catalog, 
+					list: list, 
 					loading: false, 
                     refreshing: false ,
                     allow_more: false,
@@ -57,7 +57,7 @@ export default class Catalog extends Component{
 			}
 				
         }).catch(err => {
-			// console.log(err);
+			 console.log(err + 'ERR key');
 			this.setState({ loading: false });
         });
     }
@@ -88,38 +88,10 @@ export default class Catalog extends Component{
         this.setState({key: key},this.search );
     }
 
-    ProductDetail(id, cat_id, name){
-
-        getStorage('history_search')
-            .then(history_search => {
-                var tmp = [];
-                var existID = false;
-                if(history_search != ''){
-                    var arrSearch = JSON.parse(history_search);
-                    arrSearch.map(c => {
-                        if(c.id == id){
-                            existID = true;
-                        }
-                        tmp.push(c);
-                    })
-                }
-                if(existID == false){
-                    tmp.push({
-                        id: id,
-                        cat_id: cat_id,
-                        name: name
-                    });
-                }
-
-                saveStorage('history_search', JSON.stringify(tmp));
-                this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
-            })
-            .catch(err => console.log(err+'Lỗi'));
+    productDetail(id, cat_id){
+        this.props.navigation.navigate('ProductDetailScreen',{id: id,cat_id: cat_id});
     }
 
-    catalogDetail(id, cat_id){
-        this.props.navigation.navigate('CatalogDetailScreen',{id:id, cat_id:cat_id});
-    }
 
 	renderLoading  = () => {
         if (!this.state.loading) return null;
@@ -136,31 +108,31 @@ export default class Catalog extends Component{
 
         return(
             <Container>
-                <HeaderBase page="catalog" title={''} navigation={navigation} />
+                <HeaderBase page="search_key" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                     { this.state.count > 0 ? 
-                                <FlatList style={{ width:screenWidth  }}
-                                    data={this.state.list_search}
-                                    renderItem={({ item }) => (
-                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id, item.cat_id, item.name)}>
-                                        <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
-                                            <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
-                                        </View>
-                                        </TouchableOpacity>
-                                    )}
-                                    // numColumns={6}
-                                />:
+                        <FlatList style={{ width:screenWidth  }}
+                            data={this.state.list_search}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity  onPress={()=>this.ProductDetails(item.id, item.cat_id)}>
+                                <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
+                                    <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
+                                </View>
+                                </TouchableOpacity>
+                            )}
+                            // numColumns={6}
+                        />:
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:100}}>
                            <View style={{borderTopWidth:10, borderTopColor:'#eeeeee'}}>
-                                <View style={MainStyle.subCatalog}>
-                                    <View style={MainStyle.subCatalogDetail}>
-                                        {this.state.list_catalog.map((item,i) =>{return(
-                                            <TouchableOpacity key={i} style={MainStyle.itemsubCatalog} onPress={()=>(this.catalogDetail(item.id, item.cat_id))}>
+                                <View style={MainStyle.subCat}>
+                                    <View style={MainStyle.showProHot}>
+                                        {this.state.list.map((item,i) =>{return(
+                                            <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.productDetail(item.id, item.cat_id)}}>
                                                 <View>
-                                                    <View style={{ borderRadius:5, justifyContent:'center',alignItems:'center', borderColor:'#c0c0c0', borderWidth:1}}>
-                                                        <Text style={MainStyle.nameCatalog}>{item.name}</Text>
-                                                    </View>
+                                                    <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
+                                                    <Text style={MainStyle.namePro}>{item.name}</Text>
+                                                    <Text style={MainStyle.pricePro}>Giá: {item.price}</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         )})}
@@ -171,7 +143,7 @@ export default class Catalog extends Component{
                     }
                     </View>
                 </View>
-            
+                <FooterBase navigation={navigation} page="search_key"  />
             </Container>
         );
     }

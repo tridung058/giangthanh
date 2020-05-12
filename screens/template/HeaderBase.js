@@ -12,7 +12,8 @@ import HeaderCenter from './HeaderCenter';
 import HeaderLeft from './HeaderLeft';
 
 import {getBgHome, getSearchProducts} from './../../src/api/apiProHot';
-//import getStorage from './../api/getStorage';
+import { ScrollView } from 'react-native-gesture-handler';
+import {getStorage, saveStorage} from './../../src/api/storage';
 
 let ScreenWidth = Dimensions.get("window").width;
 let ScreenHeight = Dimensions.get("window").height;
@@ -76,8 +77,33 @@ export default class HeaderBase extends Component {
             // this.setState({ loaded: true });  
     });
     }
-    ProductDetail(id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id});
+    ProductDetail(id, cat_id, name){
+
+        getStorage('history_search')
+            .then(history_search => {
+                var tmp = [];
+                var existID = false;
+                if(history_search != ''){
+                    var arrSearch = JSON.parse(history_search);
+                    arrSearch.map(c => {
+                        if(c.id == id){
+                            existID = true;
+                        }
+                        tmp.push(c);
+                    })
+                }
+                if(existID == false){
+                    tmp.push({
+                        id: id,
+                        cat_id: cat_id,
+                        name: name
+                    });
+                }
+
+                saveStorage('history_search', JSON.stringify(tmp));
+                this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
+            })
+            .catch(err => console.log(err+'Lỗi'));
     }
     
     setSearch=(value)=>{
@@ -129,7 +155,7 @@ export default class HeaderBase extends Component {
                                         <FlatList style={{ position:'relative',backgroundColor:'#fff', height:ScreenHeight-(ScreenHeight/3.7),width: ScreenWidth,marginTop:10 }}
                                             data={this.state.list_search}
                                             renderItem={({ item }) => (
-                                                <TouchableOpacity  onPress={()=>this.ProductDetail(item.id)}>
+                                                <TouchableOpacity style={{borderBottomColor:'#eeeeee', borderBottomWidth:1, paddingVertical:10}}  onPress={()=>this.ProductDetail(item.id, item.cat_id, item.name)}>
                                                     <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
                                                         <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
                                                     </View>
@@ -144,41 +170,9 @@ export default class HeaderBase extends Component {
                                 <View style={MainStyle.slideBg}>
                                     <Swiper autoplay={true}>
                                         {this.state.list.map((item, i) =>{ return(
-                                            <Image key={i} style={{width:ScreenWidth-40, height:(ScreenWidth/3), borderRadius:8}}  source={{uri:item.image}}/>
+                                            <Image key={i} style={{width:ScreenWidth-40, height:(ScreenWidth/3.5), borderRadius:8}}  source={{uri:item.image}}/>
                                         )})}
                                     </Swiper >
-                                </View>
-                                <View style={MainStyle.menu}>
-                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatScreen')}}>
-                                        <View>
-                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cat_b.png')}/>
-                                        </View>
-                                        <Text style={MainStyle.textMenu}>Danh mục</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('CatalogScreen')}}>
-                                        <View >
-                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_catalog.png')}/>
-                                        </View>
-                                        <Text style={MainStyle.textMenu}>Catalog</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('OrderMemberScreen')}}>
-                                        <View >
-                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_cart_b.png')}/>
-                                        </View>
-                                        <Text style={MainStyle.textMenu}>Đơn hàng</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=> { navigation.navigate('NewsScreen')}}>
-                                        <View >
-                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_news.png')}/>
-                                        </View>
-                                        <Text style={MainStyle.textMenu}>Tin tức</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={MainStyle.itemTouchMenu} onPress={()=>{navigation.navigate('ContactScreen')}}>
-                                        <View >
-                                            <Image style={MainStyle.logoMenu} source={require('./../../assets/icon_contact.png')}/>
-                                        </View>
-                                        <Text style={MainStyle.textMenu}>Liên hệ</Text>
-                                    </TouchableOpacity>
                                 </View>
                             </View>
                      </View>
@@ -188,7 +182,7 @@ export default class HeaderBase extends Component {
         || page == 'news_detail'|| page == 'product_detail' || page == 'catalog' ||
          page == 'catalog_detail' || page == 'contact' || page == 'search' || page == 'notifi'
         || page == 'member' || page == 'carts' || page == 'info_member' || page == 'order_member'
-        || page == 'order_member_detail' || page == 'change_pass_word' || page == 'forget_password'){
+        || page == 'order_member_detail' || page == 'change_pass_word' || page == 'forget_password' || page == 'search_key'){
             return (
                 <View style={ MainStyle.heightHeader }>
                     <View style={MainStyle.SliderContainerStyle}>

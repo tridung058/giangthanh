@@ -9,13 +9,13 @@
       "android",
       "web"
     ],
-    "version": "1.0.9",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#d00f12"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,7 +26,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.maymaygiangthanh.app",
-      "buildNumber": "1.0.9",
+      "buildNumber": "1.1.0",
       "infoPlist": {
         "NSCameraUsageDescription": "This application uses the camera to take photos of people when taking attendance",
         "NSPhotoLibraryAddUsageDescription": "The application uses images to make avatar images",
@@ -35,7 +35,7 @@
     },
     "android": {
       "package": "com.hoidetmay.app",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"]
   }
   }

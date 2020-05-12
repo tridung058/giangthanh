@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView,Dimensions, Alert, TextInput, Modal, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, Image, ScrollView, Dimensions, Alert, TextInput, Modal, TouchableHighlight, KeyboardAvoidingView, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
@@ -134,27 +134,31 @@ export default class ProductDetail extends Component{
                         member:JSON.parse(member),
                         is_login: true
                     })
+                }else{
+                    this.setState({
+                        is_login: false
+                    })
                 }
             })
             .catch((err)=>{
                 console.log(err+ 'LOI');
             })
 
-            getStorage('viewed')
-            .then((viewed)=>{
-                if(viewed !=''){
-                    this.setState({
-                        viewed:JSON.parse(viewed),
-                        is_login: true
-                    })
-                    console.log(this.state.viewed);
-                }else{
-                    console.log('NULL');
-                }
-            })
-            .catch((err)=>{
-                console.log(err+ 'LOI viewed');
-            })
+            // getStorage('viewed')
+            // .then((viewed)=>{
+            //     if(viewed !=''){
+            //         this.setState({
+            //             viewed:JSON.parse(viewed),
+            //             is_login: true
+            //         })
+            //         console.log(this.state.viewed);
+            //     }else{
+            //         console.log('NULL');
+            //     }
+            // })
+            // .catch((err)=>{
+            //     console.log(err+ 'LOI viewed');
+            // })
 
         this.generateRandomString(3);
 
@@ -366,13 +370,14 @@ export default class ProductDetail extends Component{
             </View> 
         )
 
-        const mainComment = is_login === true?memberComment:guestComment;
+        const mainComment = is_login?memberComment:guestComment;
 
         return(
             <Container>
                 <HeaderBase page="product_detail" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
+                        <KeyboardAvoidingView style={[ {backgroundColor: '#f5fdff'}]} keyboardVerticalOffset={10} behavior={Platform.OS === "ios" ? 'padding' : 'height'}>
                         <ScrollView showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView,{marginBottom:130}}>
                            <View style={{width: screenWidth-20,marginLeft:10, marginTop:10}}>
                                 <View style={{position:'relative', zIndex:0}}>
@@ -495,7 +500,7 @@ export default class ProductDetail extends Component{
                                                             </View>
                                                             <View/>
                                                         </View>
-                                                        {list_sub_comment[item.id].length != 0?
+                                                        {list_sub_comment[item.id] != null?
                                                         <View>
                                                             {list_sub_comment[item.id].map((res,i2)=>{return(
                                                                 <View key={i2} style={MainStyle.subCommentStyle}>
@@ -534,7 +539,21 @@ export default class ProductDetail extends Component{
                                     <Text style={MainStyle.textProHot}>Sản phẩm cùng loại</Text>
                                 </View>
                                 <View style={MainStyle.showProHot}>
-                                    {this.state.other_pro.map((item,i) =>{return(
+                                <FlatList
+                                    data={this.state.other_pro}
+                                    renderItem={({ item }) => (
+                                        <TouchableOpacity  style={MainStyle.itemProHot} onPress={()=>{this.makeRemoteRequest(item.id, item.cat_id)}}>
+                                            <View>
+                                                <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
+                                                <Text style={MainStyle.namePro}>{item.name}</Text>
+                                                <Text style={MainStyle.pricePro}>Giá: {item.price}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )}
+                                    numColumns={3}
+                                />
+                                    {/* {this.state.other_pro.map((item,i) =>{return(
+                                    
                                         <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.makeRemoteRequest(item.id, item.cat_id)}}>
                                             <View>
                                                 <Image style={{width:(screenWidth-100)/3, height:((screenWidth-100)/3)}}  source={{uri:item.image}}/>
@@ -542,10 +561,11 @@ export default class ProductDetail extends Component{
                                                 <Text style={MainStyle.pricePro}>Giá: {item.price}</Text>
                                             </View>
                                         </TouchableOpacity>
-                                    )})}
+                                    )})} */}
                                 </View>
                            </View>
                         </ScrollView>
+                        </KeyboardAvoidingView>
                     </View>
                 </View>
                 <View style={MainStyle.add_cart}>

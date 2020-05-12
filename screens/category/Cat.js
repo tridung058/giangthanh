@@ -6,7 +6,7 @@ import HeaderBase from '../template/HeaderBase';
 import { Container, Content, CheckBox, Icon } from "native-base";
 
 import { getCat} from '../../src/api/apiCatProduct';
-import {getStorage} from '../../src/api/storage';
+import {getStorage, saveStorage} from '../../src/api/storage';
 import { getSearchProducts } from './../../src/api/apiProHot';
 import global from '../../src/api/global';
 
@@ -90,8 +90,33 @@ export default class Cat extends Component{
         this.setState({key: key},this.search );
     }
 
-    ProductDetail(id, cat_id){
-        this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
+    ProductDetail(id, cat_id, name){
+
+        getStorage('history_search')
+            .then(history_search => {
+                var tmp = [];
+                var existID = false;
+                if(history_search != ''){
+                    var arrSearch = JSON.parse(history_search);
+                    arrSearch.map(c => {
+                        if(c.id == id){
+                            existID = true;
+                        }
+                        tmp.push(c);
+                    })
+                }
+                if(existID == false){
+                    tmp.push({
+                        id: id,
+                        cat_id: cat_id,
+                        name: name
+                    });
+                }
+
+                saveStorage('history_search', JSON.stringify(tmp));
+                this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
+            })
+            .catch(err => console.log(err+'Lỗi'));
     }
 
     goCatDetail(id, name){
@@ -120,7 +145,7 @@ export default class Cat extends Component{
                                 <FlatList style={{ width:screenWidth  }}
                                     data={this.state.list_search}
                                     renderItem={({ item }) => (
-                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id, item.cat_id)}>
+                                        <TouchableOpacity  onPress={()=>this.ProductDetail(item.id, item.cat_id, item.name)}>
                                         <View style={{paddingLeft:20, paddingTop:10, paddingRight:20}}>
                                             <Text style={{fontFamily:'Roboto', color:'red',fontSize:15 }}>{item.name}</Text>
                                         </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView,Dimensions, Alert, FlatList, TextInput, Picker } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView,Dimensions, Alert, FlatList, TextInput, Picker, KeyboardAvoidingView } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
 
 import MainStyle from '../../styles/MainStyle';
@@ -200,77 +200,81 @@ export default class InfoMember extends Component{
             <Container>
                 <HeaderBase page="info_member" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
-                    <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <View showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
-                           <View style={MainStyle.changeInfoStyle}>
-                                <View style={MainStyle.formSignIn}>
-                                    <TextInput style={MainStyle.txtInput} 
-                                        onChangeText={(name) => this.setState({ name })} 
-                                        value={this.state.name} returnKeyType='next' 
-                                    />
-                                    <TextInput style={MainStyle.txtInput} 
-                                        onChangeText={(phone) => this.setState({ phone })} 
-                                        value={this.state.phone} returnKeyType='done'
-                                     />
-                                    <TextInput style={MainStyle.txtInput} 
-                                        placeholder='Nhập lại mật khẩu mới' 
-                                        onChangeText={(email) => this.setState({ email })} 
-                                        value={this.state.email} returnKeyType='done' 
-                                    />
-                                    <TextInput style={MainStyle.txtInput} 
-                                        placeholder={this.state.member.job == ''?'Cập nhật vị trí công việc':''} 
-                                        onChangeText={(job) => this.setState({ job })} 
-                                        value={this.state.job} returnKeyType='done' 
-                                    />
-                                    {/* {main_sex} */}
-
-                                    <View style={{marginTop:10, paddingVertical:10, borderBottomColor:'#e0e0e0', borderBottomWidth:1}}>
-                                        <RadioForm
-                                        radio_props={radio_props}
-                                        initial={this.state.gender == true ? 0 : 1}
-                                        buttonColor={'#777777'}
-                                        labelStyle={{paddingRight:10}}
-                                        buttonSize={16}
-                                        formHorizontal={true}
-                                        labelStyle={{color: '#777777', paddingRight:10}}
-                                        onPress={(value) => {this.setState({value:value})}}
+                <KeyboardAvoidingView style={[ {backgroundColor: '#f5fdff'}]} keyboardVerticalOffset={80} behavior={Platform.OS === "ios" ? 'padding' : 'height'}>
+                    <ScrollView>
+                        <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
+                            <View showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
+                            <View style={MainStyle.changeInfoStyle}>
+                                    <View style={MainStyle.formSignIn}>
+                                        <TextInput style={MainStyle.txtInput} 
+                                            onChangeText={(name) => this.setState({ name })} 
+                                            value={this.state.name} returnKeyType='next' 
                                         />
-                                    </View>
+                                        <TextInput style={MainStyle.txtInput} 
+                                            onChangeText={(phone) => this.setState({ phone })} 
+                                            value={this.state.phone} returnKeyType='done'
+                                        />
+                                        <TextInput style={MainStyle.txtInput} 
+                                            placeholder='Cập nhật email' 
+                                            onChangeText={(email) => this.setState({ email })} 
+                                            value={this.state.email} returnKeyType='done' 
+                                        />
+                                        <TextInput style={MainStyle.txtInput} 
+                                            placeholder={this.state.member.job == ''?'Cập nhật vị trí công việc':''} 
+                                            onChangeText={(job) => this.setState({ job })} 
+                                            value={this.state.job} returnKeyType='done' 
+                                        />
+                                        {/ {main_sex} /}
 
-                                    <TextInput style={MainStyle.txtInput} 
-                                        placeholder= {this.state.member.birthday == ''?'Cập nhật ngày sinh của bạn':''}
-                                        onChangeText={(birthday) => this.setState({ birthday })} 
-                                        value={this.state.birthday} returnKeyType='done' 
-                                    />
-                                    <TextInput style={MainStyle.txtInputCp} 
-                                        placeholder= {this.state.member.company == ''?'Tên công ty của bạn':''}
-                                        onChangeText={(company) => this.setState({ company })} 
-                                        value={this.state.company} returnKeyType='done' 
-                                    />
-                                    <View style={{borderBottomColor:'#e0e0e0', borderBottomWidth:1,marginTop:10, paddingVertical:10}}>
-                                        <Picker
-                                            selectedValue={this.state.city}
-                                            style={{height:20, width: screenWidth-20, justifyContent:"center" }}
-                                            onValueChange={(city, itemIndex) =>
-                                                this.setState({city: city})
-                                            }>
-                                                {this.state.list_city.map((item, i)=>{return(
-                                                    <Picker.Item key={i} label={item.name} value={this.state.city} />
-                                                )})}
-                                        </Picker>
+                                        <View style={{marginTop:10, paddingVertical:10, borderBottomColor:'#e0e0e0', borderBottomWidth:1}}>
+                                            <RadioForm
+                                            radio_props={radio_props}
+                                            initial={this.state.gender == true ? 0 : 1}
+                                            buttonColor={'#777777'}
+                                            labelStyle={{paddingRight:10}}
+                                            buttonSize={16}
+                                            formHorizontal={true}
+                                            labelStyle={{color: '#777777', paddingRight:10}}
+                                            onPress={(value) => {this.setState({value:value})}}
+                                            />
+                                        </View>
+
+                                        <TextInput style={MainStyle.txtInput} 
+                                            placeholder= {this.state.member.birthday == ''?'Cập nhật ngày sinh của bạn':''}
+                                            onChangeText={(birthday) => this.setState({ birthday })} 
+                                            value={this.state.birthday} returnKeyType='done' 
+                                        />
+                                        <TextInput style={MainStyle.txtInput} 
+                                            placeholder= {this.state.member.company == ''?'Tên công ty của bạn':''}
+                                            onChangeText={(company) => this.setState({ company })} 
+                                            value={this.state.company} returnKeyType='done' 
+                                        />
+                                        <View style={{borderBottomColor:'#e0e0e0', borderBottomWidth:1,marginTop:10, paddingVertical:10}}>
+                                            <Picker
+                                                selectedValue={this.state.city}
+                                                style={{height:30, width: screenWidth-20}}
+                                                onValueChange={(city, itemIndex) =>
+                                                    this.setState({city: city})
+                                                }>
+                                                    {this.state.list_city.map((item, i)=>{return(
+                                                        <Picker.Item key={i} label={item.name} value={this.state.city} />
+                                                    )})}
+                                            </Picker>
+                                        </View>
+                                        <TextInput style={MainStyle.txtInput} 
+                                            placeholder= {this.state.member.address_detail == ''?'Cập nhật địa chỉ chi tiết':''} 
+                                            onChangeText={(address_detail) => this.setState({ address_detail })} 
+                                            value={this.state.address_detail} returnKeyType='done' 
+                                        />
+                                        <TouchableOpacity style={MainStyle.btnSignIn} onPress={() => this.updateInfo()}>
+                                            <Text style={{color:'#ffffff', fontFamily:'RobotoBold', fontSize:18}}>CẬP NHẬT</Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    <TextInput style={MainStyle.txtInput} 
-                                         placeholder= {this.state.member.address_detail == ''?'Cập nhật địa chỉ chi tiết':''} 
-                                        onChangeText={(address) => this.setState({ address })} 
-                                        value={this.state.address_detail} returnKeyType='done' 
-                                    />
-                                    <TouchableOpacity style={MainStyle.btnSignIn} onPress={() => this.updateInfo()}>
-                                        <Text style={{color:'#ffffff', fontFamily:'RobotoBold', fontSize:18}}>CẬP NHẬT</Text>
-                                    </TouchableOpacity>
-                                </View>
-                           </View>
+                            </View>
+                            </View>
                         </View>
-                    </View>
+                    </ScrollView>
+                    </KeyboardAvoidingView>
                 </View>
             </Container>
         );

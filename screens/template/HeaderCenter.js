@@ -71,12 +71,12 @@ export default class HeaderCenter extends Component{
         const {all_amout} = this.state;
             if(this.props.page && this.props.page == 'home'){
                 return (
-                    <View style={{alignItems: 'center',marginTop:width/12}}>
+                    <View style={{alignItems: 'center',marginTop:width/20}}>
                         <Image style={MainStyle.logoHome} source={require('./../../assets/logo.png')}/>
                     </View>
                 )
             }else if(this.props.page && (this.props.page == 'category' || this.props.page == 'cat' || this.props.page == 'cat_machine' || this.props.page == 'news' || this.props.page == 'news_detail' || this.props.page == 'catalog' 
-            || this.props.page == 'catalog_detail'|| this.props.page == 'search' )){
+            || this.props.page == 'catalog_detail'|| this.props.page == 'search'|| this.props.page == 'search_key' )){
                 return (
                     <View style={{alignItems: 'center',marginTop:width/13.5,marginRight:20,position:'relative'}}>
                         <Icon type="Ionicons" name="md-search" style={{ color: '#000000', position: 'absolute', top: 5, left: 20,zIndex:2 }} />

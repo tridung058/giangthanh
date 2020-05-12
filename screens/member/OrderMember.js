@@ -68,7 +68,7 @@ export default class OrderMember extends Component{
             <Container>
                 <HeaderBase page="order_member" title={''} navigation={navigation} />
                 <View style={[MainStyle.tContainerDefault]}>
-                    <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
+                    <ScrollView style={{marginBottom:68}}>
                         <View showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
                            <View style={{}}>
                                {this.state.list.map((item, i) =>{ return(
@@ -85,7 +85,7 @@ export default class OrderMember extends Component{
                                )})}
                            </View>
                         </View>
-                    </View>
+                    </ScrollView>
                 </View>
             </Container>
         );

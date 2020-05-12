@@ -1,5 +1,6 @@
 import { StyleSheet, PixelRatio, Dimensions, Platform, StatusBar } from 'react-native';
 import Constants from 'expo-constants';
+import { Row } from 'native-base';
 
 const {width, height} = Dimensions.get('window');
 const  screenWidth = Dimensions.get('window').width;
@@ -13,14 +14,15 @@ const barHeight = Constants.statusBarHeight;
 export default { 
     tSplash:{
         width: width,
-        height: height
+        height: height,
+        flex:1
     },
     tDefaultScrollView:{
     },
     bgHeaderHome:{
         flexDirection:'row',
         width:width,
-        height:width*431/750,
+        height:(width*431/750),
         paddingTop:barHeight-20,
     },
     itemHeagerHome:{
@@ -30,7 +32,7 @@ export default {
     headerItem:{
         flexDirection:'row',
         width:width,
-        height:width/6,
+        height:width/8,
         overflow:'hidden',
         marginTop:barHeight
     },
@@ -71,11 +73,14 @@ export default {
     },
     headerHomeRight:{
         width:width/3,
+        alignItems:'center',
+        justifyContent:'center',
+        paddingBottom:10
     },
     searchBox:{
         width:width,
         //height:width/6,
-        marginTop:20,
+        marginTop:10,
         alignItems:'center',
         position:'relative',
     },
@@ -140,7 +145,7 @@ export default {
     slideBg:{
         height:width/3,
         width:width-40,
-        marginTop:15,
+        marginTop:10,
         alignItems:'center',
         justifyContent:'center',
         marginLeft:20
@@ -174,7 +179,7 @@ export default {
         fontFamily: 'Roboto',
     },
     bodyHome:{
-        marginTop:(width/3)+20,
+        marginTop:(width/25)+20,
         marginBottom:(screenWidth/3)+105+(screenWidth-40)/7,
         position:'relative',
         zIndex:-1
@@ -218,6 +223,7 @@ export default {
     },
     itemProHot:{
         width:(screenWidth-60)/3,
+        flexDirection:'row',
         marginLeft:10,
         marginRight:10,
     },
