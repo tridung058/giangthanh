@@ -538,7 +538,7 @@ export default class Home extends React.Component{
                             <View style={[MainStyle.showPurchase]}>
                                 {this.state.list_cat_buy.map((item, i)=>{
                                     return(
-                                        <TouchableOpacity style={MainStyle.itemPurchase} onPress={()=>(this.goCatDetail(item.id, item.name))}>
+                                        <TouchableOpacity key={i} style={MainStyle.itemPurchase} onPress={()=>(this.goCatDetail(item.id, item.name))}>
                                             <View>
                                                 <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={{uri:item.image}}/>
                                                 <Text style={MainStyle.namePurchase}>{item.name}</Text>
@@ -556,7 +556,7 @@ export default class Home extends React.Component{
                             <View style={[MainStyle.showPurchase]}>
                                 {this.state.list_cat_service.map((item,i)=>{
                                     return(
-                                        <TouchableOpacity style={MainStyle.itemPurchase} onPress={()=>(this.goCatDetail(item.id, item.name))}>
+                                        <TouchableOpacity key={i} style={MainStyle.itemPurchase} onPress={()=>(this.goCatDetail(item.id, item.name))}>
                                             <View>
                                                 <Image style={{width:(screenWidth-120)/3, height:((screenWidth-120)/3)}}  source={{uri:item.image}}/>
                                                 <Text style={MainStyle.namePurchase}>{item.name}</Text>
