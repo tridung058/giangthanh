@@ -35,7 +35,7 @@
     },
     "android": {
       "package": "com.hoidetmay.app",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"]
   }
   }
