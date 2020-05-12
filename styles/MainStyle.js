@@ -806,6 +806,12 @@ export default {
         borderBottomColor:'#e0e0e0',
         borderBottomWidth:1
     },
+    txtInputCp:{
+        marginTop:10,
+        paddingVertical:10,
+       // borderBottomColor:'#e0e0e0',
+       // borderBottomWidth:1
+    },
     btnSignIn:{
         marginVertical:20,
         height:height/18,

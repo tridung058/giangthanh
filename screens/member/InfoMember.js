@@ -242,7 +242,7 @@ export default class InfoMember extends Component{
                                         onChangeText={(birthday) => this.setState({ birthday })} 
                                         value={this.state.birthday} returnKeyType='done' 
                                     />
-                                    <TextInput style={MainStyle.txtInput} 
+                                    <TextInput style={MainStyle.txtInputCp} 
                                         placeholder= {this.state.member.company == ''?'Tên công ty của bạn':''}
                                         onChangeText={(company) => this.setState({ company })} 
                                         value={this.state.company} returnKeyType='done' 
@@ -250,7 +250,7 @@ export default class InfoMember extends Component{
                                     <View style={{borderBottomColor:'#e0e0e0', borderBottomWidth:1,marginTop:10, paddingVertical:10}}>
                                         <Picker
                                             selectedValue={this.state.city}
-                                            style={{height:30, width: screenWidth-20}}
+                                            style={{height:20, width: screenWidth-20, justifyContent:"center" }}
                                             onValueChange={(city, itemIndex) =>
                                                 this.setState({city: city})
                                             }>
