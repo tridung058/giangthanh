@@ -68,7 +68,7 @@ export default class OrderMemberDetail extends Component{
                 <View style={[MainStyle.tContainerDefault]}>
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
                         <View showsVerticalScrollIndicator={false} style={MainStyle.tDefaultScrollView}>
-                            <ScrollView>
+                            <ScrollView style={{marginBottom:68}}>
                                 <View style={{paddingHorizontal:10}}>
                                     {list.map((item, i) =>{
                                         return(
