@@ -89,8 +89,10 @@ export default class FooterBase extends Component {
                     </View>
                     <Text style={MainStyle.textFooterBase}>Thông Báo</Text>
                     {count > 0?
-                        <Text style={{position:'absolute',top:0, right:10, backgroundColor:'#ce1e1e',
-                        color:'#fff', paddingHorizontal:9, height:20,borderRadius:10}}>{count}</Text>:
+                        <View style={{position:'absolute',top:0, right:13, backgroundColor:'#ce1e1e',
+                        color:'#fff', paddingHorizontal:8, height:18,borderRadius:9}}>
+                        <Text style={{color:'#ffffff'}} >{count}</Text>
+                        </View>:
                         null
                     }
                 </TouchableOpacity>

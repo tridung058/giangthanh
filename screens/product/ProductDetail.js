@@ -539,7 +539,7 @@ export default class ProductDetail extends Component{
                                     <Text style={MainStyle.textProHot}>Sản phẩm cùng loại</Text>
                                 </View>
                                 <View style={MainStyle.showProHot}>
-                                <FlatList
+                                {/* <FlatList
                                     data={this.state.other_pro}
                                     renderItem={({ item }) => (
                                         <TouchableOpacity  style={MainStyle.itemProHot} onPress={()=>{this.makeRemoteRequest(item.id, item.cat_id)}}>
@@ -551,8 +551,8 @@ export default class ProductDetail extends Component{
                                         </TouchableOpacity>
                                     )}
                                     numColumns={3}
-                                />
-                                    {/* {this.state.other_pro.map((item,i) =>{return(
+                                /> */}
+                                    {this.state.other_pro.map((item,i) =>{return(
                                     
                                         <TouchableOpacity key={i} style={MainStyle.itemProHot} onPress={()=>{this.makeRemoteRequest(item.id, item.cat_id)}}>
                                             <View>
@@ -561,7 +561,7 @@ export default class ProductDetail extends Component{
                                                 <Text style={MainStyle.pricePro}>Giá: {item.price}</Text>
                                             </View>
                                         </TouchableOpacity>
-                                    )})} */}
+                                    )})}
                                 </View>
                            </View>
                         </ScrollView>
