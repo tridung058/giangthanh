@@ -204,7 +204,7 @@ export default class Carts extends Component{
                 <HeaderBase page="carts" title={''} navigation={navigation} />
                 <View >
                     <View style={[MainStyle.tDefaultContent, MainStyle.tDefaultContentFix]}>
-                        <ScrollView >
+                        <ScrollView style={{ marginBottom:220}}>
                             {list.map((item, i) =>{return(
                                 <View key={i} style={{ flexDirection:'row', width:screenWidth,backgroundColor:'#fff', justifyContent:'space-around' }}>
                                     <View style={{width:(screenWidth-20)/3, paddingLeft:10}}>

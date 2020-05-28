@@ -226,7 +226,7 @@ export default class InfoMember extends Component{
                                             onChangeText={(job) => this.setState({ job })} 
                                             value={this.state.job} returnKeyType='done' 
                                         />
-                                        {/* {main_sex} */}
+                                        {/* { {main_sex} } */}
 
                                         <View style={{marginTop:10, paddingVertical:10, borderBottomColor:'#e0e0e0', borderBottomWidth:1}}>
                                             <RadioForm
@@ -259,11 +259,11 @@ export default class InfoMember extends Component{
                                                     this.setState({city: city})
                                                 }>
                                                     {this.state.list_city.map((item, i)=>{return(
-                                                        <Picker.Item key={i} label={this.state.city_name} value={item.id} />
+
+                                                        <Picker.Item key={i} label={item.name} value={item.id} />
                                                     )})}
                                             </Picker>
 
-                                            
                                         </View>
                                         <TextInput style={MainStyle.txtInput} 
                                             placeholder= {this.state.member.address_detail == ''?'Cập nhật địa chỉ chi tiết':''} 
