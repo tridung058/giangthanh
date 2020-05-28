@@ -270,7 +270,7 @@ export default class Authentication extends Component{
                                         <Text style={ !isSignIn ==true?MainStyle.txtsignIn:MainStyle.txtsignUp}>Đăng ký</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <KeyboardAvoidingView style={[ {backgroundColor: '#f5fdff'}]} keyboardVerticalOffset={40} behavior={Platform.OS === "ios" ? 'padding' : 'height'}>
+                                <KeyboardAvoidingView style={[ {backgroundColor: '#f5fdff', paddingBottom:50}]} keyboardVerticalOffset={40} behavior={Platform.OS === "ios" ? 'padding' : 'height'}>
                                     <ScrollView>
                                         {main}
                                     </ScrollView>

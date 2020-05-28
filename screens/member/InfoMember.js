@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView,Dimensions, Alert, FlatList, TextInput, Picker, KeyboardAvoidingView } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView,Dimensions, Alert, FlatList, TextInput, KeyboardAvoidingView } from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
 
 import MainStyle from '../../styles/MainStyle';
 import FooterBase from '../template/FooterBase';
 import HeaderBase from '../template/HeaderBase';
-import { Container, Content, CheckBox, Icon } from "native-base";
+import { Container, Content, CheckBox, Icon, Picker } from "native-base";
 
 import { getCity, updateInfoMember, getInfoMember} from '../../src/api/apiMember';
 import { saveStorage, getStorage} from '../../src/api/storage';
@@ -29,6 +29,7 @@ export default class InfoMember extends Component{
             gender: true,
             list_city: [],
             city:'',
+            city_name: '',
             name: '',
             phone: '',
             email: '',
@@ -64,6 +65,7 @@ export default class InfoMember extends Component{
                         this.setState({
                             list: list,
                             city: list.city,
+                            city_name: list.city_name,
                             name: list.name,
                             phone: list.phone,
                             email: list.email,
@@ -257,9 +259,11 @@ export default class InfoMember extends Component{
                                                     this.setState({city: city})
                                                 }>
                                                     {this.state.list_city.map((item, i)=>{return(
-                                                        <Picker.Item key={i} label={item.name} value={this.state.city} />
+                                                        <Picker.Item key={i} label={this.state.city_name} value={item.id} />
                                                     )})}
                                             </Picker>
+
+                                            
                                         </View>
                                         <TextInput style={MainStyle.txtInput} 
                                             placeholder= {this.state.member.address_detail == ''?'Cập nhật địa chỉ chi tiết':''} 

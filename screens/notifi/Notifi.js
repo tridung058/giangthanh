@@ -118,6 +118,9 @@ export default class Notifi extends Component{
     ProductDetail(id, cat_id){
         this.props.navigation.navigate('ProductDetailScreen',{id:id, cat_id:cat_id});
     }
+    NewsDetail(id, cat_id){
+        this.props.navigation.navigate('NewsDetailScreen',{id:id});
+    }
 	renderLoading  = () => {
         if (!this.state.loading) return null;
 
@@ -159,16 +162,28 @@ export default class Notifi extends Component{
                                                 <View style={MainStyle.notificationStyle}>
                                                     <Image style={{ width: screenWidth/7, height:(screenWidth/7), borderRadius: (screenWidth/7)/2}} source={{uri:item.image}}/>
                                                     <View style={{flex:1, paddingHorizontal:15}}>
-                                                        <TouchableOpacity style={{}} onPress={() => this.ProductDetail(item.product_id, item.cat_id)}>
+                                                        {item.type == 'news' ? 
+                                                        <TouchableOpacity style={{}} onPress={() => this.NewsDetail(item.product_id, item.cat_id)}>
                                                             <Text style={{fontFamily:'RobotoBold', color:'#000000', textTransform:'uppercase'}}>{item.title}</Text>
                                                             <View style={{flexDirection:'row', paddingVertical:5}}>
                                                                 <Text style={{fontFamily:'Roboto', color:'#333333'}}>mới được </Text>
                                                                 <Text style={{fontFamily:'RobotoBold'}}>{item.member}</Text>
-                                                                <Text> đăng bán</Text>
+                                                                <Text style={{color:'red'}}> đăng (tin tức)</Text>
                                                             </View>
                                                             <Text style={{fontFamily:'Roboto', color:'#333333'}}>{item.time}</Text>
                                                             <View/>
                                                         </TouchableOpacity>
+                                                        :<TouchableOpacity style={{}} onPress={() => this.ProductDetail(item.product_id, item.cat_id)}>
+                                                            <Text style={{fontFamily:'RobotoBold', color:'#000000', textTransform:'uppercase'}}>{item.title}</Text>
+                                                            <View style={{flexDirection:'row', paddingVertical:5}}>
+                                                                <Text style={{fontFamily:'Roboto', color:'#333333'}}>mới được </Text>
+                                                                <Text style={{fontFamily:'RobotoBold'}}>{item.member}</Text>
+                                                                <Text style={{color:'red'}}> đăng bán (sản phẩm)</Text>
+                                                            </View>
+                                                            <Text style={{fontFamily:'Roboto', color:'#333333'}}>{item.time}</Text>
+                                                            <View/>
+                                                        </TouchableOpacity>
+                                                    }
                                                     </View>
                                                     <View/>
                                                 </View>
